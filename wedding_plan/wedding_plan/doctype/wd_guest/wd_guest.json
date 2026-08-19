@@ -1,0 +1,263 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-08-19 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "household_name",
+  "primary_phone",
+  "alternate_phone",
+  "address",
+  "city",
+  "category",
+  "sub_group",
+  "pax",
+  "kids",
+  "owner_in_family",
+  "rsvp_status",
+  "patrika_status",
+  "patrika_delivered_by",
+  "patrika_date",
+  "patrika_acknowledged",
+  "stay_required",
+  "venue",
+  "rooms_needed",
+  "arrival_mode",
+  "arrival_detail",
+  "arrival_datetime",
+  "pickup_required",
+  "pickup_point",
+  "departure_datetime",
+  "dietary",
+  "special_needs",
+  "hamper_tier",
+  "vip_protocol",
+  "functions_invited"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "household_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Household",
+   "reqd": 1
+  },
+  {
+   "fieldname": "primary_phone",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Primary Phone"
+  },
+  {
+   "fieldname": "alternate_phone",
+   "fieldtype": "Data",
+   "label": "Alternate Phone"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "City"
+  },
+  {
+   "default": "Local",
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Local\nOutstation"
+  },
+  {
+   "fieldname": "sub_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Group",
+   "options": "WD Sub Group"
+  },
+  {
+   "default": "1",
+   "fieldname": "pax",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Pax"
+  },
+  {
+   "default": "0",
+   "fieldname": "kids",
+   "fieldtype": "Int",
+   "label": "Kids"
+  },
+  {
+   "fieldname": "owner_in_family",
+   "fieldtype": "Data",
+   "label": "Owner In Family"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "rsvp_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "RSVP",
+   "options": "Pending\nConfirmed\nDeclined"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "patrika_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Patrika",
+   "options": "Not Printed\nPending\nHanded\nCouriered\nDigital Only"
+  },
+  {
+   "fieldname": "patrika_delivered_by",
+   "fieldtype": "Data",
+   "label": "Patrika Delivered By"
+  },
+  {
+   "fieldname": "patrika_date",
+   "fieldtype": "Date",
+   "label": "Patrika Date"
+  },
+  {
+   "fieldname": "patrika_acknowledged",
+   "fieldtype": "Check",
+   "label": "Patrika Acknowledged"
+  },
+  {
+   "fieldname": "stay_required",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Stay Required"
+  },
+  {
+   "fieldname": "venue",
+   "fieldtype": "Link",
+   "label": "Venue",
+   "options": "WD Venue"
+  },
+  {
+   "fieldname": "rooms_needed",
+   "fieldtype": "Int",
+   "label": "Rooms Needed"
+  },
+  {
+   "fieldname": "arrival_mode",
+   "fieldtype": "Select",
+   "label": "Arrival Mode",
+   "options": "\nAir\nTrain\nBus\nRoad\nLocal"
+  },
+  {
+   "fieldname": "arrival_detail",
+   "fieldtype": "Data",
+   "label": "Arrival Detail"
+  },
+  {
+   "fieldname": "arrival_datetime",
+   "fieldtype": "Datetime",
+   "label": "Arrival Datetime"
+  },
+  {
+   "fieldname": "pickup_required",
+   "fieldtype": "Check",
+   "label": "Pickup Required"
+  },
+  {
+   "fieldname": "pickup_point",
+   "fieldtype": "Data",
+   "label": "Pickup Point"
+  },
+  {
+   "fieldname": "departure_datetime",
+   "fieldtype": "Datetime",
+   "label": "Departure Datetime"
+  },
+  {
+   "default": "Standard",
+   "fieldname": "dietary",
+   "fieldtype": "Select",
+   "label": "Dietary",
+   "options": "Standard\nJain\nVegan\nDiabetic\nOther"
+  },
+  {
+   "fieldname": "special_needs",
+   "fieldtype": "Small Text",
+   "label": "Special Needs"
+  },
+  {
+   "default": "None",
+   "fieldname": "hamper_tier",
+   "fieldtype": "Select",
+   "label": "Hamper Tier",
+   "options": "VIP\nPremium\nStandard\nKids\nNone"
+  },
+  {
+   "fieldname": "vip_protocol",
+   "fieldtype": "Check",
+   "label": "VIP Protocol"
+  },
+  {
+   "fieldname": "functions_invited",
+   "fieldtype": "Table MultiSelect",
+   "label": "Invited To",
+   "options": "WD Guest Function"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Guest",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "household_name"
+}

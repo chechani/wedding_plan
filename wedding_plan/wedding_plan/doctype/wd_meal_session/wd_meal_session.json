@@ -1,0 +1,188 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-08-19 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "date",
+  "session_name",
+  "time",
+  "venue",
+  "vendor",
+  "who_eats",
+  "guaranteed_plates",
+  "jain_plates",
+  "staff_coupons",
+  "kids_plates",
+  "served_plates",
+  "rate",
+  "signed_by_caterer",
+  "signed_by_liaison",
+  "signed_by_commander",
+  "slip_photo",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "session_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Session",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time",
+   "fieldtype": "Data",
+   "label": "Time"
+  },
+  {
+   "fieldname": "venue",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Venue",
+   "options": "WD Venue"
+  },
+  {
+   "fieldname": "vendor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Caterer",
+   "options": "WD Vendor"
+  },
+  {
+   "fieldname": "who_eats",
+   "fieldtype": "Data",
+   "label": "Who Eats"
+  },
+  {
+   "default": "0",
+   "fieldname": "guaranteed_plates",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Guaranteed Plates"
+  },
+  {
+   "default": "0",
+   "fieldname": "jain_plates",
+   "fieldtype": "Int",
+   "label": "Jain Plates"
+  },
+  {
+   "default": "0",
+   "fieldname": "staff_coupons",
+   "fieldtype": "Int",
+   "label": "Staff Coupons"
+  },
+  {
+   "default": "0",
+   "fieldname": "kids_plates",
+   "fieldtype": "Int",
+   "label": "Kids Plates"
+  },
+  {
+   "fieldname": "served_plates",
+   "fieldtype": "Int",
+   "label": "Served Plates"
+  },
+  {
+   "default": "0",
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate"
+  },
+  {
+   "fieldname": "signed_by_caterer",
+   "fieldtype": "Check",
+   "label": "Signed By Caterer"
+  },
+  {
+   "fieldname": "signed_by_liaison",
+   "fieldtype": "Check",
+   "label": "Signed By Liaison"
+  },
+  {
+   "fieldname": "signed_by_commander",
+   "fieldtype": "Check",
+   "label": "Signed By Venue Commander"
+  },
+  {
+   "fieldname": "slip_photo",
+   "fieldtype": "Attach Image",
+   "label": "Slip Photo"
+  },
+  {
+   "default": "Planned",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Planned\nLocked\nClosed"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Meal Session",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Wedding Planner",
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

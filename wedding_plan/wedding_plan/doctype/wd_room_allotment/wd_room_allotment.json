@@ -1,0 +1,112 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-08-19 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "room",
+  "guest",
+  "check_in",
+  "check_out",
+  "keys_handed",
+  "hamper_placed",
+  "luggage_delivered"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "room",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Room",
+   "options": "WD Room",
+   "reqd": 1
+  },
+  {
+   "fieldname": "guest",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Guest",
+   "options": "WD Guest",
+   "reqd": 1
+  },
+  {
+   "fieldname": "check_in",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Check In"
+  },
+  {
+   "fieldname": "check_out",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Check Out"
+  },
+  {
+   "fieldname": "keys_handed",
+   "fieldtype": "Check",
+   "label": "Keys Handed"
+  },
+  {
+   "fieldname": "hamper_placed",
+   "fieldtype": "Check",
+   "label": "Hamper Placed"
+  },
+  {
+   "fieldname": "luggage_delivered",
+   "fieldtype": "Check",
+   "label": "Luggage Delivered"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Room Allotment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
