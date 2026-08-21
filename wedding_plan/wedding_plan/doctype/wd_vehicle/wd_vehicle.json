@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -13,7 +13,12 @@
   "capacity",
   "driver_name",
   "driver_phone",
-  "vendor"
+  "vendor",
+  "url_location_tracker",
+  "attach_anfa",
+  "attach_wzwl",
+  "attach_ppky",
+  "attach_ngpj"
  ],
  "fields": [
   {
@@ -58,15 +63,37 @@
    "fieldtype": "Link",
    "label": "Vendor",
    "options": "WD Vendor"
+  },
+  {
+   "fieldname": "url_location_tracker",
+   "fieldtype": "Data",
+   "label": "Url Location tracker"
+  },
+  {
+   "fieldname": "attach_anfa",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_wzwl",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_ppky",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_ngpj",
+   "fieldtype": "Attach"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-19 20:42:46.913927",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Vehicle",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

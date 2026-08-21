@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -14,7 +14,16 @@
   "contact_name",
   "contact_phone",
   "advance_amount",
-  "vendor_type"
+  "vendor_type",
+  "column_break_zuwr",
+  "section_break_uzen",
+  "attach_mlye",
+  "attach_yghl",
+  "attach_zwww",
+  "attach_zhbt",
+  "attach_emya",
+  "attach_ebir",
+  "attach_qynx"
  ],
  "fields": [
   {
@@ -63,15 +72,52 @@
    "fieldname": "vendor_type",
    "fieldtype": "Data",
    "label": "Vendor Type"
+  },
+  {
+   "fieldname": "column_break_zuwr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_uzen",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attach_mlye",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_yghl",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_zwww",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_zhbt",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_emya",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_ebir",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_qynx",
+   "fieldtype": "Attach"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-19 18:54:08.526043",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Vendor",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -32,7 +32,7 @@
    "fieldname": "leg_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Leg No",
+   "label": "Trip No",
    "reqd": 1
   },
   {
@@ -88,10 +88,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-19 20:38:45.110630",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Convoy Leg",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

@@ -2,8 +2,10 @@
 Multi-sheet Excel import — the mechanism that makes "define everything as a
 new marriage" real (see erpnext-whatsapp-plan.md section B6, which this
 follows: master data first, batches traceable, reconcile before you rely on
-the numbers). One workbook, one sheet per doctype, sheets processed in
-dependency order so a typo in a later sheet never corrupts an earlier one.
+the numbers). One workbook, one sheet per doctype, sheets processed in a
+sensible default order — though a link whose target isn't in the DB yet will
+pull that target's own sheet in out of order (see `links` below), so exact
+sheet ordering in the workbook isn't load-bearing.
 
 Each SHEETS entry describes:
   doctype       - the DocType to upsert into
@@ -15,10 +17,16 @@ Each SHEETS entry describes:
   links         - {fieldname: (link_doctype, lookup_fieldname)} — the sheet
                    holds a human-readable value (e.g. a venue name); this
                    resolves it to the linked doc's name *within this
-                   wedding*, and is a row-level error if not found (matching
-                   B6's "imports fail on missing links" — deliberately not
-                   auto-created, so a typo in a venue name is caught here
-                   instead of silently spawning a duplicate venue).
+                   wedding*. If it's not in the DB yet, the linked doctype's
+                   own sheet (if present in this workbook) is searched for a
+                   matching row, and that row is imported first — out of
+                   SHEETS order, recursively, so a chain of unresolved links
+                   still resolves. Only a value that appears nowhere — not
+                   in the DB and not as a row in its own sheet — is a
+                   row-level error (matching B6's "imports fail on missing
+                   links"): nothing is ever fabricated, so a typo in a venue
+                   name still can't silently spawn a duplicate venue, it can
+                   only be satisfied by data the user actually provided.
   multiselects  - {fieldname: (link_doctype, lookup_fieldname)} for
                    comma-separated text columns that map onto a Table
                    MultiSelect field (e.g. Guests' "Invited To" column).
@@ -85,22 +93,89 @@ def build_template_workbook() -> Workbook:
     return wb
 
 
-def _resolve_link(wedding, doctype, lookup_field, value, cache):
+class _ImportContext:
+    """Per-run state: the workbook, a doctype->sheet index for pull-ins,
+    a cache of each sheet's non-blank rows (shared between the main loop
+    and out-of-order pulls so a sheet is only read off disk once), the
+    resolved-link cache, and bookkeeping to make pulled-in rows idempotent
+    and cycles detectable."""
+
+    def __init__(self, wedding, wb):
+        self.wedding = wedding
+        self.wb = wb
+        self.sheet_cfg_by_doctype = {s["doctype"]: s for s in SHEETS}
+        self._sheet_rows = {}
+        self.link_cache = {}
+        self.imported_keys = set()  # (doctype, natural_key_tuple) already saved this run
+        self._pulling = set()  # (doctype, normalized lookup value) — cycle guard
+
+    def rows_for_sheet(self, sheet_name):
+        if sheet_name not in self._sheet_rows:
+            raw_rows = list(self.wb[sheet_name].iter_rows(values_only=True))
+            parsed = []
+            if raw_rows:
+                headers = [str(h).strip() for h in raw_rows[0] if h is not None]
+                for row_idx, raw_row in enumerate(raw_rows[1:], start=2):
+                    row = dict(zip(headers, raw_row))
+                    if any(v not in (None, "") for v in row.values()):
+                        parsed.append((row_idx, row))
+            self._sheet_rows[sheet_name] = parsed
+        return self._sheet_rows[sheet_name]
+
+
+def _resolve_link(ctx, doctype, lookup_field, value):
     if not value:
         return None, None
     key = (doctype, str(value).strip().lower())
-    if key in cache:
-        return cache[key], None
-    name = frappe.db.get_value(doctype, {"wedding": wedding, lookup_field: value}, "name")
+    if key in ctx.link_cache:
+        return ctx.link_cache[key], None
+
+    name = frappe.db.get_value(doctype, {"wedding": ctx.wedding, lookup_field: value}, "name")
+    if not name:
+        name = _pull_in_linked_row(ctx, doctype, lookup_field, key)
     if not name:
         return None, f"{doctype} '{value}' not found — import {doctype} sheet first"
-    cache[key] = name
+
+    ctx.link_cache[key] = name
     return name, None
+
+
+def _pull_in_linked_row(ctx, doctype, lookup_field, key):
+    """Look for a row matching `key` in `doctype`'s own sheet elsewhere in
+    the workbook and import it now, so a link isn't limited to targets that
+    happen to appear earlier in SHEETS order. Returns None (never raises)
+    when there's nothing to pull in, so the caller falls through to the
+    normal not-found error; raises only if the pulled-in row itself fails
+    to import (e.g. one of *its* links is genuinely missing)."""
+    source_sheet = ctx.sheet_cfg_by_doctype.get(doctype)
+    if not source_sheet or source_sheet["sheet_name"] not in ctx.wb.sheetnames:
+        return None
+    if key in ctx._pulling:
+        return None  # circular reference between sheets — fall through to not-found
+
+    match = None
+    for _, candidate in ctx.rows_for_sheet(source_sheet["sheet_name"]):
+        cell = candidate.get(lookup_field)
+        if cell not in (None, "") and str(cell).strip().lower() == key[1]:
+            match = candidate
+            break
+    if match is None:
+        return None
+
+    ctx._pulling.add(key)
+    try:
+        return _import_row(ctx, source_sheet, match)
+    except Exception as e:
+        raise ValueError(
+            f"while auto-importing {doctype} '{key[1]}' from the {source_sheet['sheet_name']} sheet: {e}"
+        ) from e
+    finally:
+        ctx._pulling.discard(key)
 
 
 def run_import(wedding: str, file_path: str, import_job: str = None):
     wb = load_workbook(file_path, data_only=True)
-    link_cache = {}
+    ctx = _ImportContext(wedding, wb)
     totals = {"rows_total": 0, "rows_succeeded": 0, "rows_failed": 0}
     errors = []
     sheets_processed = []
@@ -109,20 +184,19 @@ def run_import(wedding: str, file_path: str, import_job: str = None):
         sheet_name = sheet_cfg["sheet_name"]
         if sheet_name not in wb.sheetnames:
             continue
-        ws = wb[sheet_name]
-        rows = list(ws.iter_rows(values_only=True))
+        rows = ctx.rows_for_sheet(sheet_name)
         if not rows:
             continue
-        headers = [str(h).strip() for h in rows[0] if h is not None]
         sheet_result = {"sheet": sheet_name, "doctype": sheet_cfg["doctype"], "succeeded": 0, "failed": 0}
 
-        for row_idx, raw_row in enumerate(rows[1:], start=2):
-            row = dict(zip(headers, raw_row))
-            if not any(v not in (None, "") for v in row.values()):
-                continue
+        for row_idx, row in rows:
+            natural_key = tuple(row.get(f) for f in sheet_cfg["natural_key"])
+            if (sheet_cfg["doctype"], natural_key) in ctx.imported_keys:
+                continue  # a later sheet already pulled this row in out of order
+
             totals["rows_total"] += 1
             try:
-                _import_row(wedding, sheet_cfg, row, link_cache)
+                _import_row(ctx, sheet_cfg, row)
                 totals["rows_succeeded"] += 1
                 sheet_result["succeeded"] += 1
             except Exception as e:  # noqa: BLE001 — one bad row must not abort the batch
@@ -145,12 +219,12 @@ def run_import(wedding: str, file_path: str, import_job: str = None):
     return {**totals, "sheets_processed": sheets_processed, "errors": errors}
 
 
-def _import_row(wedding, sheet_cfg, row, link_cache):
+def _import_row(ctx, sheet_cfg, row):
     doctype = sheet_cfg["doctype"]
     links = sheet_cfg.get("links", {})
     multiselects = sheet_cfg.get("multiselects", {})
 
-    data = {"wedding": wedding}
+    data = {"wedding": ctx.wedding}
     for field, value in row.items():
         if field in ("wedding", None) or field in links or field in multiselects or value in (None, ""):
             continue
@@ -158,10 +232,11 @@ def _import_row(wedding, sheet_cfg, row, link_cache):
 
     for field, (link_doctype, lookup_field) in links.items():
         raw_value = row.get(field)
-        resolved, err = _resolve_link(wedding, link_doctype, lookup_field, raw_value, link_cache)
+        resolved, err = _resolve_link(ctx, link_doctype, lookup_field, raw_value)
         if err:
             raise ValueError(err)
-        data[field] = resolved
+        if resolved is not None:
+            data[field] = resolved
 
     multiselect_rows = {}
     for field, (link_doctype, lookup_field) in multiselects.items():
@@ -173,14 +248,14 @@ def _import_row(wedding, sheet_cfg, row, link_cache):
             part = part.strip()
             if not part:
                 continue
-            resolved, err = _resolve_link(wedding, link_doctype, lookup_field, part, link_cache)
+            resolved, err = _resolve_link(ctx, link_doctype, lookup_field, part)
             if err:
                 raise ValueError(err)
             names.append(resolved)
         multiselect_rows[field] = names
 
     natural_key = sheet_cfg["natural_key"]
-    filters = {"wedding": wedding}
+    filters = {"wedding": ctx.wedding}
     for key_field in natural_key:
         filters[key_field] = data.get(key_field)
 
@@ -199,6 +274,8 @@ def _import_row(wedding, sheet_cfg, row, link_cache):
             doc.append(field, {link_fieldname_in_child: name})
 
     doc.save(ignore_permissions=True)
+    ctx.imported_keys.add((doctype, tuple(row.get(f) for f in natural_key)))
+    return doc.name
 
 
 def _multiselect_child_link_field(doctype, fieldname):

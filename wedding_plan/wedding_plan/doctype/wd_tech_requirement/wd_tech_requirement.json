@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -10,9 +10,13 @@
   "wedding",
   "function",
   "sound",
+  "attach_hgkh",
   "led_visual",
+  "attach_stvm",
   "pyro_sfx",
-  "light"
+  "attach_zioe",
+  "light",
+  "attach_kciv"
  ],
  "fields": [
   {
@@ -50,15 +54,32 @@
    "fieldname": "light",
    "fieldtype": "Small Text",
    "label": "Light"
+  },
+  {
+   "fieldname": "attach_hgkh",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_zioe",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_stvm",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_kciv",
+   "fieldtype": "Attach"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-19 20:56:26.205461",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Tech Requirement",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

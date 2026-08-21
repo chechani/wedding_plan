@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -10,7 +10,10 @@
   "wedding",
   "function",
   "style_needed",
-  "brief"
+  "brief",
+  "attach_mchl",
+  "attach_pqig",
+  "attach_snvl"
  ],
  "fields": [
   {
@@ -38,15 +41,28 @@
    "fieldname": "brief",
    "fieldtype": "Small Text",
    "label": "Brief"
+  },
+  {
+   "fieldname": "attach_mchl",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_pqig",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "attach_snvl",
+   "fieldtype": "Attach"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-19 20:42:28.529719",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Anchor Brief",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

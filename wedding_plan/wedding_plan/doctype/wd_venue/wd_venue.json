@@ -1,8 +1,9 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
- "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "allow_rename": 1,
+ "autoname": "field:venue_name",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -11,7 +12,8 @@
   "venue_name",
   "location",
   "rooms_total",
-  "notes"
+  "notes",
+  "sub_venue"
  ],
  "fields": [
   {
@@ -28,7 +30,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Venue Name",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "location",
@@ -44,15 +47,22 @@
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
+  },
+  {
+   "fieldname": "sub_venue",
+   "fieldtype": "Table",
+   "label": "Sub Venue",
+   "options": "WD Sub Venue"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-20 09:45:52.120630",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Venue",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
