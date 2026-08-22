@@ -8,12 +8,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "wedding",
   "venue_name",
   "location",
   "rooms_total",
   "notes",
-  "sub_venue"
+  "map",
+  "wedding"
  ],
  "fields": [
   {
@@ -35,7 +35,7 @@
   },
   {
    "fieldname": "location",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Location"
   },
   {
@@ -49,16 +49,15 @@
    "label": "Notes"
   },
   {
-   "fieldname": "sub_venue",
-   "fieldtype": "Table",
-   "label": "Sub Venue",
-   "options": "WD Sub Venue"
+   "fieldname": "map",
+   "fieldtype": "Geolocation",
+   "label": "Map"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-20 09:45:52.120630",
+ "modified": "2026-08-22 09:20:50.589856",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Venue",

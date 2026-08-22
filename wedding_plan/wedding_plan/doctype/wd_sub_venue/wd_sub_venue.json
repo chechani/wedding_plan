@@ -10,7 +10,8 @@
   "venue",
   "sub_venue",
   "capacity",
-  "notes"
+  "notes",
+  "wedding"
  ],
  "fields": [
   {
@@ -33,13 +34,19 @@
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
+  },
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-08-19 21:13:13.226628",
+ "modified": "2026-08-22 07:57:13.088419",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Sub Venue",

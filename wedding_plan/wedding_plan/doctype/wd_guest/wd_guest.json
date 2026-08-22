@@ -2,12 +2,11 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "autoname": "hash",
- "creation": "2026-08-19 12:00:00.000000",
+ "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "wedding",
   "household_name",
   "primary_phone",
   "alternate_phone",
@@ -36,7 +35,8 @@
   "special_needs",
   "hamper_tier",
   "vip_protocol",
-  "functions_invited"
+  "functions_invited",
+  "wedding"
  ],
  "fields": [
   {
@@ -73,9 +73,10 @@
   },
   {
    "fieldname": "city",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "City"
+   "label": "City",
+   "options": "WD City"
   },
   {
    "default": "Local",
@@ -128,8 +129,9 @@
   },
   {
    "fieldname": "patrika_delivered_by",
-   "fieldtype": "Data",
-   "label": "Patrika Delivered By"
+   "fieldtype": "Link",
+   "label": "Patrika Delivered By",
+   "options": "WD Patrika Delivery Mode"
   },
   {
    "fieldname": "patrika_date",
@@ -137,11 +139,13 @@
    "label": "Patrika Date"
   },
   {
+   "default": "0",
    "fieldname": "patrika_acknowledged",
    "fieldtype": "Check",
    "label": "Patrika Acknowledged"
   },
   {
+   "default": "0",
    "fieldname": "stay_required",
    "fieldtype": "Check",
    "in_list_view": 1,
@@ -175,6 +179,7 @@
    "label": "Arrival Datetime"
   },
   {
+   "default": "0",
    "fieldname": "pickup_required",
    "fieldtype": "Check",
    "label": "Pickup Required"
@@ -209,6 +214,7 @@
    "options": "VIP\nPremium\nStandard\nKids\nNone"
   },
   {
+   "default": "0",
    "fieldname": "vip_protocol",
    "fieldtype": "Check",
    "label": "VIP Protocol"
@@ -223,10 +229,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 12:00:00.000000",
+ "modified": "2026-08-22 09:37:26.285068",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Guest",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

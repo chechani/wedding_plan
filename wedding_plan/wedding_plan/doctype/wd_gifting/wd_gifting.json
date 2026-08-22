@@ -8,7 +8,8 @@
  "field_order": [
   "guest",
   "household",
-  "gift_item"
+  "gift_item",
+  "wedding"
  ],
  "fields": [
   {
@@ -27,12 +28,18 @@
    "fieldtype": "Link",
    "label": "Gift item",
    "options": "WD Gifting Type"
+  },
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-20 11:29:25.973129",
+ "modified": "2026-08-22 07:57:51.230521",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Gifting",
