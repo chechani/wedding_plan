@@ -1,0 +1,140 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "field:channel_code",
+ "creation": "2026-08-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "channel_code",
+  "channel_name",
+  "short_label",
+  "sort_order",
+  "enabled",
+  "column_break_1",
+  "acknowledgement_required",
+  "delivery_tracking_required",
+  "description",
+  "typical_owner",
+  "redo_policy",
+  "acknowledgement_expectation"
+ ],
+ "fields": [
+  {
+   "description": "Stable machine key, e.g. main, ganesh, manvaar. Matches the frontend's channel key.",
+   "fieldname": "channel_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Channel Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "channel_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Channel Name",
+   "reqd": 1
+  },
+  {
+   "description": "Short label used for matrix column headers.",
+   "fieldname": "short_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Short Label",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sort_order",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Sort Order"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "If set, a task on this channel only counts as complete (for Fully Invited) once Acknowledged. If not set, Delivered is enough.",
+   "fieldname": "acknowledgement_required",
+   "fieldtype": "Check",
+   "label": "Acknowledgement Required"
+  },
+  {
+   "default": "0",
+   "description": "If set, this channel typically has a physical/trackable delivery (courier reference, doorstep visit) worth recording.",
+   "fieldname": "delivery_tracking_required",
+   "fieldtype": "Check",
+   "label": "Delivery Tracking Required"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "typical_owner",
+   "fieldtype": "Data",
+   "label": "Typically Handled By"
+  },
+  {
+   "fieldname": "redo_policy",
+   "fieldtype": "Data",
+   "label": "Redo Policy"
+  },
+  {
+   "fieldname": "acknowledgement_expectation",
+   "fieldtype": "Small Text",
+   "label": "Acknowledgement Expectation"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Invitation Channel",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "sort_order",
+ "sort_order": "ASC",
+ "states": [],
+ "title_field": "channel_name"
+}

@@ -1,0 +1,238 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-08-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "title",
+  "category",
+  "status",
+  "priority",
+  "column_break_1",
+  "function",
+  "venue",
+  "run_sheet_item",
+  "due_date",
+  "completed_date",
+  "section_break_assignment",
+  "assigned_to_type",
+  "assigned_team",
+  "assigned_vendor",
+  "assigned_person",
+  "column_break_2",
+  "contact_name",
+  "contact_phone",
+  "contact_secondary_name",
+  "contact_secondary_phone",
+  "section_break_details",
+  "description",
+  "blocked_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Category",
+   "options": "Booking & Contract\nAdvance & Payment\nLogistics & Setup\nRitual & Puja Arrangements\nAttire & Grooming\nGuest & Vendor Communication\nDay-of Coordination\nFinance & Settlement\nDocumentation\nCompliance & Permits\nContingency & Backup\nTravel & Accommodation\nDécor & Styling\nOther",
+   "reqd": 1
+  },
+  {
+   "default": "Not Started",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Not Started\nIn Progress\nBlocked\nDone\nCancelled",
+   "reqd": 1
+  },
+  {
+   "default": "Medium",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Priority",
+   "options": "Low\nMedium\nHigh\nUrgent"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "function",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Function",
+   "options": "WD Function"
+  },
+  {
+   "fetch_from": "function.venue",
+   "fetch_if_empty": 1,
+   "fieldname": "venue",
+   "fieldtype": "Link",
+   "label": "Venue",
+   "options": "WD Venue"
+  },
+  {
+   "description": "Optional: the day-of schedule slot this task is preparing for.",
+   "fieldname": "run_sheet_item",
+   "fieldtype": "Link",
+   "label": "Run Sheet Item",
+   "options": "WD Run Sheet Item"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "completed_date",
+   "fieldtype": "Date",
+   "label": "Completed Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_assignment",
+   "fieldtype": "Section Break",
+   "label": "Assignment"
+  },
+  {
+   "fieldname": "assigned_to_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Assigned To Type",
+   "options": "\nTeam\nVendor\nPerson"
+  },
+  {
+   "depends_on": "eval:doc.assigned_to_type==\"Team\"",
+   "fieldname": "assigned_team",
+   "fieldtype": "Link",
+   "label": "Assigned Team",
+   "options": "WD Team"
+  },
+  {
+   "depends_on": "eval:doc.assigned_to_type==\"Vendor\"",
+   "fieldname": "assigned_vendor",
+   "fieldtype": "Link",
+   "label": "Assigned Vendor",
+   "options": "WD Vendor"
+  },
+  {
+   "depends_on": "eval:doc.assigned_to_type==\"Person\"",
+   "fieldname": "assigned_person",
+   "fieldtype": "Link",
+   "label": "Assigned Person",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_phone",
+   "fieldtype": "Data",
+   "label": "Contact Phone",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_secondary_name",
+   "fieldtype": "Data",
+   "label": "Secondary Contact Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_secondary_phone",
+   "fieldtype": "Data",
+   "label": "Secondary Contact Phone",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_details",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Blocked\"",
+   "fieldname": "blocked_reason",
+   "fieldtype": "Small Text",
+   "label": "Blocked Reason"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

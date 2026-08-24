@@ -10,6 +10,7 @@
   "wedding",
   "room",
   "guest",
+  "guest_occupants",
   "check_in",
   "check_out",
   "keys_handed",
@@ -41,6 +42,13 @@
    "label": "Guest",
    "options": "WD Guest",
    "reqd": 1
+  },
+  {
+   "description": "Which specific household members are in this room — a household with rooms_needed > 1 splits across multiple allotment rows.",
+   "fieldname": "guest_occupants",
+   "fieldtype": "Table",
+   "label": "Occupants",
+   "options": "WD Room Allotment Occupant"
   },
   {
    "fieldname": "check_in",

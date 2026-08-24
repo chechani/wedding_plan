@@ -1,0 +1,263 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-08-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "guest",
+  "full_name",
+  "relation_to_household",
+  "column_break_1",
+  "age_group",
+  "gender",
+  "section_break_contact",
+  "mobile",
+  "whatsapp_number",
+  "column_break_2",
+  "email",
+  "dietary",
+  "special_needs",
+  "section_break_travel",
+  "departs_with_household",
+  "arrival_mode",
+  "column_break_3",
+  "arrival_detail",
+  "arrival_datetime",
+  "section_break_documents",
+  "photo",
+  "aadhar_document",
+  "section_break_portal",
+  "portal_enabled",
+  "portal_access_level",
+  "column_break_4",
+  "user",
+  "portal_invited_on",
+  "portal_last_login"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "guest",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Household",
+   "options": "WD Guest",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "relation_to_household",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Relation",
+   "options": "Self\nSpouse\nChild\nParent\nSibling\nOther Relative\nGuest"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Adult",
+   "fieldname": "age_group",
+   "fieldtype": "Select",
+   "label": "Age Group",
+   "options": "Adult\nTeen\nChild\nInfant"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "\nMale\nFemale\nOther"
+  },
+  {
+   "fieldname": "section_break_contact",
+   "fieldtype": "Section Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile"
+  },
+  {
+   "fieldname": "whatsapp_number",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "dietary",
+   "fieldtype": "Select",
+   "label": "Dietary",
+   "options": "\nStandard\nJain\nVegan\nDiabetic\nOther"
+  },
+  {
+   "fieldname": "special_needs",
+   "fieldtype": "Small Text",
+   "label": "Special Needs"
+  },
+  {
+   "fieldname": "section_break_travel",
+   "fieldtype": "Section Break",
+   "label": "Travel"
+  },
+  {
+   "default": "1",
+   "description": "When checked, this member follows the household's shared arrival/departure plan and the fields below are ignored.",
+   "fieldname": "departs_with_household",
+   "fieldtype": "Check",
+   "label": "Travels With Household"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "arrival_mode",
+   "fieldtype": "Select",
+   "label": "Arrival Mode",
+   "options": "\nAir\nTrain\nBus\nRoad\nLocal"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "arrival_detail",
+   "fieldtype": "Data",
+   "label": "Arrival Detail"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "arrival_datetime",
+   "fieldtype": "Datetime",
+   "label": "Arrival Datetime"
+  },
+  {
+   "fieldname": "section_break_documents",
+   "fieldtype": "Section Break",
+   "label": "Documents"
+  },
+  {
+   "fieldname": "photo",
+   "fieldtype": "Attach Image",
+   "label": "Photo"
+  },
+  {
+   "description": "Image/scan of the physical Aadhar card. Deliberately not a text number field — see field-level note in the app's implementation notes.",
+   "fieldname": "aadhar_document",
+   "fieldtype": "Attach",
+   "label": "Aadhar Document"
+  },
+  {
+   "fieldname": "section_break_portal",
+   "fieldtype": "Section Break",
+   "label": "Portal Access"
+  },
+  {
+   "default": "0",
+   "description": "Explicit gate: nothing is provisioned for this member until this is checked.",
+   "fieldname": "portal_enabled",
+   "fieldtype": "Check",
+   "label": "Portal Enabled"
+  },
+  {
+   "default": "Self Profile Only",
+   "fieldname": "portal_access_level",
+   "fieldtype": "Select",
+   "label": "Portal Access Level",
+   "options": "None\nSelf Profile Only\nSelf Profile + RSVP"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Portal User",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "portal_invited_on",
+   "fieldtype": "Datetime",
+   "label": "Portal Invited On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "portal_last_login",
+   "fieldtype": "Datetime",
+   "label": "Portal Last Login",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Guest Member",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

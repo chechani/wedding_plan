@@ -1,53 +1,32 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
- "allow_rename": 1,
- "creation": "2026-08-20 11:27:47.493262",
+ "autoname": "hash",
+ "creation": "2026-08-24 00:00:00.000000",
  "doctype": "DocType",
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "guest",
-  "household",
-  "gift_item",
-  "wedding"
+  "guest_member"
  ],
  "fields": [
   {
-   "fieldname": "guest",
+   "fieldname": "guest_member",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Guest",
-   "options": "WD Guest",
-   "reqd": 1
-  },
-  {
-   "fieldname": "household",
-   "fieldtype": "Data",
-   "label": "Household"
-  },
-  {
-   "fieldname": "gift_item",
-   "fieldtype": "Link",
-   "label": "Gift item",
-   "options": "WD Gifting Type"
-  },
-  {
-   "fieldname": "wedding",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Wedding",
-   "options": "Wedding",
+   "label": "Guest Member",
+   "options": "WD Guest Member",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
+ "istable": 1,
  "links": [],
- "modified": "2026-08-22 07:57:51.230521",
+ "modified": "2026-08-24 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
- "name": "WD Gifting",
+ "name": "WD Pickup Guest",
  "owner": "Administrator",
  "permissions": [
   {

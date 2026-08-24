@@ -40,6 +40,12 @@ WEDDING_SCOPED_DOCTYPES = [
     "WD Gap Note",
     "WD Import Job",
     "WD WhatsApp Message Log",
+    "WD Invitation Task",
+    "WD Invitation Log",
+    "WD Task",
+    "WD Guest Member",
+    "WD Guest Member Function",
+    "WD Gifting",
 ]
 
 

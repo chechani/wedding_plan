@@ -9,6 +9,7 @@
  "field_order": [
   "wedding",
   "guest",
+  "guest_members",
   "mode",
   "detail",
   "eta",
@@ -33,6 +34,13 @@
    "in_list_view": 1,
    "label": "Guest",
    "options": "WD Guest"
+  },
+  {
+   "description": "Which specific household members this pickup covers, when it's not the whole household travelling together.",
+   "fieldname": "guest_members",
+   "fieldtype": "Table MultiSelect",
+   "label": "Guest Members",
+   "options": "WD Pickup Guest"
   },
   {
    "fieldname": "mode",

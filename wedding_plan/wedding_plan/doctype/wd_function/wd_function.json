@@ -10,6 +10,8 @@
   "wedding",
   "function_name",
   "date",
+  "start_time",
+  "end_time",
   "venue",
   "notes"
  ],
@@ -35,6 +37,16 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Date"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Start Time"
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "End Time"
   },
   {
    "fieldname": "venue",

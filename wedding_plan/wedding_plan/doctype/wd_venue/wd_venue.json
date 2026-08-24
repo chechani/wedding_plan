@@ -10,7 +10,10 @@
  "field_order": [
   "venue_name",
   "location",
+  "image",
   "rooms_total",
+  "book_from",
+  "book_upto",
   "notes",
   "map",
   "wedding"
@@ -39,9 +42,24 @@
    "label": "Location"
   },
   {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
    "fieldname": "rooms_total",
    "fieldtype": "Int",
    "label": "Rooms Total"
+  },
+  {
+   "fieldname": "book_from",
+   "fieldtype": "Datetime",
+   "label": "Book From"
+  },
+  {
+   "fieldname": "book_upto",
+   "fieldtype": "Datetime",
+   "label": "Book Upto"
   },
   {
    "fieldname": "notes",

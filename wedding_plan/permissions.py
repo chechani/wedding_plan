@@ -32,6 +32,10 @@ ROLE_WRITE_REQUIREMENTS = {
     "WD Vehicle": {"Convoy Controller"},
     "WD Room Allotment": {"Accommodation"},
     "WD Vendor": {"Finance"},
+    "WD Invitation Task": {"Guest Relations"},
+    "WD Invitation Log": {"Guest Relations"},
+    "WD Guest Member": {"Accommodation", "Guest Relations"},
+    "WD Guest Member Function": {"Guest Relations"},
 }
 
 ALWAYS_CAN_WRITE = {"Owner", "Event Director"}

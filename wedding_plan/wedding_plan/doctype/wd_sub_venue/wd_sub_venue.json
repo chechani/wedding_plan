@@ -9,6 +9,7 @@
  "field_order": [
   "venue",
   "sub_venue",
+  "image",
   "capacity",
   "notes",
   "wedding"
@@ -24,6 +25,11 @@
    "fieldname": "sub_venue",
    "fieldtype": "Data",
    "label": "Sub Venue"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   },
   {
    "fieldname": "capacity",

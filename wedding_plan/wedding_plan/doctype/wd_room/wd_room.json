@@ -11,7 +11,11 @@
   "venue",
   "room_no",
   "room_type",
-  "block"
+  "block",
+  "accomodate",
+  "extra_beds",
+  "book_from",
+  "book_upto"
  ],
  "fields": [
   {
@@ -47,6 +51,26 @@
    "fieldname": "block",
    "fieldtype": "Data",
    "label": "Block"
+  },
+  {
+   "fieldname": "accomodate",
+   "fieldtype": "Int",
+   "label": "Accommodate"
+  },
+  {
+   "fieldname": "extra_beds",
+   "fieldtype": "Int",
+   "label": "Extra Beds"
+  },
+  {
+   "fieldname": "book_from",
+   "fieldtype": "Datetime",
+   "label": "Book From"
+  },
+  {
+   "fieldname": "book_upto",
+   "fieldtype": "Datetime",
+   "label": "Book Upto"
   }
  ],
  "grid_page_length": 50,
