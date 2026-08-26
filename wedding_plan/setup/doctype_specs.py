@@ -43,6 +43,7 @@ WEDDING_SCOPED_DOCTYPES = [
     "WD WhatsApp Message Log",
     "WD Invitation Task",
     "WD Invitation Log",
+    "WD Delivery Run",
     "WD Task",
     "WD Guest Member",
     "WD Guest Member Function",

@@ -16,9 +16,19 @@ Re-exports so the frontend's REST calls stay short:
   /api/method/wedding_plan.api.update_invitation_task
   /api/method/wedding_plan.api.bulk_update_invitation_tasks
   /api/method/wedding_plan.api.ensure_invitation_tasks
+  /api/method/wedding_plan.api.get_pending_acknowledgements
+  /api/method/wedding_plan.api.confirm_acknowledgement
+  /api/method/wedding_plan.api.get_invitation_history
+  /api/method/wedding_plan.api.add_invitation_log
+  /api/method/wedding_plan.api.record_doorstep_delivery
+  /api/method/wedding_plan.api.list_delivery_runs
+  /api/method/wedding_plan.api.create_delivery_run
+  /api/method/wedding_plan.api.toggle_delivery_run_item
   /api/method/wedding_plan.api.task_board
   /api/method/wedding_plan.api.task_dashboard_stats
   /api/method/wedding_plan.api.bulk_update_task_status
+  /api/method/wedding_plan.api.checklist_board
+  /api/method/wedding_plan.api.function_readiness_stats
   /api/method/wedding_plan.api.function_headcount_stats
   /api/method/wedding_plan.api.provision_guest_portal_user
   /api/method/wedding_plan.api.guest_login
@@ -44,12 +54,21 @@ from wedding_plan.api.invitations import (  # noqa: F401
 	update_invitation_task,
 	bulk_update_invitation_tasks,
 	ensure_invitation_tasks,
+	get_pending_acknowledgements,
+	confirm_acknowledgement,
+	get_invitation_history,
+	add_invitation_log,
+	record_doorstep_delivery,
+	list_delivery_runs,
+	create_delivery_run,
+	toggle_delivery_run_item,
 )
 from wedding_plan.api.tasks import (  # noqa: F401
 	task_board,
 	task_dashboard_stats,
 	bulk_update_task_status,
 )
+from wedding_plan.api.checklist import checklist_board, function_readiness_stats  # noqa: F401
 from wedding_plan.api.guests import function_headcount_stats  # noqa: F401
 from wedding_plan.api.guest_portal import (  # noqa: F401
 	provision_guest_portal_user,

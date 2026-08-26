@@ -18,6 +18,7 @@ Design notes:
 """
 import frappe
 from frappe import _
+from frappe.utils import date_diff, getdate, today
 
 from wedding_plan.invitation_logic import is_task_complete
 
@@ -319,3 +320,287 @@ def ensure_invitation_tasks(wedding, household=None):
 			created += 1
 
 	return {"created": created}
+
+
+def _log_attempt(wedding, household, channel, invitation_task, result, details, logged_by=None):
+	"""WD Invitation Log is the append-only attempt history behind a task's
+	current status — every status-changing action below writes one of these
+	alongside updating the task, so 'what happened and when' is never lost
+	to a later overwrite (matches this module's own 'nothing overwrites
+	anything' design note, previously only honoured by the mock frontend)."""
+	attempt_number = frappe.db.count("WD Invitation Log", {"wedding": wedding, "household": household, "channel": channel}) + 1
+	frappe.get_doc(
+		{
+			"doctype": "WD Invitation Log",
+			"wedding": wedding,
+			"household": household,
+			"channel": channel,
+			"invitation_task": invitation_task,
+			"attempt_number": attempt_number,
+			"entry_date": today(),
+			"result": result,
+			"logged_by": logged_by or frappe.session.user,
+			"details": details,
+		}
+	).insert()
+
+
+@frappe.whitelist()
+def get_pending_acknowledgements(wedding):
+	"""Every WD Invitation Task sitting at Delivered — the Acknowledgement
+	Inbox's actual data source, replacing the frontend's hardcoded sample
+	dates/runners."""
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	tasks = frappe.get_all(
+		"WD Invitation Task",
+		filters={"wedding": wedding, "status": "Delivered"},
+		fields=["name", "household", "channel", "delivered_date", "delivery_reference"],
+	)
+	if not tasks:
+		return []
+
+	household_ids = {t.household for t in tasks}
+	households = {
+		h.name: h
+		for h in frappe.get_all(
+			"WD Guest",
+			filters={"name": ["in", list(household_ids)]},
+			fields=["name", "household_name", "owner_in_family", "sub_group"],
+		)
+	}
+	sub_group_ids = {h.sub_group for h in households.values() if h.sub_group}
+	sub_group_labels = {}
+	if sub_group_ids:
+		for row in frappe.get_all("WD Sub Group", filters={"name": ["in", list(sub_group_ids)]}, fields=["name", "sub_group_name"]):
+			sub_group_labels[row.name] = row.sub_group_name
+
+	channel_ids = {t.channel for t in tasks}
+	channel_names = {
+		c.name: c.channel_name
+		for c in frappe.get_all("WD Invitation Channel", filters={"name": ["in", list(channel_ids)]}, fields=["name", "channel_name"])
+	}
+
+	today_date = getdate()
+	out = []
+	for t in tasks:
+		h = households.get(t.household)
+		if not h:
+			continue
+		days_waiting = date_diff(today_date, t.delivered_date) if t.delivered_date else None
+		out.append(
+			{
+				"task": t.name,
+				"household": t.household,
+				"household_name": h.household_name,
+				"sub_group_name": sub_group_labels.get(h.sub_group),
+				"owner": h.owner_in_family,
+				"channel": t.channel,
+				"channel_name": channel_names.get(t.channel, t.channel),
+				"delivered_date": t.delivered_date,
+				"delivered_by": t.delivery_reference,
+				"days_waiting": days_waiting,
+			}
+		)
+	out.sort(key=lambda r: r["days_waiting"] or 0, reverse=True)
+	return out
+
+
+@frappe.whitelist()
+def confirm_acknowledgement(wedding, household, channel, method):
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+	task = update_invitation_task(wedding, household, channel, status="Acknowledged")
+	_log_attempt(wedding, household, channel, task.get("name"), result="Success", details=f"Receipt acknowledged via {method}")
+	return task
+
+
+@frappe.whitelist()
+def get_invitation_history(wedding, household):
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	logs = frappe.get_all(
+		"WD Invitation Log",
+		filters={"wedding": wedding, "household": household},
+		fields=["name", "channel", "entry_date", "result", "logged_by", "details", "creation"],
+		order_by="entry_date desc, creation desc",
+	)
+	channel_ids = {r.channel for r in logs}
+	channel_names = {
+		c.name: c.channel_name
+		for c in frappe.get_all("WD Invitation Channel", filters={"name": ["in", list(channel_ids)]}, fields=["name", "channel_name"])
+	} if channel_ids else {}
+
+	return [{**r, "channel_name": channel_names.get(r.channel, r.channel)} for r in logs]
+
+
+@frappe.whitelist()
+def add_invitation_log(
+	wedding,
+	household,
+	channel,
+	status=None,
+	mode=None,
+	assigned_to=None,
+	planned_date=None,
+	completed_date=None,
+	received_by=None,
+	accompanied_by=None,
+	courier_awb=None,
+	notes=None,
+):
+	"""Invitation history drawer's 'Add Entry' — updates the task's current
+	status/dates and appends one attempt record describing what happened,
+	same split as everywhere else in this module (current state vs. history)."""
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	# `mode` ("In person"/"Courier"/"Via relative"/...) is the drawer's own
+	# free-form vocabulary for *this attempt* — WD Invitation Task.delivery_mode
+	# is a Link to WD Patrika Delivery Mode (a household-level, mostly-unseeded
+	# master list for the main card specifically) and isn't the same concept,
+	# so `mode` stays narrative-only, folded into the log's `details` below
+	# rather than written to that Link field.
+	date_field = {"Delivered": "delivered_date", "Sent": "sent_date", "Planned": "planned_date", "Acknowledged": "acknowledged_date", "Failed": "failed_date"}.get(status)
+	task = update_invitation_task(
+		wedding,
+		household,
+		channel,
+		status=status,
+		delivery_reference=received_by or courier_awb,
+		assigned_to=assigned_to,
+		notes=notes,
+	)
+	if date_field and completed_date:
+		frappe.db.set_value("WD Invitation Task", task.get("name"), date_field, completed_date)
+
+	details = f"{mode or 'Update'} — {status or 'logged'}"
+	if received_by:
+		details += f" (Received by {received_by})"
+	if accompanied_by and accompanied_by != "Nothing":
+		details += f", with {accompanied_by}"
+	if courier_awb:
+		details += f", AWB: {courier_awb}"
+	if notes:
+		details += f". Note: {notes}"
+
+	result = "Success" if status in ("Delivered", "Acknowledged") else "Issue" if status == "Failed" else "Pending"
+	_log_attempt(wedding, household, channel, task.get("name"), result=result, details=details, logged_by=assigned_to)
+
+	return task
+
+
+@frappe.whitelist()
+def record_doorstep_delivery(wedding, household, outcome, received_by=None, note=None):
+	"""Mobile field-capture screen — always the 'main' patrika channel, one
+	tap per doorstep. Status mapping mirrors the frontend's own outcome
+	classification (kept in sync deliberately rather than trusting a raw
+	status string from the client)."""
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	is_success = "✓" in outcome or "family member" in outcome
+	is_wrong_address = "Wrong" in outcome
+	status = "Delivered" if is_success else "Failed" if is_wrong_address else "Sent"
+
+	task = update_invitation_task(
+		wedding,
+		household,
+		"main",
+		status=status,
+		delivery_reference=received_by,
+		failure_reason=outcome if is_wrong_address else None,
+	)
+	if status == "Delivered":
+		frappe.db.set_value("WD Invitation Task", task.get("name"), "delivered_date", today())
+
+	details = f"Doorstep: {outcome}"
+	if received_by:
+		details += f" (Recipient: {received_by})"
+	if note:
+		details += f" — {note}"
+	result = "Success" if is_success else "Issue" if is_wrong_address else "Pending"
+	_log_attempt(wedding, household, "main", task.get("name"), result=result, details=details)
+
+	return task
+
+
+@frappe.whitelist()
+def list_delivery_runs(wedding):
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	runs = frappe.get_all(
+		"WD Delivery Run",
+		filters={"wedding": wedding},
+		fields=["name", "area_name", "assigned_to", "run_date", "items_description"],
+		order_by="run_date asc, creation asc",
+	)
+	if not runs:
+		return []
+
+	run_names = [r.name for r in runs]
+	rows = frappe.get_all(
+		"WD Delivery Run Household",
+		filters={"parent": ["in", run_names]},
+		fields=["name", "parent", "household", "delivered"],
+		order_by="idx asc",
+	)
+	household_ids = {r.household for r in rows}
+	household_names = {
+		h.name: h.household_name
+		for h in frappe.get_all("WD Guest", filters={"name": ["in", list(household_ids)]}, fields=["name", "household_name"])
+	} if household_ids else {}
+
+	rows_by_run = {}
+	for r in rows:
+		rows_by_run.setdefault(r.parent, []).append(
+			{"name": r.name, "household": r.household, "household_name": household_names.get(r.household, r.household), "delivered": bool(r.delivered)}
+		)
+
+	return [{**run, "households": rows_by_run.get(run.name, [])} for run in runs]
+
+
+@frappe.whitelist()
+def create_delivery_run(wedding, area_name, assigned_to, run_date=None, items_description=None, households=None):
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	if isinstance(households, str):
+		households = frappe.parse_json(households)
+	households = households or []
+
+	run = frappe.get_doc(
+		{
+			"doctype": "WD Delivery Run",
+			"wedding": wedding,
+			"area_name": area_name,
+			"assigned_to": assigned_to,
+			"run_date": run_date,
+			"items_description": items_description,
+			"households": [{"household": h} for h in households],
+		}
+	).insert()
+	return run.as_dict()
+
+
+@frappe.whitelist()
+def toggle_delivery_run_item(wedding, run, household, delivered):
+	"""Ticking a household in a run also marks the household delivered on
+	the main patrika channel — same cross-effect the mock UI's own comment
+	promised ('Ticking a household here writes a Delivered entry to its
+	log') but never actually implemented."""
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+	delivered = frappe.parse_json(delivered) if isinstance(delivered, str) else bool(delivered)
+
+	run_doc = frappe.get_doc("WD Delivery Run", run)
+	if run_doc.wedding != wedding:
+		frappe.throw(_("This run does not belong to this wedding."))
+
+	row = next((h for h in run_doc.households if h.household == household), None)
+	if not row:
+		frappe.throw(_("{0} is not part of this run.").format(household))
+	row.delivered = 1 if delivered else 0
+	run_doc.save()
+
+	if delivered:
+		task = update_invitation_task(wedding, household, "main", status="Delivered", delivery_reference=f"Delivery run: {run_doc.area_name}")
+		frappe.db.set_value("WD Invitation Task", task.get("name"), "delivered_date", today())
+		_log_attempt(wedding, household, "main", task.get("name"), result="Success", details=f"Delivered on run ({run_doc.area_name}, {run_doc.assigned_to})")
+
+	return {"ok": True}
