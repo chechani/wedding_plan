@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "wedding",
+  "function_type",
   "function_name",
   "date",
   "start_time",
@@ -24,6 +25,15 @@
    "label": "Wedding",
    "options": "Wedding",
    "reqd": 1
+  },
+  {
+   "description": "Which standard Indian wedding event this is (Mehendi, Sangeet, Phera, ...) — see WD Function Type. Optional: pick one to prefill Function Name below, then customize it (e.g. \"Mehendi 18\", \"Birthday + Sangeet 20\").",
+   "fieldname": "function_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Function Type",
+   "options": "WD Function Type"
   },
   {
    "fieldname": "function_name",

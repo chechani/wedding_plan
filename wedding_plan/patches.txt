@@ -2,3 +2,4 @@
 
 [post_model_sync]
 wedding_plan.patches.rename_wedding_to_hash
+wedding_plan.patches.seed_function_types

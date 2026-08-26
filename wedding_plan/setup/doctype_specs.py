@@ -46,6 +46,7 @@ WEDDING_SCOPED_DOCTYPES = [
     "WD Guest Member",
     "WD Guest Member Function",
     "WD Gifting",
+    "WD Function Checklist Item",
 ]
 
 
