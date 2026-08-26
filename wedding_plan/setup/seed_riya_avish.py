@@ -187,14 +187,17 @@ def run():
     """bench --site <site> execute wedding_plan.setup.seed_riya_avish.run"""
     from wedding_plan.api.weddings import create_wedding_and_join
 
-    if not frappe.db.exists("Wedding", "riya-avish-2025"):
-        create_wedding_and_join(
+    wedding_name = frappe.db.get_value("Wedding", {"slug": "riya-avish-2025"}, "name")
+    if not wedding_name:
+        wedding = create_wedding_and_join(
             slug="riya-avish-2025",
-            couple_names="Riya Vora x Avish Parekh",
+            bride_name="Riya Vora",
+            groom_name="Avish Parekh",
             start_date="2025-12-18",
             end_date="2025-12-22",
             venues_summary="Kailasha Resort (Ujjain), Golden Yug (Tarana), Home & Buddy's (Indore)",
         )
+        wedding_name = wedding["name"]
         frappe.db.commit()
 
     wb = build_workbook()
@@ -207,7 +210,7 @@ def run():
     with os.fdopen(fd, "wb") as f:
         f.write(buf.getvalue())
 
-    result = run_import("riya-avish-2025", path)
+    result = run_import(wedding_name, path)
     os.remove(path)
     print(result)
     return result

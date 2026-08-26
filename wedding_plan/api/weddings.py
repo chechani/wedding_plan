@@ -5,18 +5,21 @@ from wedding_plan.setup.install import ensure_planner_role
 
 
 @frappe.whitelist()
-def create_wedding_and_join(slug, couple_names, start_date, end_date, venues_summary=None):
+def create_wedding_and_join(slug, bride_name, groom_name, start_date, end_date, venues_summary=None, name_order=None):
     """Creates a Wedding and makes the calling user its Owner. This is the
     only way weddings get created — there is no separate 'add member' step
     needed for the creator, and no code path that hard-codes Riya x Avish or
-    any other specific wedding."""
-    if frappe.db.exists("Wedding", slug):
+    any other specific wedding. couple_names is derived server-side from
+    bride_name/groom_name/name_order — see Wedding.validate()."""
+    if frappe.db.exists("Wedding", {"slug": slug}):
         frappe.throw(_("That slug is already taken"))
 
     wedding = frappe.get_doc({
         "doctype": "Wedding",
         "slug": slug,
-        "couple_names": couple_names,
+        "bride_name": bride_name,
+        "groom_name": groom_name,
+        "name_order": name_order or "Bride & Groom",
         "start_date": start_date,
         "end_date": end_date,
         "venues_summary": venues_summary,

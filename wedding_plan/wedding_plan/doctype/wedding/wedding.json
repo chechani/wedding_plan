@@ -2,13 +2,16 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
- "autoname": "field:slug",
+ "autoname": "hash",
  "creation": "2026-08-19 14:55:25.164379",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "slug",
+  "bride_name",
+  "groom_name",
+  "name_order",
   "couple_names",
   "start_date",
   "end_date",
@@ -26,11 +29,32 @@
    "unique": 1
   },
   {
+   "fieldname": "bride_name",
+   "fieldtype": "Data",
+   "label": "Bride's Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "groom_name",
+   "fieldtype": "Data",
+   "label": "Groom's Name",
+   "reqd": 1
+  },
+  {
+   "default": "Bride & Groom",
+   "description": "Which order to show the names in couple_names below.",
+   "fieldname": "name_order",
+   "fieldtype": "Select",
+   "label": "Display Order",
+   "options": "Bride & Groom\nGroom & Bride"
+  },
+  {
+   "description": "Computed from bride_name/groom_name/name_order on save — do not edit directly.",
    "fieldname": "couple_names",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Couple Names",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "start_date",
