@@ -8,10 +8,14 @@ return a Frappe API key + secret the frontend stores and sends back as
 is Frappe's own standard token auth, so nothing else in the app needs to
 know these tokens exist.
 
-Note: logging in again rotates api_secret (a fresh one is issued each time,
-the old one stops working), matching how a session token normally behaves —
-don't expect two concurrently logged-in tabs to both keep working forever
-after one of them logs in again.
+The key pair is generated once per user and reused on every subsequent
+login, rather than rotated — a previous version regenerated api_secret on
+every call, which meant logging in from a second tab/device silently
+invalidated every other tab's stored token (401s "out of nowhere"). Reusing
+the existing pair means multiple concurrently logged-in tabs/devices for the
+same account all keep working. A user can still be forced to a fresh token
+via Desk (User > API Access > Generate Keys), which explicitly invalidates
+the old one.
 """
 import frappe
 from frappe.auth import LoginManager
@@ -20,17 +24,22 @@ from frappe.utils.password import update_password
 
 def _issue_token(user: str) -> dict:
     user_doc = frappe.get_doc("User", user)
-    api_key = user_doc.api_key or frappe.generate_hash(length=15)
-    api_secret = frappe.generate_hash(length=15)
-    user_doc.api_key = api_key
-    user_doc.api_secret = api_secret
-    user_doc.save(ignore_permissions=True)
-    frappe.db.commit()
+    if not user_doc.api_key or not user_doc.api_secret:
+        api_key = user_doc.api_key or frappe.generate_hash(length=15)
+        api_secret = frappe.generate_hash(length=15)
+        user_doc.api_key = api_key
+        user_doc.api_secret = api_secret
+        user_doc.save(ignore_permissions=True)
+        frappe.db.commit()
+    else:
+        api_key = user_doc.api_key
+        api_secret = user_doc.get_password("api_secret")
     return {
         "email": user_doc.name,
         "full_name": user_doc.full_name,
         "api_key": api_key,
         "api_secret": api_secret,
+        "auth_token": f"token {api_key}:{api_secret}",
     }
 
 

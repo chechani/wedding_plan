@@ -2,29 +2,42 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
+ "autoname": "hash",
  "creation": "2026-08-19 21:12:01.684913",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "wedding",
   "venue",
   "sub_venue",
   "image",
   "capacity",
-  "notes",
-  "wedding"
+  "notes"
  ],
  "fields": [
   {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
    "fieldname": "venue",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Venue",
    "options": "WD Venue"
   },
   {
    "fieldname": "sub_venue",
    "fieldtype": "Data",
-   "label": "Sub Venue"
+   "in_list_view": 1,
+   "label": "Sub Venue",
+   "reqd": 1
   },
   {
    "fieldname": "image",
@@ -40,24 +53,42 @@
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
-  },
-  {
-   "fieldname": "wedding",
-   "fieldtype": "Link",
-   "label": "Wedding",
-   "options": "Wedding"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
- "istable": 1,
  "links": [],
- "modified": "2026-08-22 07:57:13.088419",
+ "modified": "2026-08-26 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Sub Venue",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",

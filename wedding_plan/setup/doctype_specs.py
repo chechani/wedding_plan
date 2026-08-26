@@ -20,6 +20,7 @@ WEDDING_SCOPED_DOCTYPES = [
     "Wedding Member",
     "WD Sub Group",
     "WD Venue",
+    "WD Sub Venue",
     "WD Room",
     "WD Function",
     "WD Run Sheet Item",
