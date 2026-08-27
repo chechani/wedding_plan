@@ -11,8 +11,14 @@
   "room",
   "guest",
   "guest_occupants",
+  "occupancy_basis",
+  "rate",
+  "meal_plan",
   "check_in",
   "check_out",
+  "early_checkin_approved",
+  "late_checkout_approved",
+  "release_date",
   "keys_handed",
   "hamper_placed",
   "luggage_delivered"
@@ -51,6 +57,23 @@
    "options": "WD Room Allotment Occupant"
   },
   {
+   "fieldname": "occupancy_basis",
+   "fieldtype": "Select",
+   "label": "Occupancy Basis",
+   "options": "Double\nTriple\nExtra bed"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "meal_plan",
+   "fieldtype": "Select",
+   "label": "Meal Plan",
+   "options": "EP\nCP\nMAP\nAP"
+  },
+  {
    "fieldname": "check_in",
    "fieldtype": "Datetime",
    "in_list_view": 1,
@@ -61,6 +84,21 @@
    "fieldtype": "Datetime",
    "in_list_view": 1,
    "label": "Check Out"
+  },
+  {
+   "fieldname": "early_checkin_approved",
+   "fieldtype": "Check",
+   "label": "Early Check-in Approved"
+  },
+  {
+   "fieldname": "late_checkout_approved",
+   "fieldtype": "Check",
+   "label": "Late Check-out Approved"
+  },
+  {
+   "fieldname": "release_date",
+   "fieldtype": "Date",
+   "label": "Release Date"
   },
   {
    "fieldname": "keys_handed",

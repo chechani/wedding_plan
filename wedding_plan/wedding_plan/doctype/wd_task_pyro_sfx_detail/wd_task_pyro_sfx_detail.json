@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "effect_type",
+  "quantity",
+  "height",
+  "moment_cue",
+  "indoor_permitted",
+  "safety_distance",
+  "trained_technician",
+  "technician_name",
+  "fire_extinguishers",
+  "permission_reference",
+  "wind_check_owner",
+  "refills_spares"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "effect_type",
+   "fieldtype": "Table MultiSelect",
+   "label": "Effect Type",
+   "options": "WD Task Pyro Effect"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "label": "Height"
+  },
+  {
+   "fieldname": "moment_cue",
+   "fieldtype": "Data",
+   "label": "Moment Cue"
+  },
+  {
+   "fieldname": "indoor_permitted",
+   "fieldtype": "Check",
+   "label": "Indoor Permitted"
+  },
+  {
+   "fieldname": "safety_distance",
+   "fieldtype": "Float",
+   "label": "Safety Distance"
+  },
+  {
+   "fieldname": "trained_technician",
+   "fieldtype": "Check",
+   "label": "Trained Technician"
+  },
+  {
+   "fieldname": "technician_name",
+   "fieldtype": "Data",
+   "label": "Technician Name"
+  },
+  {
+   "fieldname": "fire_extinguishers",
+   "fieldtype": "Int",
+   "label": "Fire Extinguishers"
+  },
+  {
+   "fieldname": "permission_reference",
+   "fieldtype": "Data",
+   "label": "Permission Reference"
+  },
+  {
+   "fieldname": "wind_check_owner",
+   "fieldtype": "Data",
+   "label": "Wind Check Owner"
+  },
+  {
+   "fieldname": "refills_spares",
+   "fieldtype": "Int",
+   "label": "Refills Spares"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Pyro SFX Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

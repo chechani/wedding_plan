@@ -27,6 +27,7 @@ Re-exports so the frontend's REST calls stay short:
   /api/method/wedding_plan.api.task_board
   /api/method/wedding_plan.api.task_dashboard_stats
   /api/method/wedding_plan.api.bulk_update_task_status
+  /api/method/wedding_plan.api.get_task_subtype_detail
   /api/method/wedding_plan.api.checklist_board
   /api/method/wedding_plan.api.function_readiness_stats
   /api/method/wedding_plan.api.function_headcount_stats
@@ -67,6 +68,7 @@ from wedding_plan.api.tasks import (  # noqa: F401
 	task_board,
 	task_dashboard_stats,
 	bulk_update_task_status,
+	get_task_subtype_detail,
 )
 from wedding_plan.api.checklist import checklist_board, function_readiness_stats  # noqa: F401
 from wedding_plan.api.guests import function_headcount_stats  # noqa: F401

@@ -1,0 +1,147 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "artist",
+  "service",
+  "call_time",
+  "duration_per_person_min",
+  "number_of_people",
+  "assistants_provided",
+  "trial_date",
+  "trial_approved",
+  "location",
+  "mehendi_artists_count",
+  "bridal_mehendi_separate_slot",
+  "touch_up_during_function"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "artist",
+   "fieldtype": "Link",
+   "label": "Artist",
+   "options": "WD Vendor"
+  },
+  {
+   "fieldname": "service",
+   "fieldtype": "Select",
+   "label": "Service",
+   "options": "Bridal makeup\nFamily makeup\nHair\nMehendi\nGrooming"
+  },
+  {
+   "fieldname": "call_time",
+   "fieldtype": "Time",
+   "label": "Call Time"
+  },
+  {
+   "fieldname": "duration_per_person_min",
+   "fieldtype": "Int",
+   "label": "Duration Per Person Min"
+  },
+  {
+   "fieldname": "number_of_people",
+   "fieldtype": "Int",
+   "label": "Number Of People"
+  },
+  {
+   "fieldname": "assistants_provided",
+   "fieldtype": "Int",
+   "label": "Assistants Provided"
+  },
+  {
+   "fieldname": "trial_date",
+   "fieldtype": "Date",
+   "label": "Trial Date"
+  },
+  {
+   "fieldname": "trial_approved",
+   "fieldtype": "Check",
+   "label": "Trial Approved"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "WD Sub Venue"
+  },
+  {
+   "fieldname": "mehendi_artists_count",
+   "fieldtype": "Int",
+   "label": "Mehendi Artists Count"
+  },
+  {
+   "fieldname": "bridal_mehendi_separate_slot",
+   "fieldtype": "Check",
+   "label": "Bridal Mehendi Separate Slot"
+  },
+  {
+   "fieldname": "touch_up_during_function",
+   "fieldtype": "Check",
+   "label": "Touch Up During Function"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Makeup Hair Mehendi Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

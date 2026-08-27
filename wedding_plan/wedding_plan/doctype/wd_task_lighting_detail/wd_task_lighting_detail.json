@@ -1,0 +1,162 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "truss",
+  "truss_size",
+  "led_par",
+  "warm_white_dmx",
+  "sharpies",
+  "washes",
+  "blinders",
+  "strobes",
+  "follow_spot",
+  "moving_heads",
+  "smoke_haze_machine",
+  "light_console_operator",
+  "face_light_on_couple",
+  "choreographer_requirement",
+  "power_load_kw"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "truss",
+   "fieldtype": "Data",
+   "label": "Truss"
+  },
+  {
+   "fieldname": "truss_size",
+   "fieldtype": "Data",
+   "label": "Truss Size"
+  },
+  {
+   "fieldname": "led_par",
+   "fieldtype": "Int",
+   "label": "Led Par"
+  },
+  {
+   "fieldname": "warm_white_dmx",
+   "fieldtype": "Int",
+   "label": "Warm White Dmx"
+  },
+  {
+   "fieldname": "sharpies",
+   "fieldtype": "Int",
+   "label": "Sharpies"
+  },
+  {
+   "fieldname": "washes",
+   "fieldtype": "Int",
+   "label": "Washes"
+  },
+  {
+   "fieldname": "blinders",
+   "fieldtype": "Int",
+   "label": "Blinders"
+  },
+  {
+   "fieldname": "strobes",
+   "fieldtype": "Int",
+   "label": "Strobes"
+  },
+  {
+   "fieldname": "follow_spot",
+   "fieldtype": "Int",
+   "label": "Follow Spot"
+  },
+  {
+   "fieldname": "moving_heads",
+   "fieldtype": "Int",
+   "label": "Moving Heads"
+  },
+  {
+   "fieldname": "smoke_haze_machine",
+   "fieldtype": "Int",
+   "label": "Smoke Haze Machine"
+  },
+  {
+   "fieldname": "light_console_operator",
+   "fieldtype": "Data",
+   "label": "Light Console Operator"
+  },
+  {
+   "fieldname": "face_light_on_couple",
+   "fieldtype": "Check",
+   "label": "Face Light On Couple"
+  },
+  {
+   "fieldname": "choreographer_requirement",
+   "fieldtype": "Long Text",
+   "label": "Choreographer Requirement"
+  },
+  {
+   "fieldname": "power_load_kw",
+   "fieldtype": "Float",
+   "label": "Power Load Kw"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Lighting Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

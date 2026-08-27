@@ -1,0 +1,193 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "parallel_venue_coverage_needed",
+  "crew_photo",
+  "crew_video",
+  "crew_candid",
+  "crew_traditional",
+  "drone",
+  "drone_permission_ref",
+  "live_feed_to_led",
+  "photo_booth",
+  "photo_booth_detail",
+  "coverage_hours",
+  "shot_list",
+  "family_photo_list",
+  "phone_free_moments",
+  "backup_drives",
+  "delivery_raw",
+  "delivery_edited",
+  "delivery_album",
+  "delivery_reel",
+  "album_specification"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "parallel_venue_coverage_needed",
+   "fieldtype": "Check",
+   "label": "Parallel Venue Coverage Needed"
+  },
+  {
+   "fieldname": "crew_photo",
+   "fieldtype": "Int",
+   "label": "Crew Photo"
+  },
+  {
+   "fieldname": "crew_video",
+   "fieldtype": "Int",
+   "label": "Crew Video"
+  },
+  {
+   "fieldname": "crew_candid",
+   "fieldtype": "Int",
+   "label": "Crew Candid"
+  },
+  {
+   "fieldname": "crew_traditional",
+   "fieldtype": "Int",
+   "label": "Crew Traditional"
+  },
+  {
+   "fieldname": "drone",
+   "fieldtype": "Check",
+   "label": "Drone"
+  },
+  {
+   "fieldname": "drone_permission_ref",
+   "fieldtype": "Data",
+   "label": "Drone Permission Ref"
+  },
+  {
+   "fieldname": "live_feed_to_led",
+   "fieldtype": "Check",
+   "label": "Live Feed To Led"
+  },
+  {
+   "fieldname": "photo_booth",
+   "fieldtype": "Check",
+   "label": "Photo Booth"
+  },
+  {
+   "fieldname": "photo_booth_detail",
+   "fieldtype": "Data",
+   "label": "Photo Booth Detail"
+  },
+  {
+   "fieldname": "coverage_hours",
+   "fieldtype": "Int",
+   "label": "Coverage Hours"
+  },
+  {
+   "fieldname": "shot_list",
+   "fieldtype": "Attach",
+   "label": "Shot List"
+  },
+  {
+   "fieldname": "family_photo_list",
+   "fieldtype": "Table",
+   "label": "Family Photo List",
+   "options": "WD Task Family Photo Line"
+  },
+  {
+   "fieldname": "phone_free_moments",
+   "fieldtype": "Data",
+   "label": "Phone Free Moments"
+  },
+  {
+   "fieldname": "backup_drives",
+   "fieldtype": "Int",
+   "label": "Backup Drives"
+  },
+  {
+   "fieldname": "delivery_raw",
+   "fieldtype": "Date",
+   "label": "Delivery Raw"
+  },
+  {
+   "fieldname": "delivery_edited",
+   "fieldtype": "Date",
+   "label": "Delivery Edited"
+  },
+  {
+   "fieldname": "delivery_album",
+   "fieldtype": "Date",
+   "label": "Delivery Album"
+  },
+  {
+   "fieldname": "delivery_reel",
+   "fieldtype": "Date",
+   "label": "Delivery Reel"
+  },
+  {
+   "fieldname": "album_specification",
+   "fieldtype": "Data",
+   "label": "Album Specification"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Coverage Plan Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

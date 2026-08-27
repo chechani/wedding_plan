@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "vendor",
+  "contract_value",
+  "advances_paid",
+  "approved_extras",
+  "overtime_charges",
+  "shortfall_deduction",
+  "damages_penalty",
+  "actual_quantity_delivered",
+  "final_bill",
+  "gst",
+  "tds",
+  "net_payable",
+  "settlement_date",
+  "dispute_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "vendor",
+   "fieldtype": "Link",
+   "label": "Vendor",
+   "options": "WD Vendor"
+  },
+  {
+   "fieldname": "contract_value",
+   "fieldtype": "Currency",
+   "label": "Contract Value"
+  },
+  {
+   "fieldname": "advances_paid",
+   "fieldtype": "Currency",
+   "label": "Advances Paid"
+  },
+  {
+   "fieldname": "approved_extras",
+   "fieldtype": "Table",
+   "label": "Approved Extras",
+   "options": "WD Task Settlement Extra Line"
+  },
+  {
+   "fieldname": "overtime_charges",
+   "fieldtype": "Currency",
+   "label": "Overtime Charges"
+  },
+  {
+   "fieldname": "shortfall_deduction",
+   "fieldtype": "Currency",
+   "label": "Shortfall Deduction"
+  },
+  {
+   "fieldname": "damages_penalty",
+   "fieldtype": "Currency",
+   "label": "Damages Penalty"
+  },
+  {
+   "fieldname": "actual_quantity_delivered",
+   "fieldtype": "Int",
+   "label": "Actual Quantity Delivered"
+  },
+  {
+   "fieldname": "final_bill",
+   "fieldtype": "Currency",
+   "label": "Final Bill"
+  },
+  {
+   "fieldname": "gst",
+   "fieldtype": "Currency",
+   "label": "Gst"
+  },
+  {
+   "fieldname": "tds",
+   "fieldtype": "Currency",
+   "label": "Tds"
+  },
+  {
+   "fieldname": "net_payable",
+   "fieldtype": "Currency",
+   "label": "Net Payable",
+   "read_only": 1
+  },
+  {
+   "fieldname": "settlement_date",
+   "fieldtype": "Date",
+   "label": "Settlement Date"
+  },
+  {
+   "fieldname": "dispute_notes",
+   "fieldtype": "Long Text",
+   "label": "Dispute Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Final Settlement Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

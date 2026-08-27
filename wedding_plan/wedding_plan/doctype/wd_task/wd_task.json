@@ -10,6 +10,7 @@
   "wedding",
   "title",
   "category",
+  "subtype",
   "status",
   "priority",
   "column_break_1",
@@ -18,19 +19,26 @@
   "run_sheet_item",
   "due_date",
   "completed_date",
+  "depends_on_task",
   "section_break_assignment",
   "assigned_to_type",
   "assigned_team",
   "assigned_vendor",
   "assigned_person",
+  "shadow_backup",
+  "vendor",
   "column_break_2",
   "contact_name",
   "contact_phone",
   "contact_secondary_name",
   "contact_secondary_phone",
+  "section_break_costs",
+  "estimated_cost",
+  "actual_cost",
   "section_break_details",
   "description",
-  "blocked_reason"
+  "blocked_reason",
+  "reference_attachments"
  ],
  "fields": [
   {
@@ -51,21 +59,30 @@
   },
   {
    "fieldname": "category",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Category",
-   "options": "Booking & Contract\nAdvance & Payment\nLogistics & Setup\nRitual & Puja Arrangements\nAttire & Grooming\nGuest & Vendor Communication\nDay-of Coordination\nFinance & Settlement\nDocumentation\nCompliance & Permits\nContingency & Backup\nTravel & Accommodation\nDécor & Styling\nOther",
+   "options": "WD Task Category",
    "reqd": 1
+  },
+  {
+   "description": "Unlocks a structured detail sheet for the kind of work this task is (e.g. Sound setup, Floral order).",
+   "fieldname": "subtype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Sub-type",
+   "options": "WD Task Subtype"
   },
   {
    "default": "Not Started",
    "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Not Started\nIn Progress\nBlocked\nDone\nCancelled",
+   "options": "WD Task Status",
    "reqd": 1
   },
   {
@@ -117,6 +134,13 @@
    "read_only": 1
   },
   {
+   "description": "Load-in order — this task must finish before the dependent one starts.",
+   "fieldname": "depends_on_task",
+   "fieldtype": "Link",
+   "label": "Depends On",
+   "options": "WD Task"
+  },
+  {
    "fieldname": "section_break_assignment",
    "fieldtype": "Section Break",
    "label": "Assignment"
@@ -150,6 +174,20 @@
    "options": "User"
   },
   {
+   "description": "Who takes over if the owner is unreachable.",
+   "fieldname": "shadow_backup",
+   "fieldtype": "Link",
+   "label": "Shadow / Backup",
+   "options": "WD Team"
+  },
+  {
+   "description": "The contracted vendor for this task, distinct from who executes it (Assigned To).",
+   "fieldname": "vendor",
+   "fieldtype": "Link",
+   "label": "Vendor",
+   "options": "WD Vendor"
+  },
+  {
    "fieldname": "column_break_2",
    "fieldtype": "Column Break"
   },
@@ -179,6 +217,21 @@
    "read_only": 1
   },
   {
+   "fieldname": "section_break_costs",
+   "fieldtype": "Section Break",
+   "label": "Cost"
+  },
+  {
+   "fieldname": "estimated_cost",
+   "fieldtype": "Currency",
+   "label": "Estimated Cost"
+  },
+  {
+   "fieldname": "actual_cost",
+   "fieldtype": "Currency",
+   "label": "Actual Cost"
+  },
+  {
    "fieldname": "section_break_details",
    "fieldtype": "Section Break",
    "label": "Details"
@@ -193,6 +246,12 @@
    "fieldname": "blocked_reason",
    "fieldtype": "Small Text",
    "label": "Blocked Reason"
+  },
+  {
+   "fieldname": "reference_attachments",
+   "fieldtype": "Table",
+   "label": "Reference Attachments",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

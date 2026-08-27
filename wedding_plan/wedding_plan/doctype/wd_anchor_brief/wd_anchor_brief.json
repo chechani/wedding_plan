@@ -8,12 +8,18 @@
  "engine": "InnoDB",
  "field_order": [
   "wedding",
+  "task",
   "function",
-  "style_needed",
-  "brief",
-  "attach_mchl",
-  "attach_pqig",
-  "attach_snvl"
+  "anchor",
+  "style_required",
+  "language_mix",
+  "duration_hours",
+  "running_order",
+  "names_to_announce",
+  "games_segments",
+  "cue_coordination_with",
+  "mic_type",
+  "do_not_say_list"
  ],
  "fields": [
   {
@@ -26,6 +32,14 @@
    "reqd": 1
   },
   {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Task",
+   "options": "WD Task"
+  },
+  {
    "fieldname": "function",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -33,32 +47,64 @@
    "options": "WD Function"
   },
   {
-   "fieldname": "style_needed",
+   "fieldname": "anchor",
+   "fieldtype": "Link",
+   "label": "Anchor",
+   "options": "WD Vendor"
+  },
+  {
+   "fieldname": "style_required",
+   "fieldtype": "Select",
+   "label": "Style Required",
+   "options": "Warm informal\nHigh-energy outdoor\nRitual-literate\nStage formal\nRoving"
+  },
+  {
+   "fieldname": "language_mix",
    "fieldtype": "Data",
-   "label": "Style Needed"
+   "label": "Language Mix"
   },
   {
-   "fieldname": "brief",
+   "fieldname": "duration_hours",
+   "fieldtype": "Float",
+   "label": "Duration (Hours)"
+  },
+  {
+   "fieldname": "running_order",
+   "fieldtype": "Attach",
+   "label": "Running Order"
+  },
+  {
+   "fieldname": "names_to_announce",
+   "fieldtype": "Table",
+   "label": "Names To Announce",
+   "options": "WD Task Anchor Name Line"
+  },
+  {
+   "fieldname": "games_segments",
+   "fieldtype": "Long Text",
+   "label": "Games & Segments"
+  },
+  {
+   "fieldname": "cue_coordination_with",
    "fieldtype": "Small Text",
-   "label": "Brief"
+   "label": "Cue Coordination With"
   },
   {
-   "fieldname": "attach_mchl",
-   "fieldtype": "Attach"
+   "fieldname": "mic_type",
+   "fieldtype": "Select",
+   "label": "Mic Type",
+   "options": "Handheld\nRoving\nLapel"
   },
   {
-   "fieldname": "attach_pqig",
-   "fieldtype": "Attach"
-  },
-  {
-   "fieldname": "attach_snvl",
-   "fieldtype": "Attach"
+   "fieldname": "do_not_say_list",
+   "fieldtype": "Long Text",
+   "label": "Do-Not-Say List"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 20:42:28.529719",
+ "modified": "2026-08-27 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Anchor Brief",

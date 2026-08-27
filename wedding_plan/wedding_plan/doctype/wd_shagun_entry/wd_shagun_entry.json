@@ -12,7 +12,11 @@
   "function",
   "amount_or_item",
   "received_by",
-  "counter_shift"
+  "counter_shift",
+  "shagun_counter_staffing",
+  "shagun_register_maintained",
+  "handover_to_finance",
+  "handover_signature"
  ],
  "fields": [
   {
@@ -52,6 +56,27 @@
    "fieldname": "counter_shift",
    "fieldtype": "Data",
    "label": "Counter / Shift"
+  },
+  {
+   "description": "Two-person rule, always.",
+   "fieldname": "shagun_counter_staffing",
+   "fieldtype": "Int",
+   "label": "Counter Staffing"
+  },
+  {
+   "fieldname": "shagun_register_maintained",
+   "fieldtype": "Check",
+   "label": "Register Maintained"
+  },
+  {
+   "fieldname": "handover_to_finance",
+   "fieldtype": "Datetime",
+   "label": "Handover To Finance"
+  },
+  {
+   "fieldname": "handover_signature",
+   "fieldtype": "Data",
+   "label": "Handover Signature"
   }
  ],
  "grid_page_length": 50,

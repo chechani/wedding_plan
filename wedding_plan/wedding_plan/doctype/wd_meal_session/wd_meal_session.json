@@ -10,6 +10,8 @@
   "wedding",
   "date",
   "session_name",
+  "service_style",
+  "crockery",
   "time",
   "venue",
   "vendor",
@@ -45,10 +47,23 @@
   },
   {
    "fieldname": "session_name",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Session",
+   "options": "WD Meal Session Type",
    "reqd": 1
+  },
+  {
+   "fieldname": "service_style",
+   "fieldtype": "Link",
+   "label": "Service Style",
+   "options": "WD Service Style"
+  },
+  {
+   "fieldname": "crockery",
+   "fieldtype": "Link",
+   "label": "Crockery",
+   "options": "WD Crockery Type"
   },
   {
    "fieldname": "time",

@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "dg_capacity",
+  "dg_count",
+  "fuel_litres",
+  "fuel_refiller",
+  "load_calculation",
+  "distribution_boards",
+  "cable_lengths",
+  "earthing_done",
+  "changeover_seconds",
+  "ups_console_led",
+  "technician_on_site",
+  "technician_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "dg_capacity",
+   "fieldtype": "Data",
+   "label": "Dg Capacity"
+  },
+  {
+   "fieldname": "dg_count",
+   "fieldtype": "Int",
+   "label": "Dg Count"
+  },
+  {
+   "fieldname": "fuel_litres",
+   "fieldtype": "Float",
+   "label": "Fuel Litres"
+  },
+  {
+   "fieldname": "fuel_refiller",
+   "fieldtype": "Data",
+   "label": "Fuel Refiller"
+  },
+  {
+   "fieldname": "load_calculation",
+   "fieldtype": "Table",
+   "label": "Load Calculation",
+   "options": "WD Task Load Calc Line"
+  },
+  {
+   "fieldname": "distribution_boards",
+   "fieldtype": "Int",
+   "label": "Distribution Boards"
+  },
+  {
+   "fieldname": "cable_lengths",
+   "fieldtype": "Data",
+   "label": "Cable Lengths"
+  },
+  {
+   "fieldname": "earthing_done",
+   "fieldtype": "Check",
+   "label": "Earthing Done"
+  },
+  {
+   "fieldname": "changeover_seconds",
+   "fieldtype": "Int",
+   "label": "Changeover Seconds"
+  },
+  {
+   "fieldname": "ups_console_led",
+   "fieldtype": "Check",
+   "label": "Ups Console Led"
+  },
+  {
+   "fieldname": "technician_on_site",
+   "fieldtype": "Check",
+   "label": "Technician On Site"
+  },
+  {
+   "fieldname": "technician_name",
+   "fieldtype": "Data",
+   "label": "Technician Name"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Power Generator Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

@@ -1,0 +1,198 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "flower_type",
+  "fresh_or_artificial",
+  "quantity",
+  "quantity_unit",
+  "colour",
+  "source",
+  "delivery_datetime",
+  "cold_storage_arranged",
+  "garlands",
+  "varmala_pair",
+  "varmala_design_file",
+  "mandap_floral_spec",
+  "petals_for_shower",
+  "petals_unit",
+  "urli_flowers",
+  "car_decoration",
+  "wastage_allowance_pct",
+  "rate",
+  "rate_basis",
+  "backup_flower"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "flower_type",
+   "fieldtype": "Table MultiSelect",
+   "label": "Flower Type",
+   "options": "WD Task Floral Flower"
+  },
+  {
+   "fieldname": "fresh_or_artificial",
+   "fieldtype": "Select",
+   "label": "Fresh Or Artificial",
+   "options": "Fresh\nArtificial"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "quantity_unit",
+   "fieldtype": "Link",
+   "label": "Quantity Unit",
+   "options": "WD Unit"
+  },
+  {
+   "fieldname": "colour",
+   "fieldtype": "Data",
+   "label": "Colour"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "Local mandi\nBengaluru\nPune\nImported"
+  },
+  {
+   "fieldname": "delivery_datetime",
+   "fieldtype": "Datetime",
+   "label": "Delivery Datetime"
+  },
+  {
+   "fieldname": "cold_storage_arranged",
+   "fieldtype": "Check",
+   "label": "Cold Storage Arranged"
+  },
+  {
+   "fieldname": "garlands",
+   "fieldtype": "Int",
+   "label": "Garlands"
+  },
+  {
+   "fieldname": "varmala_pair",
+   "fieldtype": "Data",
+   "label": "Varmala Pair"
+  },
+  {
+   "fieldname": "varmala_design_file",
+   "fieldtype": "Attach",
+   "label": "Varmala Design File"
+  },
+  {
+   "fieldname": "mandap_floral_spec",
+   "fieldtype": "Long Text",
+   "label": "Mandap Floral Spec"
+  },
+  {
+   "fieldname": "petals_for_shower",
+   "fieldtype": "Float",
+   "label": "Petals For Shower"
+  },
+  {
+   "fieldname": "petals_unit",
+   "fieldtype": "Link",
+   "label": "Petals Unit",
+   "options": "WD Unit"
+  },
+  {
+   "fieldname": "urli_flowers",
+   "fieldtype": "Int",
+   "label": "Urli Flowers"
+  },
+  {
+   "fieldname": "car_decoration",
+   "fieldtype": "Check",
+   "label": "Car Decoration"
+  },
+  {
+   "fieldname": "wastage_allowance_pct",
+   "fieldtype": "Percent",
+   "label": "Wastage Allowance Pct"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "rate_basis",
+   "fieldtype": "Select",
+   "label": "Rate Basis",
+   "options": "Per kg\nPer stem"
+  },
+  {
+   "fieldname": "backup_flower",
+   "fieldtype": "Data",
+   "label": "Backup Flower"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Floral Order",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

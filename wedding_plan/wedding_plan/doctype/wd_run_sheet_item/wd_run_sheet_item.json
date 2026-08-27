@@ -17,6 +17,10 @@
   "notes",
   "is_fixed",
   "is_assumption",
+  "depends_on",
+  "buffer_minutes",
+  "actual_start",
+  "actual_end",
   "sort_order"
  ],
  "fields": [
@@ -83,6 +87,28 @@
    "fieldname": "is_assumption",
    "fieldtype": "Check",
    "label": "Assumption \u2014 needs confirming"
+  },
+  {
+   "fieldname": "depends_on",
+   "fieldtype": "Link",
+   "label": "Depends On",
+   "options": "WD Run Sheet Item"
+  },
+  {
+   "fieldname": "buffer_minutes",
+   "fieldtype": "Int",
+   "label": "Buffer (Minutes)"
+  },
+  {
+   "description": "Filled live \u2014 tells you what slipped and by how much.",
+   "fieldname": "actual_start",
+   "fieldtype": "Time",
+   "label": "Actual Start"
+  },
+  {
+   "fieldname": "actual_end",
+   "fieldtype": "Time",
+   "label": "Actual End"
   },
   {
    "default": "0",

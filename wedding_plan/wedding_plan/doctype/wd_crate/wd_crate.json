@@ -10,11 +10,21 @@
   "wedding",
   "crate_no",
   "destination_venue",
+  "owned_or_rented",
   "contents",
   "packed_by",
   "dispatched",
+  "dispatched_truck_rider",
+  "manifest_photo",
+  "count_matches_manifest",
   "received_by",
-  "returned"
+  "received_time",
+  "issued_to",
+  "issued_time",
+  "returned",
+  "returned_condition_notes",
+  "gate_pass_number",
+  "return_due_date"
  ],
  "fields": [
   {
@@ -41,9 +51,16 @@
    "options": "WD Venue"
   },
   {
+   "fieldname": "owned_or_rented",
+   "fieldtype": "Select",
+   "label": "Owned Or Rented",
+   "options": "Owned\nRented"
+  },
+  {
    "fieldname": "contents",
-   "fieldtype": "Small Text",
-   "label": "Contents"
+   "fieldtype": "Table",
+   "label": "Contents",
+   "options": "WD Task Item Line"
   },
   {
    "fieldname": "packed_by",
@@ -57,14 +74,61 @@
    "label": "Dispatched"
   },
   {
+   "fieldname": "dispatched_truck_rider",
+   "fieldtype": "Data",
+   "label": "Dispatched — Truck & Rider"
+  },
+  {
+   "fieldname": "manifest_photo",
+   "fieldtype": "Attach Image",
+   "label": "Manifest Photo",
+   "description": "Taken before the truck leaves."
+  },
+  {
+   "fieldname": "count_matches_manifest",
+   "fieldtype": "Check",
+   "label": "Count Matches Manifest"
+  },
+  {
    "fieldname": "received_by",
    "fieldtype": "Data",
    "label": "Received By"
   },
   {
+   "fieldname": "received_time",
+   "fieldtype": "Datetime",
+   "label": "Received Time"
+  },
+  {
+   "fieldname": "issued_to",
+   "fieldtype": "Data",
+   "label": "Issued To"
+  },
+  {
+   "fieldname": "issued_time",
+   "fieldtype": "Datetime",
+   "label": "Issued Time"
+  },
+  {
    "fieldname": "returned",
    "fieldtype": "Check",
    "label": "Returned"
+  },
+  {
+   "fieldname": "returned_condition_notes",
+   "fieldtype": "Data",
+   "label": "Returned Condition"
+  },
+  {
+   "description": "Anything leaving the premises, including guest luggage.",
+   "fieldname": "gate_pass_number",
+   "fieldtype": "Data",
+   "label": "Gate Pass Number"
+  },
+  {
+   "fieldname": "return_due_date",
+   "fieldtype": "Date",
+   "label": "Return Due Date"
   }
  ],
  "grid_page_length": 50,

@@ -10,12 +10,17 @@
   "wedding",
   "guest",
   "guest_members",
+  "direction",
   "mode",
   "detail",
   "eta",
   "point",
   "vehicle",
+  "pax_count",
+  "luggage_count",
   "greeter_name",
+  "greeter_placard",
+  "special_needs",
   "status"
  ],
  "fields": [
@@ -41,6 +46,14 @@
    "fieldtype": "Table MultiSelect",
    "label": "Guest Members",
    "options": "WD Pickup Guest"
+  },
+  {
+   "default": "Pickup",
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Direction",
+   "options": "Pickup\nDrop"
   },
   {
    "fieldname": "mode",
@@ -72,9 +85,30 @@
    "options": "WD Vehicle"
   },
   {
+   "fieldname": "pax_count",
+   "fieldtype": "Int",
+   "label": "Pax"
+  },
+  {
+   "fieldname": "luggage_count",
+   "fieldtype": "Int",
+   "label": "Luggage Count"
+  },
+  {
    "fieldname": "greeter_name",
    "fieldtype": "Data",
    "label": "Greeter"
+  },
+  {
+   "fieldname": "greeter_placard",
+   "fieldtype": "Check",
+   "label": "Placard Ready"
+  },
+  {
+   "fieldname": "special_needs",
+   "fieldtype": "Data",
+   "label": "Special Needs",
+   "description": "Wheelchair, infant seat, elderly"
   },
   {
    "default": "Waiting",

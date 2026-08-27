@@ -1,0 +1,163 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "stage_size",
+  "stage_height",
+  "load_capacity_performers",
+  "risers",
+  "riser_size",
+  "stairs",
+  "masking",
+  "load_in_window_start",
+  "load_in_window_end",
+  "trucks_labour_count",
+  "gate_pass_required",
+  "service_lift_blocked_from",
+  "service_lift_blocked_to",
+  "load_out_strike",
+  "store_room"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "stage_size",
+   "fieldtype": "Data",
+   "label": "Stage Size"
+  },
+  {
+   "fieldname": "stage_height",
+   "fieldtype": "Float",
+   "label": "Stage Height"
+  },
+  {
+   "fieldname": "load_capacity_performers",
+   "fieldtype": "Int",
+   "label": "Load Capacity Performers"
+  },
+  {
+   "fieldname": "risers",
+   "fieldtype": "Int",
+   "label": "Risers"
+  },
+  {
+   "fieldname": "riser_size",
+   "fieldtype": "Data",
+   "label": "Riser Size"
+  },
+  {
+   "fieldname": "stairs",
+   "fieldtype": "Int",
+   "label": "Stairs"
+  },
+  {
+   "fieldname": "masking",
+   "fieldtype": "Check",
+   "label": "Masking"
+  },
+  {
+   "fieldname": "load_in_window_start",
+   "fieldtype": "Datetime",
+   "label": "Load In Window Start"
+  },
+  {
+   "fieldname": "load_in_window_end",
+   "fieldtype": "Datetime",
+   "label": "Load In Window End"
+  },
+  {
+   "fieldname": "trucks_labour_count",
+   "fieldtype": "Int",
+   "label": "Trucks Labour Count"
+  },
+  {
+   "fieldname": "gate_pass_required",
+   "fieldtype": "Check",
+   "label": "Gate Pass Required"
+  },
+  {
+   "fieldname": "service_lift_blocked_from",
+   "fieldtype": "Time",
+   "label": "Service Lift Blocked From"
+  },
+  {
+   "fieldname": "service_lift_blocked_to",
+   "fieldtype": "Time",
+   "label": "Service Lift Blocked To"
+  },
+  {
+   "fieldname": "load_out_strike",
+   "fieldtype": "Datetime",
+   "label": "Load Out Strike"
+  },
+  {
+   "fieldname": "store_room",
+   "fieldtype": "Link",
+   "label": "Store Room",
+   "options": "WD Store"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Stage Truss Loadin",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

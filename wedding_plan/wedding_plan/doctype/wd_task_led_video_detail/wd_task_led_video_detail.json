@@ -1,0 +1,128 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "screen_size",
+  "pixel_pitch",
+  "indoor_outdoor_rating",
+  "live_camera_feed_inputs",
+  "media_server_operator",
+  "content_deadline",
+  "content_list",
+  "aspect_ratio_format",
+  "backup_content_copy"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "screen_size",
+   "fieldtype": "Data",
+   "label": "Screen Size"
+  },
+  {
+   "fieldname": "pixel_pitch",
+   "fieldtype": "Data",
+   "label": "Pixel Pitch"
+  },
+  {
+   "fieldname": "indoor_outdoor_rating",
+   "fieldtype": "Select",
+   "label": "Indoor Outdoor Rating",
+   "options": "Indoor\nOutdoor\nBoth"
+  },
+  {
+   "fieldname": "live_camera_feed_inputs",
+   "fieldtype": "Int",
+   "label": "Live Camera Feed Inputs"
+  },
+  {
+   "fieldname": "media_server_operator",
+   "fieldtype": "Data",
+   "label": "Media Server Operator"
+  },
+  {
+   "fieldname": "content_deadline",
+   "fieldtype": "Date",
+   "label": "Content Deadline"
+  },
+  {
+   "fieldname": "content_list",
+   "fieldtype": "Table",
+   "label": "Content List",
+   "options": "WD Task Content Line"
+  },
+  {
+   "fieldname": "aspect_ratio_format",
+   "fieldtype": "Data",
+   "label": "Aspect Ratio Format"
+  },
+  {
+   "fieldname": "backup_content_copy",
+   "fieldtype": "Check",
+   "label": "Backup Content Copy"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task LED Video Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

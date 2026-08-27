@@ -1,0 +1,305 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "location_hall",
+  "pax_min",
+  "pax_max",
+  "artist",
+  "theme_colour_palette",
+  "reference_images",
+  "entry_gate_decor",
+  "entry_gate_note",
+  "passage_decor_length",
+  "passage_decor_unit",
+  "passage_decor_props",
+  "btr_easel_stands",
+  "help_desk_welcome_board",
+  "couple_stage_length",
+  "couple_stage_width",
+  "couple_stage_height",
+  "stage_backdrop_masking",
+  "couple_couch_floral_props",
+  "face_light_on_couple",
+  "stage_stairs",
+  "dance_floor_size",
+  "dance_floor_finish",
+  "round_tables",
+  "theme_props_per_table",
+  "chairs",
+  "sofa_seating",
+  "console_tables",
+  "console_black_masking",
+  "photographer_riser",
+  "ceiling_cover_area",
+  "ceiling_cover_unit",
+  "stall_backdrops",
+  "ambience_lighting",
+  "artist_stage_riser",
+  "power_cable_connections",
+  "setup_start",
+  "ready_by",
+  "strike"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "location_hall",
+   "fieldtype": "Link",
+   "label": "Location Hall",
+   "options": "WD Sub Venue"
+  },
+  {
+   "fieldname": "pax_min",
+   "fieldtype": "Int",
+   "label": "Pax Min"
+  },
+  {
+   "fieldname": "pax_max",
+   "fieldtype": "Int",
+   "label": "Pax Max"
+  },
+  {
+   "fieldname": "artist",
+   "fieldtype": "Data",
+   "label": "Artist"
+  },
+  {
+   "fieldname": "theme_colour_palette",
+   "fieldtype": "Data",
+   "label": "Theme Colour Palette"
+  },
+  {
+   "fieldname": "reference_images",
+   "fieldtype": "Table",
+   "label": "Reference Images",
+   "options": "WD Checklist Attachment"
+  },
+  {
+   "fieldname": "entry_gate_decor",
+   "fieldtype": "Check",
+   "label": "Entry Gate Decor"
+  },
+  {
+   "fieldname": "entry_gate_note",
+   "fieldtype": "Small Text",
+   "label": "Entry Gate Note"
+  },
+  {
+   "fieldname": "passage_decor_length",
+   "fieldtype": "Float",
+   "label": "Passage Decor Length"
+  },
+  {
+   "fieldname": "passage_decor_unit",
+   "fieldtype": "Link",
+   "label": "Passage Decor Unit",
+   "options": "WD Unit"
+  },
+  {
+   "fieldname": "passage_decor_props",
+   "fieldtype": "Small Text",
+   "label": "Passage Decor Props"
+  },
+  {
+   "fieldname": "btr_easel_stands",
+   "fieldtype": "Int",
+   "label": "Btr Easel Stands"
+  },
+  {
+   "fieldname": "help_desk_welcome_board",
+   "fieldtype": "Check",
+   "label": "Help Desk Welcome Board"
+  },
+  {
+   "fieldname": "couple_stage_length",
+   "fieldtype": "Float",
+   "label": "Couple Stage Length"
+  },
+  {
+   "fieldname": "couple_stage_width",
+   "fieldtype": "Float",
+   "label": "Couple Stage Width"
+  },
+  {
+   "fieldname": "couple_stage_height",
+   "fieldtype": "Float",
+   "label": "Couple Stage Height"
+  },
+  {
+   "fieldname": "stage_backdrop_masking",
+   "fieldtype": "Small Text",
+   "label": "Stage Backdrop Masking"
+  },
+  {
+   "fieldname": "couple_couch_floral_props",
+   "fieldtype": "Small Text",
+   "label": "Couple Couch Floral Props"
+  },
+  {
+   "fieldname": "face_light_on_couple",
+   "fieldtype": "Check",
+   "label": "Face Light On Couple"
+  },
+  {
+   "fieldname": "stage_stairs",
+   "fieldtype": "Int",
+   "label": "Stage Stairs"
+  },
+  {
+   "fieldname": "dance_floor_size",
+   "fieldtype": "Data",
+   "label": "Dance Floor Size"
+  },
+  {
+   "fieldname": "dance_floor_finish",
+   "fieldtype": "Select",
+   "label": "Dance Floor Finish",
+   "options": "Printed flex\nWhite flex\nMasking"
+  },
+  {
+   "fieldname": "round_tables",
+   "fieldtype": "Int",
+   "label": "Round Tables"
+  },
+  {
+   "fieldname": "theme_props_per_table",
+   "fieldtype": "Int",
+   "label": "Theme Props Per Table"
+  },
+  {
+   "fieldname": "chairs",
+   "fieldtype": "Int",
+   "label": "Chairs"
+  },
+  {
+   "fieldname": "sofa_seating",
+   "fieldtype": "Int",
+   "label": "Sofa Seating"
+  },
+  {
+   "fieldname": "console_tables",
+   "fieldtype": "Int",
+   "label": "Console Tables"
+  },
+  {
+   "fieldname": "console_black_masking",
+   "fieldtype": "Check",
+   "label": "Console Black Masking"
+  },
+  {
+   "fieldname": "photographer_riser",
+   "fieldtype": "Int",
+   "label": "Photographer Riser"
+  },
+  {
+   "fieldname": "ceiling_cover_area",
+   "fieldtype": "Float",
+   "label": "Ceiling Cover Area"
+  },
+  {
+   "fieldname": "ceiling_cover_unit",
+   "fieldtype": "Link",
+   "label": "Ceiling Cover Unit",
+   "options": "WD Unit"
+  },
+  {
+   "fieldname": "stall_backdrops",
+   "fieldtype": "Int",
+   "label": "Stall Backdrops"
+  },
+  {
+   "fieldname": "ambience_lighting",
+   "fieldtype": "Data",
+   "label": "Ambience Lighting"
+  },
+  {
+   "fieldname": "artist_stage_riser",
+   "fieldtype": "Data",
+   "label": "Artist Stage Riser"
+  },
+  {
+   "fieldname": "power_cable_connections",
+   "fieldtype": "Small Text",
+   "label": "Power Cable Connections"
+  },
+  {
+   "fieldname": "setup_start",
+   "fieldtype": "Datetime",
+   "label": "Setup Start"
+  },
+  {
+   "fieldname": "ready_by",
+   "fieldtype": "Datetime",
+   "label": "Ready By"
+  },
+  {
+   "fieldname": "strike",
+   "fieldtype": "Datetime",
+   "label": "Strike"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Decor Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

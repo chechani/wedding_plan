@@ -70,8 +70,9 @@
   },
   {
    "fieldname": "vendor_type",
-   "fieldtype": "Data",
-   "label": "Vendor Type"
+   "fieldtype": "Link",
+   "label": "Vendor Type",
+   "options": "WD Vendor Type"
   },
   {
    "fieldname": "column_break_zuwr",

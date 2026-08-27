@@ -9,9 +9,19 @@
  "field_order": [
   "wedding",
   "title",
+  "function_affected",
+  "likelihood",
   "why",
+  "early_warning_sign",
   "mitigation",
+  "backup_plan",
+  "backup_vendor_number",
+  "lead_time_hours",
+  "standby_cost",
   "owner_label",
+  "decision_owner",
+  "tested",
+  "tested_date",
   "severity"
  ],
  "fields": [
@@ -32,14 +42,53 @@
    "reqd": 1
   },
   {
+   "fieldname": "function_affected",
+   "fieldtype": "Link",
+   "label": "Function Affected",
+   "options": "WD Function"
+  },
+  {
+   "fieldname": "likelihood",
+   "fieldtype": "Select",
+   "label": "Likelihood",
+   "options": "Low\nMedium\nHigh"
+  },
+  {
    "fieldname": "why",
    "fieldtype": "Small Text",
    "label": "Why It Bites Here"
   },
   {
+   "fieldname": "early_warning_sign",
+   "fieldtype": "Data",
+   "label": "Early Warning Sign",
+   "description": "What tells you it is starting."
+  },
+  {
    "fieldname": "mitigation",
    "fieldtype": "Small Text",
    "label": "Mitigation"
+  },
+  {
+   "fieldname": "backup_plan",
+   "fieldtype": "Long Text",
+   "label": "Backup Plan"
+  },
+  {
+   "description": "A backup with no phone number is a wish.",
+   "fieldname": "backup_vendor_number",
+   "fieldtype": "Data",
+   "label": "Backup Vendor & Number"
+  },
+  {
+   "fieldname": "lead_time_hours",
+   "fieldtype": "Int",
+   "label": "Lead Time (Hours)"
+  },
+  {
+   "fieldname": "standby_cost",
+   "fieldtype": "Currency",
+   "label": "Standby Cost"
   },
   {
    "fieldname": "owner_label",
@@ -48,11 +97,29 @@
    "label": "Owner"
   },
   {
+   "fieldname": "decision_owner",
+   "fieldtype": "Link",
+   "label": "Decision Owner",
+   "options": "WD Team"
+  },
+  {
+   "description": "An untested backup is not a backup.",
+   "fieldname": "tested",
+   "fieldtype": "Check",
+   "label": "Tested"
+  },
+  {
+   "fieldname": "tested_date",
+   "fieldtype": "Date",
+   "label": "Tested Date"
+  },
+  {
    "default": "Medium",
+   "description": "Also doubles as the spec's \"impact\" rating — severity already captures how bad it is if it happens, likelihood captures how probable it is.",
    "fieldname": "severity",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Severity",
+   "label": "Severity / Impact",
    "options": "Low\nMedium\nHigh"
   }
  ],

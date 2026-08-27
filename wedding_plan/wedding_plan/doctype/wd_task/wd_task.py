@@ -21,6 +21,51 @@ class WDTask(Document):
 		self._resolve_contact()
 		self._apply_status_change()
 
+	def on_update(self):
+		# Must run after the row is actually committed, not from validate():
+		# the detail doctype's `task` field is a Link back to this document,
+		# and Link validation checks the DB — during insert's validate(),
+		# self.name is already assigned in memory but the row itself hasn't
+		# been written yet, so that Link check fails against a task that
+		# "doesn't exist" yet.
+		self._ensure_subtype_detail()
+
+	def _ensure_subtype_detail(self):
+		"""Picking a Sub-type is what 'grows the form' — instead of inlining
+		10-30 fields here, auto-create the linked detail doctype (and clone
+		its checklist template) the first time a subtype is set, so the
+		task drawer can just link out to it. Never re-creates or deletes on
+		a later subtype change — switching subtypes doesn't retroactively
+		touch whatever detail data already exists."""
+		if not self.subtype:
+			return
+
+		detail_doctype = frappe.db.get_value("WD Task Subtype", self.subtype, "detail_doctype")
+		if not detail_doctype:
+			return
+
+		if not frappe.db.exists(detail_doctype, {"task": self.name}):
+			frappe.get_doc({
+				"doctype": detail_doctype,
+				"task": self.name,
+				"wedding": self.wedding,
+			}).insert(ignore_permissions=True)
+
+		if not frappe.db.exists("WD Task Checklist Item", {"task": self.name}):
+			template_items = frappe.get_all(
+				"WD Task Checklist Template Item",
+				filters={"subtype": self.subtype},
+				fields=["item"],
+				order_by="sort_order asc",
+			)
+			for row in template_items:
+				frappe.get_doc({
+					"doctype": "WD Task Checklist Item",
+					"task": self.name,
+					"wedding": self.wedding,
+					"item": row.item,
+				}).insert(ignore_permissions=True)
+
 	def _resolve_assignment(self):
 		required_field = _ASSIGNMENT_FIELD.get(self.assigned_to_type)
 		if self.assigned_to_type and not self.get(required_field):

@@ -1,0 +1,174 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "ritual",
+  "muhurat_start",
+  "muhurat_end",
+  "fixed_or_flexible",
+  "pandit_ji",
+  "number_of_pandits",
+  "dakshina",
+  "samagri_responsibility",
+  "seating_on_mandap",
+  "ritual_sequence_printed",
+  "ritual_sequence_file",
+  "time_allowed_minutes",
+  "prasad_count",
+  "photography_restrictions",
+  "language_of_recitation",
+  "samagri_items"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "ritual",
+   "fieldtype": "Link",
+   "label": "Ritual",
+   "options": "WD Function Type"
+  },
+  {
+   "fieldname": "muhurat_start",
+   "fieldtype": "Datetime",
+   "label": "Muhurat Start"
+  },
+  {
+   "fieldname": "muhurat_end",
+   "fieldtype": "Datetime",
+   "label": "Muhurat End"
+  },
+  {
+   "fieldname": "fixed_or_flexible",
+   "fieldtype": "Select",
+   "label": "Fixed Or Flexible",
+   "options": "Fixed\nFlexible"
+  },
+  {
+   "fieldname": "pandit_ji",
+   "fieldtype": "Link",
+   "label": "Pandit Ji",
+   "options": "WD Vendor"
+  },
+  {
+   "fieldname": "number_of_pandits",
+   "fieldtype": "Int",
+   "label": "Number Of Pandits"
+  },
+  {
+   "fieldname": "dakshina",
+   "fieldtype": "Currency",
+   "label": "Dakshina"
+  },
+  {
+   "fieldname": "samagri_responsibility",
+   "fieldtype": "Select",
+   "label": "Samagri Responsibility",
+   "options": "Family\nPandit\nDecorator"
+  },
+  {
+   "fieldname": "seating_on_mandap",
+   "fieldtype": "Table",
+   "label": "Seating On Mandap",
+   "options": "WD Task Mandap Seating Line"
+  },
+  {
+   "fieldname": "ritual_sequence_printed",
+   "fieldtype": "Check",
+   "label": "Ritual Sequence Printed"
+  },
+  {
+   "fieldname": "ritual_sequence_file",
+   "fieldtype": "Attach",
+   "label": "Ritual Sequence File"
+  },
+  {
+   "fieldname": "time_allowed_minutes",
+   "fieldtype": "Int",
+   "label": "Time Allowed Minutes"
+  },
+  {
+   "fieldname": "prasad_count",
+   "fieldtype": "Int",
+   "label": "Prasad Count"
+  },
+  {
+   "fieldname": "photography_restrictions",
+   "fieldtype": "Data",
+   "label": "Photography Restrictions"
+  },
+  {
+   "fieldname": "language_of_recitation",
+   "fieldtype": "Data",
+   "label": "Language Of Recitation"
+  },
+  {
+   "fieldname": "samagri_items",
+   "fieldtype": "Table",
+   "label": "Samagri Items",
+   "options": "WD Task Samagri Item"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Ritual Muhurat Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

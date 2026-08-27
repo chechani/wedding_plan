@@ -1,0 +1,188 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "wearer",
+  "outfit_type_colour",
+  "designer_shop_contact",
+  "order_date",
+  "trial_1",
+  "trial_2",
+  "final_delivery_date",
+  "alterations_pending",
+  "matching_items",
+  "jewellery_set",
+  "jewellery_file",
+  "safa_pagdi_count",
+  "safa_colour",
+  "kaleere_chooda",
+  "steaming_ironing_done",
+  "packed_in_bag_no",
+  "carried_by",
+  "changing_room_at_venue",
+  "backup_outfit"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "wearer",
+   "fieldtype": "Data",
+   "label": "Wearer"
+  },
+  {
+   "fieldname": "outfit_type_colour",
+   "fieldtype": "Data",
+   "label": "Outfit Type Colour"
+  },
+  {
+   "fieldname": "designer_shop_contact",
+   "fieldtype": "Data",
+   "label": "Designer Shop Contact"
+  },
+  {
+   "fieldname": "order_date",
+   "fieldtype": "Date",
+   "label": "Order Date"
+  },
+  {
+   "fieldname": "trial_1",
+   "fieldtype": "Date",
+   "label": "Trial 1"
+  },
+  {
+   "fieldname": "trial_2",
+   "fieldtype": "Date",
+   "label": "Trial 2"
+  },
+  {
+   "fieldname": "final_delivery_date",
+   "fieldtype": "Date",
+   "label": "Final Delivery Date"
+  },
+  {
+   "fieldname": "alterations_pending",
+   "fieldtype": "Small Text",
+   "label": "Alterations Pending"
+  },
+  {
+   "fieldname": "matching_items",
+   "fieldtype": "Small Text",
+   "label": "Matching Items"
+  },
+  {
+   "fieldname": "jewellery_set",
+   "fieldtype": "Data",
+   "label": "Jewellery Set"
+  },
+  {
+   "fieldname": "jewellery_file",
+   "fieldtype": "Attach",
+   "label": "Jewellery File"
+  },
+  {
+   "fieldname": "safa_pagdi_count",
+   "fieldtype": "Int",
+   "label": "Safa Pagdi Count"
+  },
+  {
+   "fieldname": "safa_colour",
+   "fieldtype": "Data",
+   "label": "Safa Colour"
+  },
+  {
+   "fieldname": "kaleere_chooda",
+   "fieldtype": "Check",
+   "label": "Kaleere Chooda"
+  },
+  {
+   "fieldname": "steaming_ironing_done",
+   "fieldtype": "Check",
+   "label": "Steaming Ironing Done"
+  },
+  {
+   "fieldname": "packed_in_bag_no",
+   "fieldtype": "Data",
+   "label": "Packed In Bag No"
+  },
+  {
+   "fieldname": "carried_by",
+   "fieldtype": "Link",
+   "label": "Carried By",
+   "options": "WD Team"
+  },
+  {
+   "fieldname": "changing_room_at_venue",
+   "fieldtype": "Link",
+   "label": "Changing Room At Venue",
+   "options": "WD Sub Venue"
+  },
+  {
+   "fieldname": "backup_outfit",
+   "fieldtype": "Data",
+   "label": "Backup Outfit"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Outfit Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

@@ -1,0 +1,211 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "setup_ready_time",
+  "pax",
+  "artist",
+  "line_array_tops",
+  "dual_bass",
+  "monitors",
+  "side_fills",
+  "cordless_mics",
+  "cordless_mic_brand",
+  "wired_mics",
+  "collar_lapel_mics",
+  "console_mixer",
+  "sound_operator",
+  "di_boxes",
+  "jack_to_jack",
+  "laptop_connecting_cord",
+  "cdj_player",
+  "extension_boards",
+  "artist_tech_rider",
+  "sound_check_time",
+  "power_arrangement_by",
+  "curfew_time",
+  "decibel_limit"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "setup_ready_time",
+   "fieldtype": "Time",
+   "label": "Setup Ready Time"
+  },
+  {
+   "fieldname": "pax",
+   "fieldtype": "Int",
+   "label": "Pax"
+  },
+  {
+   "fieldname": "artist",
+   "fieldtype": "Data",
+   "label": "Artist"
+  },
+  {
+   "fieldname": "line_array_tops",
+   "fieldtype": "Int",
+   "label": "Line Array Tops"
+  },
+  {
+   "fieldname": "dual_bass",
+   "fieldtype": "Int",
+   "label": "Dual Bass"
+  },
+  {
+   "fieldname": "monitors",
+   "fieldtype": "Int",
+   "label": "Monitors"
+  },
+  {
+   "fieldname": "side_fills",
+   "fieldtype": "Int",
+   "label": "Side Fills"
+  },
+  {
+   "fieldname": "cordless_mics",
+   "fieldtype": "Int",
+   "label": "Cordless Mics"
+  },
+  {
+   "fieldname": "cordless_mic_brand",
+   "fieldtype": "Data",
+   "label": "Cordless Mic Brand"
+  },
+  {
+   "fieldname": "wired_mics",
+   "fieldtype": "Int",
+   "label": "Wired Mics"
+  },
+  {
+   "fieldname": "collar_lapel_mics",
+   "fieldtype": "Int",
+   "label": "Collar Lapel Mics"
+  },
+  {
+   "fieldname": "console_mixer",
+   "fieldtype": "Data",
+   "label": "Console Mixer"
+  },
+  {
+   "fieldname": "sound_operator",
+   "fieldtype": "Data",
+   "label": "Sound Operator"
+  },
+  {
+   "fieldname": "di_boxes",
+   "fieldtype": "Int",
+   "label": "Di Boxes"
+  },
+  {
+   "fieldname": "jack_to_jack",
+   "fieldtype": "Int",
+   "label": "Jack To Jack"
+  },
+  {
+   "fieldname": "laptop_connecting_cord",
+   "fieldtype": "Check",
+   "label": "Laptop Connecting Cord"
+  },
+  {
+   "fieldname": "cdj_player",
+   "fieldtype": "Data",
+   "label": "Cdj Player"
+  },
+  {
+   "fieldname": "extension_boards",
+   "fieldtype": "Int",
+   "label": "Extension Boards"
+  },
+  {
+   "fieldname": "artist_tech_rider",
+   "fieldtype": "Attach",
+   "label": "Artist Tech Rider"
+  },
+  {
+   "fieldname": "sound_check_time",
+   "fieldtype": "Time",
+   "label": "Sound Check Time"
+  },
+  {
+   "fieldname": "power_arrangement_by",
+   "fieldtype": "Select",
+   "label": "Power Arrangement By",
+   "options": "Vendor\nHotel\nUs"
+  },
+  {
+   "fieldname": "curfew_time",
+   "fieldtype": "Time",
+   "label": "Curfew Time"
+  },
+  {
+   "fieldname": "decibel_limit",
+   "fieldtype": "Int",
+   "label": "Decibel Limit"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Sound Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

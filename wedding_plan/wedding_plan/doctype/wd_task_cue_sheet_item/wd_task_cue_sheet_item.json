@@ -1,0 +1,135 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "cue_number",
+  "cue_name",
+  "time_trigger",
+  "music_track_timestamp",
+  "light_cue",
+  "pyro_sfx_cue",
+  "led_content",
+  "who_executes",
+  "standby_call_seconds",
+  "backup_if_fails"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cue_number",
+   "fieldtype": "Data",
+   "label": "Cue Number",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cue_name",
+   "fieldtype": "Data",
+   "label": "Cue Name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "time_trigger",
+   "fieldtype": "Data",
+   "label": "Time Trigger"
+  },
+  {
+   "fieldname": "music_track_timestamp",
+   "fieldtype": "Data",
+   "label": "Music Track Timestamp"
+  },
+  {
+   "fieldname": "light_cue",
+   "fieldtype": "Data",
+   "label": "Light Cue"
+  },
+  {
+   "fieldname": "pyro_sfx_cue",
+   "fieldtype": "Data",
+   "label": "Pyro Sfx Cue"
+  },
+  {
+   "fieldname": "led_content",
+   "fieldtype": "Data",
+   "label": "Led Content"
+  },
+  {
+   "fieldname": "who_executes",
+   "fieldtype": "Small Text",
+   "label": "Who Executes"
+  },
+  {
+   "fieldname": "standby_call_seconds",
+   "fieldtype": "Int",
+   "label": "Standby Call Seconds"
+  },
+  {
+   "fieldname": "backup_if_fails",
+   "fieldtype": "Data",
+   "label": "Backup If Fails"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Cue Sheet Item",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

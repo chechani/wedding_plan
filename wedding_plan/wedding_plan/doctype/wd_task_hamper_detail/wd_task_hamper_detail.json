@@ -1,0 +1,156 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "tier",
+  "recipient_group",
+  "contents",
+  "packing_type_tag",
+  "quantity_to_pack",
+  "packed_by",
+  "packed_date",
+  "stored_at",
+  "delivery_point",
+  "delivered_count",
+  "delivered_photo",
+  "handover_to_finance",
+  "handover_signature"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "tier",
+   "fieldtype": "Link",
+   "label": "Tier",
+   "options": "WD Hamper Tier"
+  },
+  {
+   "fieldname": "recipient_group",
+   "fieldtype": "Table MultiSelect",
+   "label": "Recipient Group",
+   "options": "WD Task Hamper Recipient"
+  },
+  {
+   "fieldname": "contents",
+   "fieldtype": "Table",
+   "label": "Contents",
+   "options": "WD Task Item Line"
+  },
+  {
+   "fieldname": "packing_type_tag",
+   "fieldtype": "Data",
+   "label": "Packing Type Tag"
+  },
+  {
+   "fieldname": "quantity_to_pack",
+   "fieldtype": "Int",
+   "label": "Quantity To Pack"
+  },
+  {
+   "fieldname": "packed_by",
+   "fieldtype": "Link",
+   "label": "Packed By",
+   "options": "WD Team"
+  },
+  {
+   "fieldname": "packed_date",
+   "fieldtype": "Date",
+   "label": "Packed Date"
+  },
+  {
+   "fieldname": "stored_at",
+   "fieldtype": "Link",
+   "label": "Stored At",
+   "options": "WD Store"
+  },
+  {
+   "fieldname": "delivery_point",
+   "fieldtype": "Select",
+   "label": "Delivery Point",
+   "options": "Room before arrival\nWelcome desk\nAirport"
+  },
+  {
+   "fieldname": "delivered_count",
+   "fieldtype": "Int",
+   "label": "Delivered Count"
+  },
+  {
+   "fieldname": "delivered_photo",
+   "fieldtype": "Attach",
+   "label": "Delivered Photo"
+  },
+  {
+   "fieldname": "handover_to_finance",
+   "fieldtype": "Datetime",
+   "label": "Handover To Finance"
+  },
+  {
+   "fieldname": "handover_signature",
+   "fieldtype": "Data",
+   "label": "Handover Signature"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Hamper Detail",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

@@ -1,0 +1,187 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-08-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "task",
+  "mandap_size",
+  "mandap_height",
+  "mandap_style",
+  "mattress_fresh_cover",
+  "chowki",
+  "havan_kund",
+  "havan_kund_detail",
+  "gadi_bichat",
+  "gadi_bichat_area",
+  "low_height_chairs",
+  "centre_aisle",
+  "centre_aisle_length",
+  "seating_mix",
+  "candle_stands",
+  "toran_entry_items",
+  "urli_placement",
+  "samela_tent_size",
+  "groom_sofa_steps",
+  "fire_clearance_indoor_havan"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "WD Task",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "mandap_size",
+   "fieldtype": "Data",
+   "label": "Mandap Size"
+  },
+  {
+   "fieldname": "mandap_height",
+   "fieldtype": "Float",
+   "label": "Mandap Height"
+  },
+  {
+   "fieldname": "mandap_style",
+   "fieldtype": "Select",
+   "label": "Mandap Style",
+   "options": "Open\nFour-pillar\nCanopy\nFloral\nTraditional"
+  },
+  {
+   "fieldname": "mattress_fresh_cover",
+   "fieldtype": "Check",
+   "label": "Mattress Fresh Cover"
+  },
+  {
+   "fieldname": "chowki",
+   "fieldtype": "Int",
+   "label": "Chowki"
+  },
+  {
+   "fieldname": "havan_kund",
+   "fieldtype": "Check",
+   "label": "Havan Kund"
+  },
+  {
+   "fieldname": "havan_kund_detail",
+   "fieldtype": "Data",
+   "label": "Havan Kund Detail"
+  },
+  {
+   "fieldname": "gadi_bichat",
+   "fieldtype": "Check",
+   "label": "Gadi Bichat"
+  },
+  {
+   "fieldname": "gadi_bichat_area",
+   "fieldtype": "Float",
+   "label": "Gadi Bichat Area"
+  },
+  {
+   "fieldname": "low_height_chairs",
+   "fieldtype": "Int",
+   "label": "Low Height Chairs"
+  },
+  {
+   "fieldname": "centre_aisle",
+   "fieldtype": "Check",
+   "label": "Centre Aisle"
+  },
+  {
+   "fieldname": "centre_aisle_length",
+   "fieldtype": "Float",
+   "label": "Centre Aisle Length"
+  },
+  {
+   "fieldname": "seating_mix",
+   "fieldtype": "Data",
+   "label": "Seating Mix"
+  },
+  {
+   "fieldname": "candle_stands",
+   "fieldtype": "Int",
+   "label": "Candle Stands"
+  },
+  {
+   "fieldname": "toran_entry_items",
+   "fieldtype": "Check",
+   "label": "Toran Entry Items"
+  },
+  {
+   "fieldname": "urli_placement",
+   "fieldtype": "Data",
+   "label": "Urli Placement"
+  },
+  {
+   "fieldname": "samela_tent_size",
+   "fieldtype": "Data",
+   "label": "Samela Tent Size"
+  },
+  {
+   "fieldname": "groom_sofa_steps",
+   "fieldtype": "Int",
+   "label": "Groom Sofa Steps"
+  },
+  {
+   "fieldname": "fire_clearance_indoor_havan",
+   "fieldtype": "Check",
+   "label": "Fire Clearance Indoor Havan"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Task Mandap Decor",
+ "owner": "Administrator",
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "allow_rename": 1,
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Wedding Planner",
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "autoname": "hash",
+ "rows_threshold_for_grid_search": 20
+}

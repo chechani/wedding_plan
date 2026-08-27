@@ -22,8 +22,6 @@ from frappe.utils import today
 
 from wedding_plan.task_logic import resolve_contact_point
 
-STATUSES = ["Not Started", "In Progress", "Blocked", "Done", "Cancelled"]
-
 
 def _enrich(tasks):
 	function_ids = {t.function for t in tasks if t.function}
@@ -104,16 +102,22 @@ def task_board(wedding, function=None, category=None, status=None, assigned_to_t
 			"name",
 			"title",
 			"category",
+			"subtype",
 			"status",
 			"priority",
 			"function",
 			"venue",
 			"due_date",
 			"completed_date",
+			"depends_on_task",
 			"assigned_to_type",
 			"assigned_team",
 			"assigned_vendor",
 			"assigned_person",
+			"shadow_backup",
+			"vendor",
+			"estimated_cost",
+			"actual_cost",
 			"blocked_reason",
 			"description",
 		],
@@ -128,7 +132,7 @@ def task_dashboard_stats(wedding):
 
 	tasks = frappe.get_all("WD Task", filters={"wedding": wedding}, fields=["name", "status", "category", "function", "due_date"])
 
-	by_status = {s: 0 for s in STATUSES}
+	by_status = {s: 0 for s in frappe.get_all("WD Task Status", pluck="name")}
 	by_category = {}
 	overdue = 0
 	for t in tasks:
@@ -193,3 +197,26 @@ def bulk_update_task_status(wedding, task_names, status, blocked_reason=None):
 		"failed": len([r for r in results if not r["ok"]]),
 		"results": results,
 	}
+
+
+@frappe.whitelist()
+def get_task_subtype_detail(task):
+	"""Backs the task drawer's "Open <Subtype> Detail Sheet ->" link.
+	Returns {doctype, name} for the auto-created detail record (see
+	WDTask._ensure_subtype_detail), or None if the task has no subtype
+	or the subtype has no structured detail sheet."""
+	wedding, subtype = frappe.db.get_value("WD Task", task, ["wedding", "subtype"])
+	frappe.has_permission("Wedding", doc=wedding, throw=True)
+
+	if not subtype:
+		return None
+
+	detail_doctype = frappe.db.get_value("WD Task Subtype", subtype, "detail_doctype")
+	if not detail_doctype:
+		return None
+
+	name = frappe.db.get_value(detail_doctype, {"task": task}, "name")
+	if not name:
+		return None
+
+	return {"doctype": detail_doctype, "name": name}
