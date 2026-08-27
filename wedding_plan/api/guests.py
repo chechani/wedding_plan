@@ -27,7 +27,7 @@ def function_headcount_stats(wedding, function=None):
 		if key in bucket:
 			bucket[key] += 1
 
-	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_name"], order_by="date asc")
+	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_type"], order_by="date asc")
 	if function:
 		functions = [f for f in functions if f.name == function]
 
@@ -46,7 +46,7 @@ def function_headcount_stats(wedding, function=None):
 	return [
 		{
 			"function": f.name,
-			"function_name": f.function_name,
+			"function_type": f.function_type,
 			"households_invited": household_invite_counts.get(f.name, 0),
 			**by_function.get(f.name, {"invited": 0, "confirmed": 0, "declined": 0, "attended": 0, "no_show": 0, "total_members": 0}),
 		}

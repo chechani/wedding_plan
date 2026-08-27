@@ -135,11 +135,11 @@ def get_my_functions():
 		filters={"guest_member": member.name},
 		fields=["function", "status", "meal_preference"],
 	)
-	function_names = {
-		f.name: f.function_name
-		for f in frappe.get_all("WD Function", filters={"name": ["in", [r.function for r in rows]]}, fields=["name", "function_name"])
+	function_types = {
+		f.name: f.function_type
+		for f in frappe.get_all("WD Function", filters={"name": ["in", [r.function for r in rows]]}, fields=["name", "function_type"])
 	}
-	return [{"function": r.function, "function_name": function_names.get(r.function), "status": r.status, "meal_preference": r.meal_preference} for r in rows]
+	return [{"function": r.function, "function_type": function_types.get(r.function), "status": r.status, "meal_preference": r.meal_preference} for r in rows]
 
 
 @frappe.whitelist()

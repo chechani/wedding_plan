@@ -28,10 +28,10 @@ def _enrich(items):
 			team_names[row.name] = row.team_name
 
 	function_ids = {i.function for i in items if i.function}
-	function_names = {}
+	function_types = {}
 	if function_ids:
-		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_name"]):
-			function_names[row.name] = row.function_name
+		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_type"]):
+			function_types[row.name] = row.function_type
 
 	responsible_name_by_type = {"Team": team_names, "Vendor": vendor_names}
 	responsible_field_by_type = {"Team": "responsible_team", "Vendor": "responsible_vendor"}
@@ -57,7 +57,7 @@ def _enrich(items):
 		out.append(
 			{
 				**i,
-				"function_name": function_names.get(i.function),
+				"function_type": function_types.get(i.function),
 				"responsible_name": responsible_name,
 				"contact_name": contact["contact_name"],
 				"contact_phone": contact["contact_phone"],
@@ -117,11 +117,11 @@ def function_readiness_stats(wedding):
 		if i.status == "Ready":
 			ready_by_function[i.function] = ready_by_function.get(i.function, 0) + 1
 
-	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_name"], order_by="date asc")
+	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_type"], order_by="date asc")
 	return [
 		{
 			"function": f.name,
-			"function_name": f.function_name,
+			"function_type": f.function_type,
 			"total": total_by_function.get(f.name, 0),
 			"ready": ready_by_function.get(f.name, 0),
 		}

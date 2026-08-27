@@ -30,10 +30,16 @@ SUB_GROUPS = [
     "Govt officials", "Indore doctors",
 ]
 
+# function_type must match an existing WD Function Type record exactly (it's
+# a Link, required, and this global list isn't seeded by this script). The
+# original schedule also had "Home 19" (a family day, no formal function)
+# and "Carnival 21" (an evening event with no matching standard type) —
+# dropped rather than invented, since WD Function Type is a shared,
+# curated list across every wedding, not this one wedding's to extend.
 FUNCTIONS = [
-    ("Mehendi 18", "2025-12-18"), ("Home 19", "2025-12-19"), ("Myra 20", "2025-12-20"),
-    ("Birthday + Sangeet 20", "2025-12-20"), ("Carnival 21", "2025-12-21"), ("Reception 21", "2025-12-21"),
-    ("Phera 22", "2025-12-22"), ("Bidai 22", "2025-12-22"),
+    ("Mehendi", "2025-12-18"), ("Mayra / Bhaat", "2025-12-20"),
+    ("Sangeet", "2025-12-20"), ("Reception", "2025-12-21"),
+    ("Phera / Vivaah", "2025-12-22"), ("Bidai", "2025-12-22"),
 ]
 
 VENUES = [
@@ -42,32 +48,32 @@ VENUES = [
     ("Home & Buddy's", "Indore", 0, "18-19 Dec base — mehendi at Buddy's, all meals at home on the 19th, arrival hub."),
 ]
 
-# n, ph, ad, city, cat, sub, p, pat, stay, ven, pick, own, f (function names)
+# n, ph, ad, city, cat, sub, p, pat, stay, ven, pick, own, f (function types)
 GUESTS = [
     ("Vora parivaar — Tau ji", "+91 98260 00001", "Indore", "Indore", "Local", "Vora family", 6, "Handed", 1, "Kailasha Resort", "Self", "Dr. Vinod ji",
-     ["Mehendi 18", "Home 19", "Myra 20", "Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22", "Bidai 22"]),
+     ["Mehendi", "Mayra / Bhaat", "Sangeet", "Reception", "Phera / Vivaah", "Bidai"]),
     ("Parekh parivaar — Durg", "+91 94255 00002", "Durg, Chhattisgarh", "Durg", "Outstation", "Vora family", 280, "Handed", 1, "Golden Yug", "Bus from Durg", "Groom side",
-     ["Myra 20", "Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22", "Bidai 22"]),
+     ["Mayra / Bhaat", "Sangeet", "Reception", "Phera / Vivaah", "Bidai"]),
     ("Dr. Mehta & family", "+91 98931 00003", "Indore", "Indore", "Local", "Indore doctors", 2, "Pending", 0, None, "Self", "Dr. Rahul",
-     ["Reception 21", "Phera 22"]),
+     ["Reception", "Phera / Vivaah"]),
     ("Shah parivaar", "+91 94220 00004", "Manmad, Maharashtra", "Manmad", "Outstation", "Manmad parivaar", 8, "Couriered", 1, "Kailasha Resort", "Indore Junction", "Preeti ji",
-     ["Mehendi 18", "Home 19", "Myra 20", "Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22", "Bidai 22"]),
+     ["Mehendi", "Mayra / Bhaat", "Sangeet", "Reception", "Phera / Vivaah", "Bidai"]),
     ("Jain Samaj — Shri Sanghvi ji", "+91 98270 00005", "Indore", "Indore", "Local", "Jain Samaj invitees", 4, "Handed", 0, None, "Self", "Dr. Vinod ji",
-     ["Reception 21", "Phera 22"]),
+     ["Reception", "Phera / Vivaah"]),
     ("Riya's college group", "+91 90390 00006", "Mumbai / Pune", "Mumbai", "Outstation", "Riya's friends", 6, "Digital Only", 1, "Kailasha Resort", "Airport", "Riya",
-     ["Mehendi 18", "Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22"]),
+     ["Mehendi", "Sangeet", "Reception", "Phera / Vivaah"]),
     ("Sahaj Hospital team", "+91 73100 00007", "Indore", "Indore", "Local", "Sahaj Hospital parivaar", 24, "Handed", 0, None, "Shuttle from Indore", "Dr. Vinod ji",
-     ["Reception 21"]),
+     ["Reception"]),
     ("Collector office — protocol list", None, "Indore", "Indore", "Local", "Govt officials", 6, "Handed", 0, None, "Self", "Dr. Vinod ji",
-     ["Reception 21"]),
+     ["Reception"]),
     ("Jalna parivaar — Doshi", "+91 94230 00008", "Jalna, Maharashtra", "Jalna", "Outstation", "Jalna parivaar", 7, "Couriered", 1, "Kailasha Resort", "Indore Junction", "Preeti ji",
-     ["Myra 20", "Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22", "Bidai 22"]),
+     ["Mayra / Bhaat", "Sangeet", "Reception", "Phera / Vivaah", "Bidai"]),
     ("Jamner parivaar — Kothari", "+91 94040 00009", "Jamner, Maharashtra", "Jamner", "Outstation", "Jamner parivaar", 5, "Pending", 1, "Kailasha Resort", "Bus stand", "Preeti ji",
-     ["Birthday + Sangeet 20", "Carnival 21", "Reception 21", "Phera 22"]),
+     ["Sangeet", "Reception", "Phera / Vivaah"]),
     ("Business associates — textile", "+91 98261 00010", "Indore", "Indore", "Local", "Business friends", 10, "Pending", 0, None, "Self", "Dr. Vinod ji",
-     ["Reception 21"]),
+     ["Reception"]),
     ("Preeti ji's mandal", "+91 98932 00011", "Indore", "Indore", "Local", "Preeti ji's friends", 12, "Handed", 0, None, "Shuttle from Indore", "Preeti ji",
-     ["Mehendi 18", "Birthday + Sangeet 20", "Reception 21"]),
+     ["Mehendi", "Sangeet", "Reception"]),
 ]
 
 # key, name, role_label, scope
@@ -163,7 +169,7 @@ def build_workbook() -> Workbook:
 
     _sheet(wb, "SubGroups", ["sub_group_name"], [(s,) for s in SUB_GROUPS])
     _sheet(wb, "Venues", ["venue_name", "location", "rooms_total", "notes"], VENUES)
-    _sheet(wb, "Functions", ["function_name", "date"], FUNCTIONS)
+    _sheet(wb, "Functions", ["function_type", "date"], FUNCTIONS)
     _sheet(wb, "Guests", [
         "household_name", "primary_phone", "address", "city", "category", "sub_group", "pax",
         "patrika_status", "stay_required", "venue", "pickup_point", "owner_in_family", "functions_invited",

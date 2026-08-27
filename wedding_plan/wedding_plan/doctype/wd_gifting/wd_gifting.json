@@ -8,7 +8,6 @@
  "field_order": [
   "guest",
   "guest_member",
-  "household",
   "gift_item",
   "wedding"
  ],
@@ -28,11 +27,6 @@
    "fieldtype": "Link",
    "label": "Guest Member",
    "options": "WD Guest Member"
-  },
-  {
-   "fieldname": "household",
-   "fieldtype": "Data",
-   "label": "Household"
   },
   {
    "fieldname": "gift_item",

@@ -27,10 +27,10 @@ STATUSES = ["Not Started", "In Progress", "Blocked", "Done", "Cancelled"]
 
 def _enrich(tasks):
 	function_ids = {t.function for t in tasks if t.function}
-	function_names = {}
+	function_types = {}
 	if function_ids:
-		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_name"]):
-			function_names[row.name] = row.function_name
+		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_type"]):
+			function_types[row.name] = row.function_type
 
 	vendor_ids = {t.assigned_vendor for t in tasks if t.assigned_vendor}
 	vendor_names = {}
@@ -69,7 +69,7 @@ def _enrich(tasks):
 		out.append(
 			{
 				**t,
-				"function_name": function_names.get(t.function),
+				"function_type": function_types.get(t.function),
 				"assignee_name": assignee_name,
 				"contact_name": contact["contact_name"],
 				"contact_phone": contact["contact_phone"],
@@ -146,11 +146,11 @@ def task_dashboard_stats(wedding):
 		if t.status == "Done":
 			done_counts_by_function[t.function] = done_counts_by_function.get(t.function, 0) + 1
 
-	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_name"], order_by="date asc")
+	functions = frappe.get_all("WD Function", filters={"wedding": wedding}, fields=["name", "function_type"], order_by="date asc")
 	by_function = [
 		{
 			"function": f.name,
-			"function_name": f.function_name,
+			"function_type": f.function_type,
 			"task_count": task_counts_by_function.get(f.name, 0),
 			"done_count": done_counts_by_function.get(f.name, 0),
 		}
