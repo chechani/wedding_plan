@@ -14,6 +14,7 @@
   "start_time",
   "end_time",
   "venue",
+  "sub_venue",
   "notes"
  ],
  "fields": [
@@ -63,6 +64,14 @@
    "fieldtype": "Link",
    "label": "Venue",
    "options": "WD Venue"
+  },
+  {
+   "depends_on": "eval:doc.venue",
+   "description": "Filtered to sub-venues under the selected Venue.",
+   "fieldname": "sub_venue",
+   "fieldtype": "Link",
+   "label": "Sub Venue",
+   "options": "WD Sub Venue"
   },
   {
    "fieldname": "notes",
