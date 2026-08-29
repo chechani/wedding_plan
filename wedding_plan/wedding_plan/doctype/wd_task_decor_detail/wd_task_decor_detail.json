@@ -170,8 +170,9 @@
   },
   {
    "fieldname": "dance_floor_size",
-   "fieldtype": "Data",
-   "label": "Dance Floor Size"
+   "fieldtype": "Select",
+   "label": "Dance Floor Size",
+   "options": "16x16\n20x16\n24x24"
   },
   {
    "fieldname": "dance_floor_finish",

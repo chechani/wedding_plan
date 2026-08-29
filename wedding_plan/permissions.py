@@ -26,6 +26,12 @@ READONLY_ROLES = {"Family Readonly", "Shadow Readonly"}
 # non-readonly member can write). Mirrors erpnext-whatsapp-plan.md's B5
 # roles-and-permissions table.
 ROLE_WRITE_REQUIREMENTS = {
+    # Membership rows grant access itself — without this entry, any
+    # non-readonly member could write "Wedding Member" directly (bypassing
+    # add_wedding_member's own Owner/Event Director check) and hand
+    # themselves or an accomplice the Owner role. Only Owner/Event Director
+    # may create/edit membership.
+    "Wedding Member": {"Owner", "Event Director"},
     "WD Meal Session": {"Catering Liaison", "Venue Commander"},
     "WD Convoy Leg": {"Convoy Controller"},
     "WD Pickup": {"Convoy Controller"},

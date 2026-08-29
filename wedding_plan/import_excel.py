@@ -54,8 +54,6 @@ SHEETS = [
      "links": {"function": ("WD Function", "function_type"), "venue": ("WD Venue", "venue_name")}},
     {"doctype": "WD Anchor Brief", "sheet_name": "AnchorBriefs", "natural_key": ["function"],
      "links": {"function": ("WD Function", "function_type")}},
-    {"doctype": "WD Tech Requirement", "sheet_name": "TechRequirements", "natural_key": ["function"],
-     "links": {"function": ("WD Function", "function_type")}},
     {"doctype": "WD Meal Session", "sheet_name": "MealSessions", "natural_key": ["date", "session_name", "venue"],
      "links": {"venue": ("WD Venue", "venue_name"), "vendor": ("WD Vendor", "vendor_name")}},
     {"doctype": "WD Vehicle", "sheet_name": "Vehicles", "natural_key": ["vehicle_number"],
@@ -208,7 +206,7 @@ def run_import(wedding: str, file_path: str, import_job: str = None):
 
     if import_job:
         frappe.db.set_value("WD Import Job", import_job, {
-            "status": "Done" if totals["rows_failed"] == 0 else "Done",
+            "status": "Done" if totals["rows_failed"] == 0 else "Failed",
             "rows_total": totals["rows_total"],
             "rows_succeeded": totals["rows_succeeded"],
             "rows_failed": totals["rows_failed"],

@@ -6,7 +6,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
 
-from wedding_plan.task_logic import resolve_contact_point
+from wedding_plan.task_logic import enforce_polymorphic_assignment, resolve_contact_point
 
 _ASSIGNMENT_FIELD = {
 	"Team": "assigned_team",
@@ -28,7 +28,14 @@ class WDTask(Document):
 		# self.name is already assigned in memory but the row itself hasn't
 		# been written yet, so that Link check fails against a task that
 		# "doesn't exist" yet.
-		self._ensure_subtype_detail()
+		#
+		# Only worth re-checking when subtype could plausibly be new (this
+		# doc was just created, or subtype itself just changed) — otherwise
+		# every routine status/date edit on an existing task ran two
+		# `frappe.db.exists` checks whose answer can't have changed since
+		# last save.
+		if self.is_new() or self.has_value_changed("subtype"):
+			self._ensure_subtype_detail()
 
 	def _ensure_subtype_detail(self):
 		"""Picking a Sub-type is what 'grows the form' — instead of inlining
@@ -67,13 +74,7 @@ class WDTask(Document):
 				}).insert(ignore_permissions=True)
 
 	def _resolve_assignment(self):
-		required_field = _ASSIGNMENT_FIELD.get(self.assigned_to_type)
-		if self.assigned_to_type and not self.get(required_field):
-			frappe.throw(_("Select {0} for this task's assignment.").format(required_field))
-
-		for other_type, field in _ASSIGNMENT_FIELD.items():
-			if other_type != self.assigned_to_type:
-				self.set(field, None)
+		enforce_polymorphic_assignment(self, self.assigned_to_type, _ASSIGNMENT_FIELD, "this task's assignment")
 
 	def _resolve_contact(self):
 		contact = resolve_contact_point(

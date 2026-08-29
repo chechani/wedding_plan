@@ -79,6 +79,6 @@
    "write": 1
   }
  ],
- "autoname": "field:store_name",
+ "autoname": "hash",
  "rows_threshold_for_grid_search": 20
 }

@@ -25,6 +25,13 @@ class WDGuestMemberFunction(Document):
 			self.meal_preference = frappe.db.get_value("WD Guest Member", self.guest_member, "dietary")
 
 	def _check_duplicate(self):
+		# WDGuest._sync_member_attendance (wd_guest.py) already computes the
+		# full set of existing (guest_member, function) pairs in one query
+		# before looping — every row it inserts is one it already confirmed
+		# isn't a duplicate, so it sets this flag to skip re-running the same
+		# check per row.
+		if self.flags.skip_duplicate_check:
+			return
 		duplicate = frappe.db.exists(
 			"WD Guest Member Function",
 			{

@@ -308,7 +308,7 @@ def ensure_invitation_tasks(wedding, household=None):
 		for c in channels:
 			if (h, c) in existing_pairs:
 				continue
-			frappe.get_doc(
+			doc = frappe.get_doc(
 				{
 					"doctype": "WD Invitation Task",
 					"wedding": wedding,
@@ -316,7 +316,12 @@ def ensure_invitation_tasks(wedding, household=None):
 					"channel": c,
 					"status": "Not Required",
 				}
-			).insert()
+			)
+			# Already confirmed against existing_pairs above — see the flag's
+			# own comment on WDInvitationTask._check_duplicate for why this
+			# skips a redundant per-row duplicate query.
+			doc.flags.skip_duplicate_check = True
+			doc.insert()
 			created += 1
 
 	return {"created": created}
@@ -496,9 +501,19 @@ def record_doorstep_delivery(wedding, household, outcome, received_by=None, note
 	status string from the client)."""
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
-	is_success = "✓" in outcome or "family member" in outcome
-	is_wrong_address = "Wrong" in outcome
-	status = "Delivered" if is_success else "Failed" if is_wrong_address else "Sent"
+	# Exact match against the frontend's fixed outcome buttons (see
+	# FieldCaptureMobile.tsx) rather than substring checks — a prior version
+	# checked "✓"/"family member" before "Wrong", so an outcome combining
+	# both (e.g. a future "Wrong address — left with family member" option)
+	# would have silently classified as Delivered instead of Failed.
+	OUTCOME_STATUS = {
+		"Met in person ✓": "Delivered",
+		"Given to family member": "Delivered",
+		"Nobody home": "Sent",
+		"Wrong address": "Failed",
+	}
+	is_wrong_address = outcome == "Wrong address"
+	status = OUTCOME_STATUS.get(outcome, "Sent")
 
 	task = update_invitation_task(
 		wedding,

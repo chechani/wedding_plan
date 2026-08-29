@@ -37,7 +37,7 @@ class WDGuest(Document):
 			for function in invited_functions:
 				if (member, function) in existing:
 					continue
-				frappe.get_doc(
+				doc = frappe.get_doc(
 					{
 						"doctype": "WD Guest Member Function",
 						"wedding": self.wedding,
@@ -46,4 +46,8 @@ class WDGuest(Document):
 						"function": function,
 						"status": "Invited",
 					}
-				).insert(ignore_permissions=True)
+				)
+				# Already confirmed against `existing` above — see the flag's
+				# own comment on WDGuestMemberFunction._check_duplicate.
+				doc.flags.skip_duplicate_check = True
+				doc.insert(ignore_permissions=True)

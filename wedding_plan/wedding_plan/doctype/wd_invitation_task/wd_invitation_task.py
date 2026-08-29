@@ -23,6 +23,14 @@ class WDInvitationTask(Document):
 		self._apply_status_change()
 
 	def _check_duplicate(self):
+		# ensure_invitation_tasks (api/invitations.py) already computes the
+		# full set of existing (household, channel) pairs in one query before
+		# looping — every row it inserts is one it already confirmed isn't a
+		# duplicate, so it sets this flag to skip re-running the same check
+		# per row (was a redundant `frappe.db.exists` per insert on top of
+		# the batch it just did).
+		if self.flags.skip_duplicate_check:
+			return
 		duplicate = frappe.db.exists(
 			"WD Invitation Task",
 			{

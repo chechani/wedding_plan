@@ -9,6 +9,9 @@ import frappe
 
 @frappe.whitelist()
 def function_headcount_stats(wedding, function=None):
+	"""Per-function attendance breakdown (invited/confirmed/declined/
+	attended/no_show member counts) — one row per WD Function, or a single
+	row when `function` narrows to one. Backs the Attendance dashboard."""
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
 	filters = {"wedding": wedding}

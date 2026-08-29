@@ -17,11 +17,6 @@ from frappe import _
 
 STATUSES = ["Not Required", "Planned", "Sent", "Delivered", "Acknowledged", "Failed"]
 
-# Relative order for "forward progress" comparisons. Failed is intentionally
-# not part of the line — it's reachable from any in-progress status and only
-# ever resolves back to Planned (redo) or Not Required (cancel).
-_ORDER = {"Not Required": 0, "Planned": 1, "Sent": 2, "Delivered": 3, "Acknowledged": 4}
-
 # Explicit allow-list of (from -> set of valid to). Forward skips are allowed
 # (e.g. Not Required -> Delivered, for backfilling a channel that was already
 # done before the tracker existed); moving backwards without going through
@@ -47,10 +42,6 @@ def validate_transition(from_status, to_status):
 		frappe.throw(
 			_("Can't move an invitation task from {0} to {1} directly.").format(from_status, to_status)
 		)
-
-
-def is_forward_move(from_status, to_status):
-	return _ORDER.get(to_status, -1) > _ORDER.get(from_status, -1)
 
 
 def channel_terminal_statuses(acknowledgement_required):

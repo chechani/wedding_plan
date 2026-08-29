@@ -6,7 +6,8 @@ from frappe import _
 from wedding_plan.whatsapp.whatsform_client import send_text, send_template
 
 
-def _log(wedding, template_key, to_phone, payload, status, provider_message_id=None):
+def _log(wedding, template_key, to_phone, payload, result, provider_message_id=None):
+    status = "SENT" if not result.get("dry_run") else "DRY_RUN"
     frappe.get_doc({
         "doctype": "WD WhatsApp Message Log",
         "wedding": wedding,
@@ -22,10 +23,13 @@ def _log(wedding, template_key, to_phone, payload, status, provider_message_id=N
 
 @frappe.whitelist()
 def whatsapp_send_text(wedding, to_phone, message):
-    if not frappe.has_permission("Wedding", "read", doc=wedding):
+    # "write" (not "read") — sending a message is a write-ish action with
+    # real cost/guest-facing impact, so read-only roles (Family Readonly,
+    # Shadow Readonly) must not be able to trigger it.
+    if not frappe.has_permission("Wedding", "write", doc=wedding):
         frappe.throw(_("Not permitted"))
     result = send_text(to_phone, message)
-    _log(wedding, None, to_phone, {"message": message}, "SENT", result.get("message"))
+    _log(wedding, None, to_phone, {"message": message}, result, result.get("message"))
     return result
 
 
@@ -34,7 +38,7 @@ def whatsapp_send_template(wedding, to_phones, template_key, components=None):
     """to_phones: list (or comma-separated string) of numbers to send the
     approved template to in one call — matches whatsform.in's
     send_template_to_multiple_numbers shape directly."""
-    if not frappe.has_permission("Wedding", "read", doc=wedding):
+    if not frappe.has_permission("Wedding", "write", doc=wedding):
         frappe.throw(_("Not permitted"))
     if isinstance(to_phones, str):
         to_phones = [p.strip() for p in to_phones.split(",") if p.strip()]
@@ -43,5 +47,5 @@ def whatsapp_send_template(wedding, to_phones, template_key, components=None):
 
     result = send_template(template_key, to_phones, components)
     for phone in to_phones:
-        _log(wedding, template_key, phone, {"components": components}, "SENT", result.get("message"))
+        _log(wedding, template_key, phone, {"components": components}, result, result.get("message"))
     return result

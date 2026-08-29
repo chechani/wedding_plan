@@ -9,29 +9,15 @@ task_dashboard_stats().
 """
 import frappe
 
-from wedding_plan.task_logic import resolve_contact_point
+from wedding_plan.task_logic import batch_lookup_titles, resolve_contact_point, resolve_polymorphic_name
 
 STATUSES = ["Pending", "In Progress", "Ready", "Blocked"]
 
 
 def _enrich(items):
-	vendor_ids = {i.responsible_vendor for i in items if i.responsible_vendor}
-	vendor_names = {}
-	if vendor_ids:
-		for row in frappe.get_all("WD Vendor", filters={"name": ["in", list(vendor_ids)]}, fields=["name", "vendor_name"]):
-			vendor_names[row.name] = row.vendor_name
-
-	team_ids = {i.responsible_team for i in items if i.responsible_team}
-	team_names = {}
-	if team_ids:
-		for row in frappe.get_all("WD Team", filters={"name": ["in", list(team_ids)]}, fields=["name", "team_name"]):
-			team_names[row.name] = row.team_name
-
-	function_ids = {i.function for i in items if i.function}
-	function_types = {}
-	if function_ids:
-		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_type"]):
-			function_types[row.name] = row.function_type
+	vendor_names = batch_lookup_titles("WD Vendor", (i.responsible_vendor for i in items), "vendor_name")
+	team_names = batch_lookup_titles("WD Team", (i.responsible_team for i in items), "team_name")
+	function_types = batch_lookup_titles("WD Function", (i.function for i in items), "function_type")
 
 	responsible_name_by_type = {"Team": team_names, "Vendor": vendor_names}
 	responsible_field_by_type = {"Team": "responsible_team", "Vendor": "responsible_vendor"}
@@ -49,10 +35,7 @@ def _enrich(items):
 			assigned_team=i.responsible_team,
 			assigned_vendor=i.responsible_vendor,
 		)
-		responsible_name = None
-		if i.responsible_type:
-			ref = i.get(responsible_field_by_type[i.responsible_type])
-			responsible_name = responsible_name_by_type[i.responsible_type].get(ref)
+		responsible_name = resolve_polymorphic_name(i.responsible_type, responsible_field_by_type, i, responsible_name_by_type)
 
 		out.append(
 			{
@@ -69,6 +52,9 @@ def _enrich(items):
 
 @frappe.whitelist()
 def checklist_board(wedding, function=None, category=None, status=None, responsible_type=None):
+	"""List view behind the Function Readiness board — every checklist item
+	for the wedding (optionally narrowed by function/category/status/
+	responsible_type), enriched with responsible-party name and contact."""
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
 	filters = {"wedding": wedding}
@@ -104,6 +90,9 @@ def checklist_board(wedding, function=None, category=None, status=None, responsi
 
 @frappe.whitelist()
 def function_readiness_stats(wedding):
+	"""Per-function checklist completion — total items vs. items marked
+	Ready, one row per WD Function, ordered by date. Backs the readiness
+	summary tiles above the checklist board."""
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
 	items = frappe.get_all("WD Function Checklist Item", filters={"wedding": wedding}, fields=["name", "function", "status"])

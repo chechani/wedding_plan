@@ -11,7 +11,10 @@ def download_import_template():
     """GET /api/method/wedding_plan.api.download_import_template
     Returns a blank .xlsx with one sheet per importable doctype, headers
     matching the live field list — so the sheet template can never drift
-    from what run_import() actually accepts."""
+    from what run_import() actually accepts.
+    Intentionally has no frappe.has_permission gate (unlike every other
+    endpoint in this module) — it exposes only field-name schema, no
+    tenant data, so any authenticated caller may download it."""
     wb = build_template_workbook()
     buf = io.BytesIO()
     wb.save(buf)
@@ -29,6 +32,13 @@ def import_excel(wedding, file_url):
         frappe.throw(_("Not permitted to import into this wedding"))
 
     file_doc = frappe.get_doc("File", {"file_url": file_url})
+    # file_url is a hash-like path, not a secret — without this check any
+    # caller who can write to *some* wedding could read the content of a
+    # file uploaded (and privately owned) by a different tenant simply by
+    # guessing/observing its URL. Only the uploader (or a System Manager)
+    # may import it.
+    if file_doc.owner != frappe.session.user and "System Manager" not in frappe.get_roles():
+        frappe.throw(_("Not permitted to use this file"))
     file_path = file_doc.get_full_path()
 
     job = frappe.get_doc({

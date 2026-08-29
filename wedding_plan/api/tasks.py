@@ -20,33 +20,14 @@ import frappe
 from frappe import _
 from frappe.utils import today
 
-from wedding_plan.task_logic import resolve_contact_point
+from wedding_plan.task_logic import batch_lookup_titles, resolve_contact_point, resolve_polymorphic_name
 
 
 def _enrich(tasks):
-	function_ids = {t.function for t in tasks if t.function}
-	function_types = {}
-	if function_ids:
-		for row in frappe.get_all("WD Function", filters={"name": ["in", list(function_ids)]}, fields=["name", "function_type"]):
-			function_types[row.name] = row.function_type
-
-	vendor_ids = {t.assigned_vendor for t in tasks if t.assigned_vendor}
-	vendor_names = {}
-	if vendor_ids:
-		for row in frappe.get_all("WD Vendor", filters={"name": ["in", list(vendor_ids)]}, fields=["name", "vendor_name"]):
-			vendor_names[row.name] = row.vendor_name
-
-	team_ids = {t.assigned_team for t in tasks if t.assigned_team}
-	team_names = {}
-	if team_ids:
-		for row in frappe.get_all("WD Team", filters={"name": ["in", list(team_ids)]}, fields=["name", "team_name"]):
-			team_names[row.name] = row.team_name
-
-	person_ids = {t.assigned_person for t in tasks if t.assigned_person}
-	person_names = {}
-	if person_ids:
-		for row in frappe.get_all("User", filters={"name": ["in", list(person_ids)]}, fields=["name", "full_name"]):
-			person_names[row.name] = row.full_name
+	function_types = batch_lookup_titles("WD Function", (t.function for t in tasks), "function_type")
+	vendor_names = batch_lookup_titles("WD Vendor", (t.assigned_vendor for t in tasks), "vendor_name")
+	team_names = batch_lookup_titles("WD Team", (t.assigned_team for t in tasks), "team_name")
+	person_names = batch_lookup_titles("User", (t.assigned_person for t in tasks), "full_name")
 
 	assignee_name_by_type = {"Team": team_names, "Vendor": vendor_names, "Person": person_names}
 	assignee_field_by_type = {"Team": "assigned_team", "Vendor": "assigned_vendor", "Person": "assigned_person"}
@@ -59,10 +40,7 @@ def _enrich(tasks):
 			assigned_vendor=t.assigned_vendor,
 			assigned_person=t.assigned_person,
 		)
-		assignee_name = None
-		if t.assigned_to_type:
-			ref = t.get(assignee_field_by_type[t.assigned_to_type])
-			assignee_name = assignee_name_by_type[t.assigned_to_type].get(ref)
+		assignee_name = resolve_polymorphic_name(t.assigned_to_type, assignee_field_by_type, t, assignee_name_by_type)
 
 		out.append(
 			{
@@ -172,6 +150,11 @@ def task_dashboard_stats(wedding):
 
 @frappe.whitelist()
 def bulk_update_task_status(wedding, task_names, status, blocked_reason=None):
+	"""Set `status` (and `blocked_reason` when moving to Blocked) on every
+	task in `task_names` that belongs to `wedding` — a task outside this
+	wedding is skipped with an error in its own result row rather than
+	failing the whole batch. Backs the task board's multi-select bulk
+	action."""
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
 	if isinstance(task_names, str):
@@ -205,7 +188,10 @@ def get_task_subtype_detail(task):
 	Returns {doctype, name} for the auto-created detail record (see
 	WDTask._ensure_subtype_detail), or None if the task has no subtype
 	or the subtype has no structured detail sheet."""
-	wedding, subtype = frappe.db.get_value("WD Task", task, ["wedding", "subtype"])
+	row = frappe.db.get_value("WD Task", task, ["wedding", "subtype"])
+	if not row:
+		frappe.throw(_("Task {0} not found").format(task), frappe.DoesNotExistError)
+	wedding, subtype = row
 	frappe.has_permission("Wedding", doc=wedding, throw=True)
 
 	if not subtype:
