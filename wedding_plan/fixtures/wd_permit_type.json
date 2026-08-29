@@ -1,0 +1,79 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.272891",
+  "name": "Loudspeaker beyond 10 PM",
+  "permit_type_name": "Loudspeaker beyond 10 PM"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.277705",
+  "name": "Liquor",
+  "permit_type_name": "Liquor"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.278704",
+  "name": "Fire NOC",
+  "permit_type_name": "Fire NOC"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.281451",
+  "name": "Road & traffic for baraat",
+  "permit_type_name": "Road & traffic for baraat"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.282542",
+  "name": "Drone (DGCA)",
+  "permit_type_name": "Drone (DGCA)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.283635",
+  "name": "Music licence (PPL)",
+  "permit_type_name": "Music licence (PPL)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.284563",
+  "name": "Music licence (IPRS)",
+  "permit_type_name": "Music licence (IPRS)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.285436",
+  "name": "Music licence (Novex)",
+  "permit_type_name": "Music licence (Novex)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.286220",
+  "name": "Municipal",
+  "permit_type_name": "Municipal"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.286985",
+  "name": "FSSAI of caterer",
+  "permit_type_name": "FSSAI of caterer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Permit Type",
+  "modified": "2026-08-27 17:41:36.287837",
+  "name": "Generator",
+  "permit_type_name": "Generator"
+ }
+]

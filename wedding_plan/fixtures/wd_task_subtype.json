@@ -1,0 +1,245 @@
+[
+ {
+  "category": "Décor & Styling",
+  "detail_doctype": "WD Task Decor Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.350058",
+  "name": "7ljqnvar0t",
+  "subtype_name": "Function décor element sheet"
+ },
+ {
+  "category": "Décor & Styling",
+  "detail_doctype": "WD Task Floral Order",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.375410",
+  "name": "7ljqik0u2i",
+  "subtype_name": "Floral order"
+ },
+ {
+  "category": "Décor & Styling",
+  "detail_doctype": "WD Task Mandap Decor",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.401152",
+  "name": "7lkgvihfg5",
+  "subtype_name": "Mandap & ritual décor"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task Sound Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.410719",
+  "name": "7lko6pf34b",
+  "subtype_name": "Sound setup"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task Lighting Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.422087",
+  "name": "7lk09u4vf0",
+  "subtype_name": "Lighting setup"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task LED Video Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.429244",
+  "name": "7lk1addpvh",
+  "subtype_name": "LED & video"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task Pyro SFX Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.437118",
+  "name": "7lkf40fc9u",
+  "subtype_name": "Pyro & SFX"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task Power Generator Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.445702",
+  "name": "7lksfdi0b5",
+  "subtype_name": "Power & generator"
+ },
+ {
+  "category": "Logistics & Setup",
+  "detail_doctype": "WD Task Stage Truss Loadin",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.453679",
+  "name": "7lkecp4uc7",
+  "subtype_name": "Stage, truss & load-in"
+ },
+ {
+  "category": "Ritual & Puja Arrangements",
+  "detail_doctype": "WD Task Ritual Muhurat Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.461136",
+  "name": "7lkcuemgf8",
+  "subtype_name": "Ritual / muhurat"
+ },
+ {
+  "category": "Ritual & Puja Arrangements",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.469972",
+  "name": "7lk7r2ookj",
+  "subtype_name": "Samagri checklist"
+ },
+ {
+  "category": "Attire & Grooming",
+  "detail_doctype": "WD Task Outfit Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.472240",
+  "name": "7lk95ttvhn",
+  "subtype_name": "Outfit"
+ },
+ {
+  "category": "Attire & Grooming",
+  "detail_doctype": "WD Task Makeup Hair Mehendi Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.480854",
+  "name": "7lkelj8t85",
+  "subtype_name": "Makeup, hair & mehendi"
+ },
+ {
+  "category": "Entertainment & Artists",
+  "detail_doctype": "WD Anchor Brief",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.489535",
+  "name": "7lkdasmka5",
+  "subtype_name": "Anchor brief"
+ },
+ {
+  "category": "Entertainment & Artists",
+  "detail_doctype": "WD Task Choreography Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.497132",
+  "name": "7lkbr1lth2",
+  "subtype_name": "Choreography"
+ },
+ {
+  "category": "Photography & Content",
+  "detail_doctype": "WD Task Coverage Plan Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.505843",
+  "name": "7llbrtg3bs",
+  "subtype_name": "Coverage plan"
+ },
+ {
+  "category": "Travel & Accommodation",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.514437",
+  "name": "7lla1vcd3q",
+  "subtype_name": "Room block & allotment"
+ },
+ {
+  "category": "Travel & Accommodation",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.515662",
+  "name": "7llv252ahc",
+  "subtype_name": "Pickup / drop"
+ },
+ {
+  "category": "Guest & Vendor Communication",
+  "detail_doctype": "WD Task Broadcast Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.517801",
+  "name": "7lluupgdg9",
+  "subtype_name": "Broadcast / briefing"
+ },
+ {
+  "category": "Gifting, Shagun & Hampers",
+  "detail_doctype": "WD Task Hamper Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.525769",
+  "name": "7llcsc0l4s",
+  "subtype_name": "Hamper tier / shagun counter"
+ },
+ {
+  "category": "Inventory & Stores",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.538130",
+  "name": "7ll897o0bn",
+  "subtype_name": "Crate / material movement"
+ },
+ {
+  "category": "Day-of Coordination",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.540755",
+  "name": "7lld2cgaj8",
+  "subtype_name": "Run sheet item"
+ },
+ {
+  "category": "Day-of Coordination",
+  "detail_doctype": "WD Task Cue Sheet Item",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.541904",
+  "name": "7ll70p8pjm",
+  "subtype_name": "Cue sheet"
+ },
+ {
+  "category": "Compliance & Permits",
+  "detail_doctype": "WD Task Permit Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.550818",
+  "name": "7llomn9u6a",
+  "subtype_name": "Permit"
+ },
+ {
+  "category": "Documentation",
+  "detail_doctype": "WD Task Document Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.560963",
+  "name": "7ll2q49kk9",
+  "subtype_name": "Document / registration"
+ },
+ {
+  "category": "Finance & Settlement",
+  "detail_doctype": "WD Task Final Settlement Detail",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.569850",
+  "name": "7ll3h75qao",
+  "subtype_name": "Final settlement"
+ },
+ {
+  "category": "Contingency & Backup",
+  "detail_doctype": "",
+  "docstatus": 0,
+  "doctype": "WD Task Subtype",
+  "modified": "2026-08-27 17:41:36.577847",
+  "name": "7llrefnr6b",
+  "subtype_name": "Risk & backup plan"
+ }
+]

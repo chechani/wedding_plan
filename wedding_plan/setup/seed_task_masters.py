@@ -73,6 +73,14 @@ MASTER_LISTS = {
 	("WD Payment Mode", "payment_mode_name"): [
 		"Cash", "UPI", "NEFT", "RTGS", "Cheque", "Card",
 	],
+	# Household-level "how the main card physically reached them" master
+	# list (WD Guest.patrika_delivered_by) — mirrors patrika_status's own
+	# Handed/Couriered/Digital Only vocabulary so the two lists read
+	# consistently. Distinct from InvitationDrawer's free-form per-attempt
+	# `mode` field (see api/invitations.py's add_invitation_log docstring).
+	("WD Patrika Delivery Mode", "delivery_mode"): [
+		"Hand Delivered", "Courier", "Post", "Via Relative", "Digital Only",
+	],
 	("WD Unit", "unit_name"): [
 		"pax", "plates", "nights", "rooms", "kg", "stems", "pieces", "ft", "ft x ft", "sq ft",
 		"running ft", "nos", "kVA", "kW", "litres", "hours", "minutes", "per kg", "per stem",

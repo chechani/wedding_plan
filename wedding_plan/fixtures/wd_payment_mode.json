@@ -1,0 +1,44 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.301263",
+  "name": "Cash",
+  "payment_mode_name": "Cash"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.307096",
+  "name": "UPI",
+  "payment_mode_name": "UPI"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.308199",
+  "name": "NEFT",
+  "payment_mode_name": "NEFT"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.310100",
+  "name": "RTGS",
+  "payment_mode_name": "RTGS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.310899",
+  "name": "Cheque",
+  "payment_mode_name": "Cheque"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Payment Mode",
+  "modified": "2026-08-27 17:41:36.311919",
+  "name": "Card",
+  "payment_mode_name": "Card"
+ }
+]

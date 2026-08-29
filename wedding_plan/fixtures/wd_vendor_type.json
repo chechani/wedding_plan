@@ -1,0 +1,128 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.097877",
+  "name": "Decorator",
+  "vendor_type_name": "Decorator"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.135302",
+  "name": "Sound",
+  "vendor_type_name": "Sound"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.136991",
+  "name": "Light",
+  "vendor_type_name": "Light"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.141350",
+  "name": "Pyro/SFX",
+  "vendor_type_name": "Pyro/SFX"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.142430",
+  "name": "LED/Video",
+  "vendor_type_name": "LED/Video"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.143362",
+  "name": "Caterer",
+  "vendor_type_name": "Caterer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.144337",
+  "name": "Pandit",
+  "vendor_type_name": "Pandit"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.145109",
+  "name": "Photography",
+  "vendor_type_name": "Photography"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.145875",
+  "name": "Videography",
+  "vendor_type_name": "Videography"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.146637",
+  "name": "Choreographer",
+  "vendor_type_name": "Choreographer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.147927",
+  "name": "Anchor",
+  "vendor_type_name": "Anchor"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.148763",
+  "name": "Makeup Artist",
+  "vendor_type_name": "Makeup Artist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.149548",
+  "name": "Mehendi Artist",
+  "vendor_type_name": "Mehendi Artist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.150296",
+  "name": "Transport",
+  "vendor_type_name": "Transport"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.151054",
+  "name": "Generator",
+  "vendor_type_name": "Generator"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.151887",
+  "name": "Tent/Furniture",
+  "vendor_type_name": "Tent/Furniture"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.152616",
+  "name": "Florist",
+  "vendor_type_name": "Florist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Vendor Type",
+  "modified": "2026-08-27 17:41:36.153356",
+  "name": "Other",
+  "vendor_type_name": "Other"
+ }
+]

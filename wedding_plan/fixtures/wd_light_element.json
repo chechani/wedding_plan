@@ -1,0 +1,86 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "LED PAR",
+  "modified": "2026-08-27 17:41:36.240581",
+  "name": "LED PAR"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Warm white on DMX",
+  "modified": "2026-08-27 17:41:36.246065",
+  "name": "Warm white on DMX"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Sharpie",
+  "modified": "2026-08-27 17:41:36.247209",
+  "name": "Sharpie"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Wash",
+  "modified": "2026-08-27 17:41:36.249389",
+  "name": "Wash"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Blinder",
+  "modified": "2026-08-27 17:41:36.250261",
+  "name": "Blinder"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Strobe",
+  "modified": "2026-08-27 17:41:36.251038",
+  "name": "Strobe"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Follow spot",
+  "modified": "2026-08-27 17:41:36.251950",
+  "name": "Follow spot"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Moving head",
+  "modified": "2026-08-27 17:41:36.252948",
+  "name": "Moving head"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Smoke / haze machine",
+  "modified": "2026-08-27 17:41:36.253736",
+  "name": "Smoke / haze machine"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Light console",
+  "modified": "2026-08-27 17:41:36.254487",
+  "name": "Light console"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "Box truss",
+  "modified": "2026-08-27 17:41:36.255559",
+  "name": "Box truss"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Light Element",
+  "light_element_name": "V truss",
+  "modified": "2026-08-27 17:41:36.256729",
+  "name": "V truss"
+ }
+]

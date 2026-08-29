@@ -1,0 +1,51 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.155436",
+  "name": "Not Started",
+  "status_name": "Not Started"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.161069",
+  "name": "In Progress",
+  "status_name": "In Progress"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.162051",
+  "name": "Blocked",
+  "status_name": "Blocked"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.163030",
+  "name": "Awaiting Vendor",
+  "status_name": "Awaiting Vendor"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.164226",
+  "name": "Awaiting Approval",
+  "status_name": "Awaiting Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.165375",
+  "name": "Done",
+  "status_name": "Done"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Task Status",
+  "modified": "2026-08-27 17:41:36.166210",
+  "name": "Cancelled",
+  "status_name": "Cancelled"
+ }
+]

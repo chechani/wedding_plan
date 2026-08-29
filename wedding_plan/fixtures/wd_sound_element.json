@@ -1,0 +1,107 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.221697",
+  "name": "Line array tops",
+  "sound_element_name": "Line array tops"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.226823",
+  "name": "Dual bass",
+  "sound_element_name": "Dual bass"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.227773",
+  "name": "Monitors",
+  "sound_element_name": "Monitors"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.229251",
+  "name": "Side fills",
+  "sound_element_name": "Side fills"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.230127",
+  "name": "Cordless mic",
+  "sound_element_name": "Cordless mic"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.231235",
+  "name": "Wired mic",
+  "sound_element_name": "Wired mic"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.232104",
+  "name": "Lapel / collar mic",
+  "sound_element_name": "Lapel / collar mic"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.232880",
+  "name": "Console",
+  "sound_element_name": "Console"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.233653",
+  "name": "Mixer",
+  "sound_element_name": "Mixer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.234419",
+  "name": "DI box",
+  "sound_element_name": "DI box"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.235208",
+  "name": "Jack to jack",
+  "sound_element_name": "Jack to jack"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.236058",
+  "name": "CDJ player",
+  "sound_element_name": "CDJ player"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.236845",
+  "name": "Laptop",
+  "sound_element_name": "Laptop"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.237623",
+  "name": "Extension board",
+  "sound_element_name": "Extension board"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Sound Element",
+  "modified": "2026-08-27 17:41:36.238378",
+  "name": "Operator",
+  "sound_element_name": "Operator"
+ }
+]

@@ -1,0 +1,44 @@
+[
+ {
+  "crockery_type_name": "Disposable",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.192026",
+  "name": "Disposable"
+ },
+ {
+  "crockery_type_name": "Melamine",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.196655",
+  "name": "Melamine"
+ },
+ {
+  "crockery_type_name": "Steel thali",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.198150",
+  "name": "Steel thali"
+ },
+ {
+  "crockery_type_name": "Bone china",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.201803",
+  "name": "Bone china"
+ },
+ {
+  "crockery_type_name": "Leaf plate",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.202662",
+  "name": "Leaf plate"
+ },
+ {
+  "crockery_type_name": "Copper",
+  "docstatus": 0,
+  "doctype": "WD Crockery Type",
+  "modified": "2026-08-27 17:41:36.203501",
+  "name": "Copper"
+ }
+]

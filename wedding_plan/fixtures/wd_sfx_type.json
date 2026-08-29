@@ -1,0 +1,58 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.258739",
+  "name": "Cold pyro",
+  "sfx_type_name": "Cold pyro"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.264278",
+  "name": "CO2 jet",
+  "sfx_type_name": "CO2 jet"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.265235",
+  "name": "Confetti blaster",
+  "sfx_type_name": "Confetti blaster"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.267376",
+  "name": "Flower shower",
+  "sfx_type_name": "Flower shower"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.268371",
+  "name": "Sparkler",
+  "sfx_type_name": "Sparkler"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.269199",
+  "name": "Dry ice",
+  "sfx_type_name": "Dry ice"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.269950",
+  "name": "Smoke",
+  "sfx_type_name": "Smoke"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD SFX Type",
+  "modified": "2026-08-27 17:41:36.270690",
+  "name": "Bubble machine",
+  "sfx_type_name": "Bubble machine"
+ }
+]

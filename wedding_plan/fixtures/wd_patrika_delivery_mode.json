@@ -1,0 +1,37 @@
+[
+ {
+  "delivery_mode": "Hand Delivered",
+  "docstatus": 0,
+  "doctype": "WD Patrika Delivery Mode",
+  "modified": "2026-08-29 15:09:57.294469",
+  "name": "6a52lhj14n"
+ },
+ {
+  "delivery_mode": "Courier",
+  "docstatus": 0,
+  "doctype": "WD Patrika Delivery Mode",
+  "modified": "2026-08-29 15:09:57.333638",
+  "name": "6a5n9b6oel"
+ },
+ {
+  "delivery_mode": "Post",
+  "docstatus": 0,
+  "doctype": "WD Patrika Delivery Mode",
+  "modified": "2026-08-29 15:09:57.335042",
+  "name": "6a558n7chq"
+ },
+ {
+  "delivery_mode": "Via Relative",
+  "docstatus": 0,
+  "doctype": "WD Patrika Delivery Mode",
+  "modified": "2026-08-29 15:09:57.339277",
+  "name": "6a5hq55rd5"
+ },
+ {
+  "delivery_mode": "Digital Only",
+  "docstatus": 0,
+  "doctype": "WD Patrika Delivery Mode",
+  "modified": "2026-08-29 15:09:57.340478",
+  "name": "6a5e502v12"
+ }
+]

@@ -1,0 +1,135 @@
+[
+ {
+  "category_name": "Booking & Contract",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.339718",
+  "name": "Booking & Contract"
+ },
+ {
+  "category_name": "Advance & Payment",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.345031",
+  "name": "Advance & Payment"
+ },
+ {
+  "category_name": "Catering & F&B",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.346224",
+  "name": "Catering & F&B"
+ },
+ {
+  "category_name": "Décor & Styling",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.347703",
+  "name": "Décor & Styling"
+ },
+ {
+  "category_name": "Logistics & Setup",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.409858",
+  "name": "Logistics & Setup"
+ },
+ {
+  "category_name": "Ritual & Puja Arrangements",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.460218",
+  "name": "Ritual & Puja Arrangements"
+ },
+ {
+  "category_name": "Attire & Grooming",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.471047",
+  "name": "Attire & Grooming"
+ },
+ {
+  "category_name": "Entertainment & Artists",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.488270",
+  "name": "Entertainment & Artists"
+ },
+ {
+  "category_name": "Photography & Content",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.504609",
+  "name": "Photography & Content"
+ },
+ {
+  "category_name": "Travel & Accommodation",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.513412",
+  "name": "Travel & Accommodation"
+ },
+ {
+  "category_name": "Guest & Vendor Communication",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.516697",
+  "name": "Guest & Vendor Communication"
+ },
+ {
+  "category_name": "Gifting, Shagun & Hampers",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.524845",
+  "name": "Gifting, Shagun & Hampers"
+ },
+ {
+  "category_name": "Inventory & Stores",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.537259",
+  "name": "Inventory & Stores"
+ },
+ {
+  "category_name": "Day-of Coordination",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.539742",
+  "name": "Day-of Coordination"
+ },
+ {
+  "category_name": "Compliance & Permits",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.549749",
+  "name": "Compliance & Permits"
+ },
+ {
+  "category_name": "Documentation",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.560095",
+  "name": "Documentation"
+ },
+ {
+  "category_name": "Finance & Settlement",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.568992",
+  "name": "Finance & Settlement"
+ },
+ {
+  "category_name": "Contingency & Backup",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.576991",
+  "name": "Contingency & Backup"
+ },
+ {
+  "category_name": "Other",
+  "docstatus": 0,
+  "doctype": "WD Task Category",
+  "modified": "2026-08-27 17:41:36.578923",
+  "name": "Other"
+ }
+]

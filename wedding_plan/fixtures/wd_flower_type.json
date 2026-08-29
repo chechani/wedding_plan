@@ -1,0 +1,72 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Genda (marigold)",
+  "modified": "2026-08-27 17:41:36.205799",
+  "name": "Genda (marigold)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Rose",
+  "modified": "2026-08-27 17:41:36.210448",
+  "name": "Rose"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Orchid",
+  "modified": "2026-08-27 17:41:36.211573",
+  "name": "Orchid"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Carnation",
+  "modified": "2026-08-27 17:41:36.214556",
+  "name": "Carnation"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Mogra / jasmine",
+  "modified": "2026-08-27 17:41:36.215670",
+  "name": "Mogra / jasmine"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Rajnigandha",
+  "modified": "2026-08-27 17:41:36.216521",
+  "name": "Rajnigandha"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Lily",
+  "modified": "2026-08-27 17:41:36.217306",
+  "name": "Lily"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Chrysanthemum",
+  "modified": "2026-08-27 17:41:36.218063",
+  "name": "Chrysanthemum"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Anthurium",
+  "modified": "2026-08-27 17:41:36.218857",
+  "name": "Anthurium"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Flower Type",
+  "flower_type_name": "Gladiolus",
+  "modified": "2026-08-27 17:41:36.219803",
+  "name": "Gladiolus"
+ }
+]

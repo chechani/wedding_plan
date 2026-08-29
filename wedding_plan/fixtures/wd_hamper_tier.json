@@ -1,0 +1,37 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Hamper Tier",
+  "hamper_tier_name": "VIP",
+  "modified": "2026-08-27 17:41:36.290183",
+  "name": "VIP"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Hamper Tier",
+  "hamper_tier_name": "Premium",
+  "modified": "2026-08-27 17:41:36.295490",
+  "name": "Premium"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Hamper Tier",
+  "hamper_tier_name": "Standard",
+  "modified": "2026-08-27 17:41:36.296407",
+  "name": "Standard"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Hamper Tier",
+  "hamper_tier_name": "Kids",
+  "modified": "2026-08-27 17:41:36.297827",
+  "name": "Kids"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Hamper Tier",
+  "hamper_tier_name": "Vendor & staff",
+  "modified": "2026-08-27 17:41:36.298896",
+  "name": "Vendor & staff"
+ }
+]

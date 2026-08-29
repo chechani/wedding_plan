@@ -1,0 +1,44 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.180395",
+  "name": "Breakfast",
+  "session_type_name": "Breakfast"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.185471",
+  "name": "Lunch",
+  "session_type_name": "Lunch"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.186508",
+  "name": "High tea",
+  "session_type_name": "High tea"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.187839",
+  "name": "Dinner",
+  "session_type_name": "Dinner"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.189130",
+  "name": "Late-night",
+  "session_type_name": "Late-night"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Meal Session Type",
+  "modified": "2026-08-27 17:41:36.190012",
+  "name": "Midnight snack",
+  "session_type_name": "Midnight snack"
+ }
+]

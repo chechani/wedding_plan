@@ -1,0 +1,37 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Service Style",
+  "modified": "2026-08-27 17:41:36.167960",
+  "name": "Buffet",
+  "service_style_name": "Buffet"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Service Style",
+  "modified": "2026-08-27 17:41:36.172861",
+  "name": "Sit-down thali",
+  "service_style_name": "Sit-down thali"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Service Style",
+  "modified": "2026-08-27 17:41:36.174054",
+  "name": "Stall format",
+  "service_style_name": "Stall format"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Service Style",
+  "modified": "2026-08-27 17:41:36.177504",
+  "name": "Plated",
+  "service_style_name": "Plated"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Service Style",
+  "modified": "2026-08-27 17:41:36.178348",
+  "name": "Live counters only",
+  "service_style_name": "Live counters only"
+ }
+]
