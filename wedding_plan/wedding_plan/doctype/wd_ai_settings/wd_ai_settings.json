@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-01 17:42:08.869023",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "provider_note",
+  "api_key",
+  "enabled",
+  "text_model",
+  "vision_model",
+  "smart_model",
+  "model"
+ ],
+ "fields": [
+  {
+   "default": "OpenRouter (openrouter.ai)",
+   "fieldname": "provider_note",
+   "fieldtype": "Data",
+   "label": "Provider",
+   "read_only": 1
+  },
+  {
+   "description": "Server-side only. Never sent to the browser \u2014 the frontend is a static export and cannot hold a key.",
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "OpenRouter API Key"
+  },
+  {
+   "default": "nvidia/nemotron-3.5-lightning:free",
+   "description": "Used when the tier above it is blank. The previous default, google/gemini-2.0-flash-001, has been retired from OpenRouter and no longer resolves.",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Fallback Model"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "default": "nvidia/nemotron-3.5-lightning:free",
+   "description": "The workhorse. Every text-only task routes here. Free ids end in ':free' \u2014 current list at https://openrouter.ai/models?max_price=0 . Free endpoints generally require opting in to prompt logging/training, and guest intake and dedupe send household names and phone numbers.",
+   "fieldname": "text_model",
+   "fieldtype": "Data",
+   "label": "Text Model (free tier)"
+  },
+  {
+   "default": "thinkingmachines/inkling-small:free",
+   "description": "Used automatically whenever a photo is attached. Defaults to a free multimodal model so the photo path works before you add credits \u2014 swap in a paid one (e.g. google/gemini-3.7-flash or deepseek/deepseek-v4-flash-vision-exp) once you have.",
+   "fieldname": "vision_model",
+   "fieldtype": "Data",
+   "label": "Vision Model (photo intake)"
+  },
+  {
+   "description": "Used only when a screen explicitly asks to escalate. Deliberately blank \u2014 this one costs real money, so nothing bills you until you choose a model. Leave empty and the 'use the smarter model' controls stay hidden. Suggestions: anthropic/claude-opus-5, moonshotai/kimi-k3.",
+   "fieldname": "smart_model",
+   "fieldtype": "Data",
+   "label": "Smart Model (complex work)"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-09-01 19:03:49.715366",
+ "modified_by": "vicepresident@sahajtherapy.com",
+ "module": "Wedding Plan",
+ "name": "WD AI Settings",
+ "owner": "vicepresident@sahajtherapy.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
