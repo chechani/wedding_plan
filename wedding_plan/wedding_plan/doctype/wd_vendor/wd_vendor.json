@@ -84,31 +84,38 @@
   },
   {
    "fieldname": "attach_mlye",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Contract"
   },
   {
    "fieldname": "attach_yghl",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Quotation"
   },
   {
    "fieldname": "attach_zwww",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Advance receipt"
   },
   {
    "fieldname": "attach_zhbt",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Final bill"
   },
   {
    "fieldname": "attach_emya",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "GST / PAN"
   },
   {
    "fieldname": "attach_ebir",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "ID proof"
   },
   {
    "fieldname": "attach_qynx",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Other document"
   }
  ],
  "grid_page_length": 50,

@@ -339,7 +339,14 @@ def movement_board(wedding, date):
 			**m,
 			"pickups": pickups_by_movement.get(m.name, []),
 			"vehicle_assignments": assignments_by_movement.get(m.name, []),
-			"total_pax": sum(p.pax_count or 0 for p in pickups_by_movement.get(m.name, [])),
+			# A cancelled household still shows in the roster (so a coordinator
+			# can see it was pulled out), but no longer needs a seat — counting
+			# it here would overstate how many vehicles the cluster still needs.
+			"total_pax": sum(
+				p.pax_count or 0
+				for p in pickups_by_movement.get(m.name, [])
+				if p.status != "Cancelled"
+			),
 		}
 		for m in movements
 	]
