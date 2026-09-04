@@ -1,0 +1,199 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-09-04 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "title",
+  "description",
+  "severity",
+  "related_type",
+  "related_pickup",
+  "related_movement",
+  "related_leg",
+  "related_room_allotment",
+  "related_menu",
+  "related_function",
+  "related_vehicle",
+  "related_risk",
+  "issue_owner",
+  "status",
+  "resolution",
+  "resolved_at",
+  "attachments"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "default": "Medium",
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Severity",
+   "options": "Low\nMedium\nHigh\nCritical"
+  },
+  {
+   "fieldname": "related_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Related To",
+   "options": "\nPickup\nTransport Movement\nConvoy Leg\nRoom Allotment\nMenu\nFunction\nVehicle\nOther"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Pickup\"",
+   "fieldname": "related_pickup",
+   "fieldtype": "Link",
+   "label": "Pickup",
+   "options": "WD Pickup"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Transport Movement\"",
+   "fieldname": "related_movement",
+   "fieldtype": "Link",
+   "label": "Movement",
+   "options": "WD Transport Movement"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Convoy Leg\"",
+   "fieldname": "related_leg",
+   "fieldtype": "Link",
+   "label": "Convoy Leg",
+   "options": "WD Convoy Leg"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Room Allotment\"",
+   "fieldname": "related_room_allotment",
+   "fieldtype": "Link",
+   "label": "Room Allotment",
+   "options": "WD Room Allotment"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Menu\"",
+   "fieldname": "related_menu",
+   "fieldtype": "Link",
+   "label": "Menu",
+   "options": "WD Menu"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Function\"",
+   "fieldname": "related_function",
+   "fieldtype": "Link",
+   "label": "Function",
+   "options": "WD Function"
+  },
+  {
+   "depends_on": "eval:doc.related_type==\"Vehicle\"",
+   "fieldname": "related_vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "WD Vehicle"
+  },
+  {
+   "description": "Ties a live issue back to a pre-identified risk, if this is one materializing. WD Risk itself is untouched — it stays a pre-event contingency register.",
+   "fieldname": "related_risk",
+   "fieldtype": "Link",
+   "label": "Related Risk",
+   "options": "WD Risk"
+  },
+  {
+   "fieldname": "issue_owner",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Owner",
+   "options": "Wedding Member"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nIn Progress\nResolved"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Resolved\"",
+   "fieldname": "resolution",
+   "fieldtype": "Small Text",
+   "label": "Resolution"
+  },
+  {
+   "fieldname": "resolved_at",
+   "fieldtype": "Datetime",
+   "label": "Resolved At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "WD Checklist Attachment"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-04 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Event Issue",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

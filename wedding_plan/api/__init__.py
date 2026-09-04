@@ -38,8 +38,18 @@ Re-exports so the frontend's REST calls stay short:
   /api/method/wedding_plan.api.update_my_contact_info
   /api/method/wedding_plan.api.update_my_function_status
   /api/method/wedding_plan.api.upload_my_document
+  /api/method/wedding_plan.api.suggest_movement_clusters
+  /api/method/wedding_plan.api.create_movement_from_cluster
+  /api/method/wedding_plan.api.merge_movements
+  /api/method/wedding_plan.api.split_movement
+  /api/method/wedding_plan.api.suggest_vehicles
+  /api/method/wedding_plan.api.movement_board
+  /api/method/wedding_plan.api.attention_items
+  /api/method/wedding_plan.api.arrival_readiness
+  /api/method/wedding_plan.api.bulk_set_category_status
 Every other read/write (guests, rooms, run sheet, teams, vendors, meal
-sessions, convoy legs, ...) goes through Frappe's standard REST API —
+sessions, convoy legs, transport movements, vehicle assignments, event
+issues, menus, ...) goes through Frappe's standard REST API —
 GET/POST/PUT/DELETE /api/resource/<DocType>[/<name>] — which is already
 tenant-scoped by wedding_plan/permissions.py, so no bespoke CRUD endpoint is
 needed for those.
@@ -81,3 +91,13 @@ from wedding_plan.api.guest_portal import (  # noqa: F401
 	update_my_function_status,
 	upload_my_document,
 )
+from wedding_plan.api.transport import (  # noqa: F401
+	suggest_movement_clusters,
+	create_movement_from_cluster,
+	merge_movements,
+	split_movement,
+	suggest_vehicles,
+	movement_board,
+)
+from wedding_plan.api.event import attention_items, arrival_readiness  # noqa: F401
+from wedding_plan.api.menu import bulk_set_category_status  # noqa: F401

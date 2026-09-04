@@ -1,0 +1,79 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Welcome Drinks",
+  "category_name": "Welcome Drinks"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Beverages",
+  "category_name": "Beverages"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Starters",
+  "category_name": "Starters"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Live Counters",
+  "category_name": "Live Counters"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Indian Main Course",
+  "category_name": "Indian Main Course"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Breads",
+  "category_name": "Breads"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Sweets & Desserts",
+  "category_name": "Sweets & Desserts"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Kids Menu",
+  "category_name": "Kids Menu"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Jain / Special Diet",
+  "category_name": "Jain / Special Diet"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Midnight Snacks",
+  "category_name": "Midnight Snacks"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "WD Menu Category",
+  "modified": "2026-09-04 00:00:00.000000",
+  "name": "Other",
+  "category_name": "Other"
+ }
+]

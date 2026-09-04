@@ -15,8 +15,14 @@
   "column_break_1",
   "entry_date",
   "result",
+  "mode",
+  "received_by",
+  "accompanied_by",
+  "courier_awb",
   "logged_by",
-  "details"
+  "details",
+  "notes",
+  "attachments"
  ],
  "fields": [
   {
@@ -83,6 +89,29 @@
    "reqd": 1
   },
   {
+   "fieldname": "mode",
+   "fieldtype": "Select",
+   "label": "Mode",
+   "options": "\nIn person\nCourier\nVia relative\nPhone\nWhatsApp\nAt office"
+  },
+  {
+   "fieldname": "received_by",
+   "fieldtype": "Data",
+   "label": "Received By",
+   "description": "Who actually took it, when not the invitee."
+  },
+  {
+   "fieldname": "accompanied_by",
+   "fieldtype": "Data",
+   "label": "Accompanied By",
+   "description": "Mithai box, dry fruit box, shagun envelope."
+  },
+  {
+   "fieldname": "courier_awb",
+   "fieldtype": "Data",
+   "label": "Courier AWB"
+  },
+  {
    "fieldname": "logged_by",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -93,6 +122,17 @@
    "fieldtype": "Small Text",
    "label": "Details",
    "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

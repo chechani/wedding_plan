@@ -8,10 +8,16 @@
  "field_order": [
   "vehicle",
   "date",
+  "out_time",
+  "in_time",
   "start_reading",
   "end_reading",
   "start_point",
   "end_point",
+  "toll",
+  "parking",
+  "other_expense",
+  "attachments",
   "wedding"
  ],
  "fields": [
@@ -27,13 +33,24 @@
    "label": "Date"
   },
   {
+   "description": "Datetime, not Time — a baraat/vidaai trip can cross midnight, and two Time values would make in < out on exactly the trips people most want timed.",
+   "fieldname": "out_time",
+   "fieldtype": "Datetime",
+   "label": "Out Time"
+  },
+  {
+   "fieldname": "in_time",
+   "fieldtype": "Datetime",
+   "label": "In Time"
+  },
+  {
    "fieldname": "start_reading",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Start Reading "
   },
   {
    "fieldname": "end_reading",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "End Reading"
   },
   {
@@ -47,10 +64,37 @@
    "label": "End Point"
   },
   {
+   "default": "0",
+   "fieldname": "toll",
+   "fieldtype": "Currency",
+   "label": "Toll"
+  },
+  {
+   "default": "0",
+   "fieldname": "parking",
+   "fieldtype": "Currency",
+   "label": "Parking"
+  },
+  {
+   "default": "0",
+   "fieldname": "other_expense",
+   "fieldtype": "Currency",
+   "label": "Other Expense"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Odometer Photos",
+   "options": "WD Checklist Attachment"
+  },
+  {
    "fieldname": "wedding",
    "fieldtype": "Link",
    "label": "Wedding",
-   "options": "Wedding"
+   "options": "Wedding",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
   }
  ],
  "grid_page_length": 50,

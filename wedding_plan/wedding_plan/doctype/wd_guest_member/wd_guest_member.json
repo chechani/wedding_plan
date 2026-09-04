@@ -21,11 +21,16 @@
   "email",
   "dietary",
   "special_needs",
+  "is_elderly",
+  "needs_wheelchair",
   "section_break_travel",
   "departs_with_household",
   "arrival_mode",
   "column_break_3",
   "arrival_detail",
+  "flight_train_number",
+  "pnr",
+  "terminal_or_platform",
   "arrival_datetime",
   "section_break_documents",
   "photo",
@@ -126,6 +131,18 @@
    "label": "Special Needs"
   },
   {
+   "default": "0",
+   "fieldname": "is_elderly",
+   "fieldtype": "Check",
+   "label": "Elderly"
+  },
+  {
+   "default": "0",
+   "fieldname": "needs_wheelchair",
+   "fieldtype": "Check",
+   "label": "Needs Wheelchair"
+  },
+  {
    "fieldname": "section_break_travel",
    "fieldtype": "Section Break",
    "label": "Travel"
@@ -153,6 +170,24 @@
    "fieldname": "arrival_detail",
    "fieldtype": "Data",
    "label": "Arrival Detail"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "flight_train_number",
+   "fieldtype": "Data",
+   "label": "Flight / Train Number"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "pnr",
+   "fieldtype": "Data",
+   "label": "PNR"
+  },
+  {
+   "depends_on": "eval:!doc.departs_with_household",
+   "fieldname": "terminal_or_platform",
+   "fieldtype": "Data",
+   "label": "Terminal / Platform"
   },
   {
    "depends_on": "eval:!doc.departs_with_household",

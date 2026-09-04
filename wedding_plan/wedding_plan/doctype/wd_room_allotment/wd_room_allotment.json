@@ -21,7 +21,12 @@
   "release_date",
   "keys_handed",
   "hamper_placed",
-  "luggage_delivered"
+  "luggage_delivered",
+  "allotment_status",
+  "checked_in_at",
+  "checked_out_at",
+  "status_note",
+  "attachments"
  ],
  "fields": [
   {
@@ -114,6 +119,40 @@
    "fieldname": "luggage_delivered",
    "fieldtype": "Check",
    "label": "Luggage Delivered"
+  },
+  {
+   "default": "Allotted",
+   "description": "Present-tense: what is true of this booking now. Set on the room a guest was moved OUT of, not just the one moved into.",
+   "fieldname": "allotment_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Allotted\nOccupied\nNo Show\nShifted\nRejected\nChecked Out"
+  },
+  {
+   "description": "When they actually arrived. Not check_in — that is the planned booking window.",
+   "fieldname": "checked_in_at",
+   "fieldtype": "Datetime",
+   "label": "Checked In At"
+  },
+  {
+   "description": "When they actually left. Not check_out — that is the planned booking window.",
+   "fieldname": "checked_out_at",
+   "fieldtype": "Datetime",
+   "label": "Checked Out At"
+  },
+  {
+   "fieldname": "status_note",
+   "fieldtype": "Small Text",
+   "label": "Status Note",
+   "description": "Why it was shifted/rejected/no-show."
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Room Photos",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

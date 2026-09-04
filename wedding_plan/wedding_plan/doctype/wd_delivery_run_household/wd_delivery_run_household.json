@@ -8,7 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "household",
-  "delivered"
+  "delivered",
+  "attachments"
  ],
  "fields": [
   {
@@ -25,6 +26,12 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Delivered"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Proof of Delivery",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

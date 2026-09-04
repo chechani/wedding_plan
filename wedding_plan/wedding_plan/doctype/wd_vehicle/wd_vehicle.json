@@ -10,7 +10,9 @@
   "wedding",
   "vehicle_number",
   "vehicle_type",
+  "ownership_type",
   "capacity",
+  "vip_suitable",
   "driver_name",
   "driver_phone",
   "vendor",
@@ -18,7 +20,8 @@
   "attach_anfa",
   "attach_wzwl",
   "attach_ppky",
-  "attach_ngpj"
+  "attach_ngpj",
+  "attachments"
  ],
  "fields": [
   {
@@ -43,15 +46,28 @@
    "label": "Type"
   },
   {
+   "fieldname": "ownership_type",
+   "fieldtype": "Select",
+   "label": "Ownership Type",
+   "options": "\nFamily-owned\nFriend/Relative\nHired Taxi\nTravel Agency\nBus\nTempo Traveller\nLuxury/VIP\nOther"
+  },
+  {
    "fieldname": "capacity",
    "fieldtype": "Int",
    "label": "Capacity"
   },
   {
+   "default": "0",
+   "fieldname": "vip_suitable",
+   "fieldtype": "Check",
+   "label": "VIP Suitable"
+  },
+  {
    "fieldname": "driver_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Driver Name"
+   "label": "Driver Name",
+   "description": "The vehicle's default driver. A specific trip's actual driver is recorded on WD Vehicle Assignment and may differ."
   },
   {
    "fieldname": "driver_phone",
@@ -71,19 +87,29 @@
   },
   {
    "fieldname": "attach_anfa",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "RC Book"
   },
   {
    "fieldname": "attach_wzwl",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Insurance"
   },
   {
    "fieldname": "attach_ppky",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Permit"
   },
   {
    "fieldname": "attach_ngpj",
-   "fieldtype": "Attach"
+   "fieldtype": "Attach",
+   "label": "Driver Licence"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

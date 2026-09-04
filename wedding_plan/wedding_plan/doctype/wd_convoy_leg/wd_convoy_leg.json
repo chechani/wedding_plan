@@ -14,8 +14,14 @@
   "to_venue",
   "must_arrive",
   "depart_by",
+  "depart_time",
+  "vehicle",
+  "team",
   "total_pax",
   "status",
+  "boarding_at",
+  "departed_at",
+  "arrived_at",
   "notes"
  ],
  "fields": [
@@ -64,7 +70,25 @@
   {
    "fieldname": "depart_by",
    "fieldtype": "Data",
-   "label": "Depart By"
+   "label": "Depart By",
+   "description": "Free text (\"4:30 PM\") — kept as the original note beside the sortable depart_time, not converted in place."
+  },
+  {
+   "fieldname": "depart_time",
+   "fieldtype": "Time",
+   "label": "Depart Time"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "WD Vehicle"
+  },
+  {
+   "fieldname": "team",
+   "fieldtype": "Link",
+   "label": "Team On Board",
+   "options": "WD Team"
   },
   {
    "fieldname": "total_pax",
@@ -78,6 +102,25 @@
    "in_list_view": 1,
    "label": "Status",
    "options": "Planned\nBoarding\nDeparted\nArrived"
+  },
+  {
+   "fieldname": "boarding_at",
+   "fieldtype": "Datetime",
+   "label": "Boarding At",
+   "read_only": 1
+  },
+  {
+   "description": "Compared against date + depart_by to show lateness. must_arrive is free-text so no arrival delta is computed against it.",
+   "fieldname": "departed_at",
+   "fieldtype": "Datetime",
+   "label": "Departed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "arrived_at",
+   "fieldtype": "Datetime",
+   "label": "Arrived At",
+   "read_only": 1
   },
   {
    "fieldname": "notes",

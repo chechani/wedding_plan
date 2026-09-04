@@ -1,41 +1,61 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
- "allow_rename": 1,
- "creation": "2026-08-20 11:23:46.993910",
+ "autoname": "hash",
+ "creation": "2026-09-04 00:00:00.000000",
  "doctype": "DocType",
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "gift_item",
-  "qty",
-  "wedding"
+  "item_name",
+  "category",
+  "status",
+  "notes",
+  "attachments"
  ],
  "fields": [
   {
-   "fieldname": "gift_item",
+   "fieldname": "item_name",
    "fieldtype": "Data",
-   "label": "Gift Item",
+   "in_list_view": 1,
+   "label": "Item",
    "reqd": 1
   },
   {
-   "fieldname": "qty",
-   "fieldtype": "Int",
-   "label": "Qty"
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "WD Menu Category"
   },
   {
-   "fieldname": "wedding",
-   "fieldtype": "Link",
-   "label": "Wedding",
-   "options": "Wedding"
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nIn Progress\nReady\nBlocked"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Photos",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
+ "istable": 1,
  "links": [],
- "modified": "2026-08-22 07:58:54.956588",
+ "modified": "2026-09-04 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
- "name": "WD Gifting Type",
+ "name": "WD Menu Item",
  "owner": "Administrator",
  "permissions": [
   {

@@ -34,6 +34,7 @@ fixtures = [
     "WD Service Style",
     "WD Meal Session Type",
     "WD Crockery Type",
+    "WD Menu Category",
     "WD Flower Type",
     "WD Sound Element",
     "WD Light Element",
@@ -54,4 +55,24 @@ permission_query_conditions = {
 }
 has_permission = {
     dt: f"wedding_plan.permissions.has_permission__{frappe.scrub(dt)}" for dt in _scoped
+}
+
+# Doctypes whose changes matter to another coordinator's already-open /live
+# tab (implementation plan §14) — a curated subset of the wedding-scoped
+# list, not all of it. Planning-only doctypes (WD Venue, WD Vendor, ...)
+# don't need a live nudge, since nobody is staring at /live waiting on them
+# to change; these are the ones the day board's timeline and Attention band
+# actually read. See wedding_plan/realtime.py for why this targets each
+# member's user room rather than a custom "wedding:<name>" room.
+_REALTIME_DOCTYPES = [
+    "WD Pickup",
+    "WD Convoy Leg",
+    "WD Transport Movement",
+    "WD Vehicle Assignment",
+    "WD Room Allotment",
+    "WD Menu",
+    "WD Event Issue",
+]
+doc_events = {
+    dt: {"on_update": "wedding_plan.realtime.notify_event_update"} for dt in _REALTIME_DOCTYPES
 }

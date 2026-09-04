@@ -9,6 +9,10 @@
   "guest",
   "guest_member",
   "gift_item",
+  "qty",
+  "given_on",
+  "given_by",
+  "function",
   "wedding"
  ],
  "fields": [
@@ -33,6 +37,28 @@
    "fieldtype": "Link",
    "label": "Gift item",
    "options": "WD Gifting Type"
+  },
+  {
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "label": "Qty"
+  },
+  {
+   "fieldname": "given_on",
+   "fieldtype": "Date",
+   "label": "Given On"
+  },
+  {
+   "fieldname": "given_by",
+   "fieldtype": "Data",
+   "label": "Given By"
+  },
+  {
+   "fieldname": "function",
+   "fieldtype": "Link",
+   "label": "Function",
+   "options": "WD Function"
   },
   {
    "fieldname": "wedding",

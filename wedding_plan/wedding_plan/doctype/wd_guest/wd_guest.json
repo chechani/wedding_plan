@@ -27,15 +27,23 @@
   "rooms_needed",
   "arrival_mode",
   "arrival_detail",
+  "flight_train_number",
+  "pnr",
+  "terminal_or_platform",
   "arrival_datetime",
   "pickup_required",
   "pickup_point",
+  "departure_mode",
+  "departure_detail",
+  "departure_flight_train_number",
+  "departure_pnr",
   "departure_datetime",
   "dietary",
   "special_needs",
   "hamper_tier",
   "vip_protocol",
   "functions_invited",
+  "attachments",
   "wedding"
  ],
  "fields": [
@@ -174,6 +182,22 @@
    "label": "Arrival Detail"
   },
   {
+   "description": "Structured so arrival clustering can match households sharing a flight/train before any Transport Movement exists.",
+   "fieldname": "flight_train_number",
+   "fieldtype": "Data",
+   "label": "Flight / Train Number"
+  },
+  {
+   "fieldname": "pnr",
+   "fieldtype": "Data",
+   "label": "PNR"
+  },
+  {
+   "fieldname": "terminal_or_platform",
+   "fieldtype": "Data",
+   "label": "Terminal / Platform"
+  },
+  {
    "fieldname": "arrival_datetime",
    "fieldtype": "Datetime",
    "label": "Arrival Datetime"
@@ -188,6 +212,27 @@
    "fieldname": "pickup_point",
    "fieldtype": "Data",
    "label": "Pickup Point"
+  },
+  {
+   "fieldname": "departure_mode",
+   "fieldtype": "Select",
+   "label": "Departure Mode",
+   "options": "\nAir\nTrain\nBus\nRoad\nLocal"
+  },
+  {
+   "fieldname": "departure_detail",
+   "fieldtype": "Data",
+   "label": "Departure Detail"
+  },
+  {
+   "fieldname": "departure_flight_train_number",
+   "fieldtype": "Data",
+   "label": "Departure Flight / Train Number"
+  },
+  {
+   "fieldname": "departure_pnr",
+   "fieldtype": "Data",
+   "label": "Departure PNR"
   },
   {
    "fieldname": "departure_datetime",
@@ -224,6 +269,12 @@
    "fieldtype": "Table MultiSelect",
    "label": "Invited To",
    "options": "WD Guest Function"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

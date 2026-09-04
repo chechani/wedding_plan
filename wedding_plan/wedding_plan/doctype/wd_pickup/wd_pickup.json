@@ -10,6 +10,7 @@
   "wedding",
   "guest",
   "guest_members",
+  "movement",
   "direction",
   "mode",
   "detail",
@@ -21,7 +22,9 @@
   "greeter_name",
   "greeter_placard",
   "special_needs",
-  "status"
+  "status",
+  "status_changed_at",
+  "attachments"
  ],
  "fields": [
   {
@@ -46,6 +49,13 @@
    "fieldtype": "Table MultiSelect",
    "label": "Guest Members",
    "options": "WD Pickup Guest"
+  },
+  {
+   "description": "Set when this pickup is one of several households sharing a flight/train — groups them into one arrival/departure cluster.",
+   "fieldname": "movement",
+   "fieldtype": "Link",
+   "label": "Movement",
+   "options": "WD Transport Movement"
   },
   {
    "default": "Pickup",
@@ -116,7 +126,20 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Waiting\nArrived\nPicked\nDropped"
+   "options": "Waiting\nArrived\nPicked\nDropped\nCancelled"
+  },
+  {
+   "description": "When the pickup was last advanced. A guest at the airport could not be told how long ago the car left.",
+   "fieldname": "status_changed_at",
+   "fieldtype": "Datetime",
+   "label": "Status Changed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

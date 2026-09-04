@@ -33,9 +33,17 @@ ROLE_WRITE_REQUIREMENTS = {
     # may create/edit membership.
     "Wedding Member": {"Owner", "Event Director"},
     "WD Meal Session": {"Catering Liaison", "Venue Commander"},
+    "WD Menu": {"Catering Liaison", "Venue Commander"},
     "WD Convoy Leg": {"Convoy Controller"},
     "WD Pickup": {"Convoy Controller"},
     "WD Vehicle": {"Convoy Controller"},
+    "WD Vehicle Log": {"Convoy Controller"},
+    "WD Transport Movement": {"Convoy Controller"},
+    "WD Vehicle Assignment": {"Convoy Controller"},
+    # WD Event Issue deliberately unlisted: any non-readonly member may log
+    # or resolve an issue regardless of its related_type — a Catering
+    # Liaison spotting a transport problem shouldn't be blocked from
+    # recording it just because Convoy Controller owns that domain day-to-day.
     "WD Room Allotment": {"Accommodation"},
     "WD Vendor": {"Finance"},
     "WD Invitation Task": {"Guest Relations"},
