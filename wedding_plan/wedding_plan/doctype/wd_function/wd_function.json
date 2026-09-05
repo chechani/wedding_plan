@@ -14,7 +14,8 @@
   "end_time",
   "venue",
   "sub_venue",
-  "notes"
+  "notes",
+  "image"
  ],
  "fields": [
   {
@@ -70,6 +71,11 @@
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   }
  ],
  "grid_page_length": 50,

@@ -23,7 +23,8 @@
   "attach_zhbt",
   "attach_emya",
   "attach_ebir",
-  "attach_qynx"
+  "attach_qynx",
+  "documents"
  ],
  "fields": [
   {
@@ -116,6 +117,12 @@
    "fieldname": "attach_qynx",
    "fieldtype": "Attach",
    "label": "Other document"
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documents",
+   "options": "WD Checklist Attachment"
   }
  ],
  "grid_page_length": 50,

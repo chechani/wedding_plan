@@ -8,7 +8,8 @@
  "field_order": [
   "gift_item",
   "qty",
-  "wedding"
+  "wedding",
+  "image"
  ],
  "fields": [
   {
@@ -27,6 +28,11 @@
    "fieldtype": "Link",
    "label": "Wedding",
    "options": "Wedding"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   }
  ],
  "grid_page_length": 50,

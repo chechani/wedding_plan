@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "hash",
+ "creation": "2026-09-05 12:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wedding",
+  "function",
+  "groom_side_applicable",
+  "groom_side_male_dress",
+  "groom_side_male_image",
+  "groom_side_female_dress",
+  "groom_side_female_image",
+  "bride_side_applicable",
+  "bride_side_male_dress",
+  "bride_side_male_image",
+  "bride_side_female_dress",
+  "bride_side_female_image",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "wedding",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Wedding",
+   "options": "Wedding",
+   "reqd": 1
+  },
+  {
+   "fieldname": "function",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Function",
+   "options": "WD Function",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "groom_side_applicable",
+   "fieldtype": "Check",
+   "label": "Groom Side Dress Code Decided"
+  },
+  {
+   "fieldname": "groom_side_male_dress",
+   "fieldtype": "Data",
+   "label": "Groom Side – Male",
+   "depends_on": "eval:doc.groom_side_applicable"
+  },
+  {
+   "fieldname": "groom_side_male_image",
+   "fieldtype": "Attach Image",
+   "label": "Groom Side – Male Reference",
+   "depends_on": "eval:doc.groom_side_applicable"
+  },
+  {
+   "fieldname": "groom_side_female_dress",
+   "fieldtype": "Data",
+   "label": "Groom Side – Female",
+   "depends_on": "eval:doc.groom_side_applicable"
+  },
+  {
+   "fieldname": "groom_side_female_image",
+   "fieldtype": "Attach Image",
+   "label": "Groom Side – Female Reference",
+   "depends_on": "eval:doc.groom_side_applicable"
+  },
+  {
+   "fieldname": "bride_side_applicable",
+   "fieldtype": "Check",
+   "label": "Bride Side Dress Code Decided"
+  },
+  {
+   "fieldname": "bride_side_male_dress",
+   "fieldtype": "Data",
+   "label": "Bride Side – Male",
+   "depends_on": "eval:doc.bride_side_applicable"
+  },
+  {
+   "fieldname": "bride_side_male_image",
+   "fieldtype": "Attach Image",
+   "label": "Bride Side – Male Reference",
+   "depends_on": "eval:doc.bride_side_applicable"
+  },
+  {
+   "fieldname": "bride_side_female_dress",
+   "fieldtype": "Data",
+   "label": "Bride Side – Female",
+   "depends_on": "eval:doc.bride_side_applicable"
+  },
+  {
+   "fieldname": "bride_side_female_image",
+   "fieldtype": "Attach Image",
+   "label": "Bride Side – Female Reference",
+   "depends_on": "eval:doc.bride_side_applicable"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-05 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Wedding Plan",
+ "name": "WD Function Dress Code",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wedding Planner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

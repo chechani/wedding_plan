@@ -14,9 +14,11 @@
   "scope",
   "member_a_name",
   "member_a_contact",
+  "member_a_photo",
   "member_b_label",
   "member_b_name",
-  "member_b_contact"
+  "member_b_contact",
+  "member_b_photo"
  ],
  "fields": [
   {
@@ -62,6 +64,11 @@
    "label": "Member A Contact"
   },
   {
+   "fieldname": "member_a_photo",
+   "fieldtype": "Attach Image",
+   "label": "Member A Photo"
+  },
+  {
    "default": "Shadow",
    "fieldname": "member_b_label",
    "fieldtype": "Data",
@@ -76,6 +83,11 @@
    "fieldname": "member_b_contact",
    "fieldtype": "Data",
    "label": "Member B Contact"
+  },
+  {
+   "fieldname": "member_b_photo",
+   "fieldtype": "Attach Image",
+   "label": "Member B Photo"
   }
  ],
  "grid_page_length": 50,
