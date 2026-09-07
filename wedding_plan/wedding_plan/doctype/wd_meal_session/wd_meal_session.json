@@ -14,8 +14,11 @@
   "crockery",
   "time",
   "venue",
+  "function",
   "vendor",
   "who_eats",
+  "calculated_plates",
+  "adjustment",
   "guaranteed_plates",
   "jain_plates",
   "staff_coupons",
@@ -78,6 +81,13 @@
    "options": "WD Venue"
   },
   {
+   "fieldname": "function",
+   "fieldtype": "Link",
+   "label": "Function",
+   "options": "WD Function",
+   "description": "Which function this session belongs to — its Confirmed/Attended guest list is what the plate count calculator reads."
+  },
+  {
    "fieldname": "vendor",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -88,6 +98,21 @@
    "fieldname": "who_eats",
    "fieldtype": "Data",
    "label": "Who Eats"
+  },
+  {
+   "default": "0",
+   "description": "Last auto-calculated total (guests + catering staff + drivers + other teams). Set by \"Recalculate\" in the Plate Count panel, not hand-edited.",
+   "fieldname": "calculated_plates",
+   "fieldtype": "Int",
+   "label": "Calculated Plates",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Manual +/- on top of Calculated Plates before it becomes Guaranteed Plates.",
+   "fieldname": "adjustment",
+   "fieldtype": "Int",
+   "label": "Adjustment (+/-)"
   },
   {
    "default": "0",

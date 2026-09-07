@@ -47,6 +47,7 @@ Re-exports so the frontend's REST calls stay short:
   /api/method/wedding_plan.api.attention_items
   /api/method/wedding_plan.api.arrival_readiness
   /api/method/wedding_plan.api.bulk_set_category_status
+  /api/method/wedding_plan.api.calculate_meal_session_plate_count
 Every other read/write (guests, rooms, run sheet, teams, vendors, meal
 sessions, convoy legs, transport movements, vehicle assignments, event
 issues, menus, ...) goes through Frappe's standard REST API —
@@ -100,4 +101,4 @@ from wedding_plan.api.transport import (  # noqa: F401
 	movement_board,
 )
 from wedding_plan.api.event import attention_items, arrival_readiness  # noqa: F401
-from wedding_plan.api.menu import bulk_set_category_status  # noqa: F401
+from wedding_plan.api.menu import bulk_set_category_status, calculate_meal_session_plate_count  # noqa: F401

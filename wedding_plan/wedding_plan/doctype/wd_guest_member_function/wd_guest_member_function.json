@@ -14,6 +14,8 @@
   "status",
   "column_break_1",
   "meal_preference",
+  "is_fasting",
+  "serve_before",
   "last_status_change",
   "seating_notes"
  ],
@@ -74,6 +76,19 @@
    "fieldtype": "Select",
    "label": "Meal Preference",
    "options": "\nStandard\nJain\nVegan\nDiabetic\nOther"
+  },
+  {
+   "default": "0",
+   "description": "Independent of Meal Preference — a guest can be Jain AND fasting today.",
+   "fieldname": "is_fasting",
+   "fieldtype": "Check",
+   "label": "Fasting / Vrat Today"
+  },
+  {
+   "description": "This guest's own cutoff for this Function, if any — e.g. before sunset. Blank means no constraint.",
+   "fieldname": "serve_before",
+   "fieldtype": "Time",
+   "label": "Serve Before"
   },
   {
    "fieldname": "last_status_change",

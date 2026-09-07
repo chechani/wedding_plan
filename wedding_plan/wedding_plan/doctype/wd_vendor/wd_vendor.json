@@ -9,12 +9,14 @@
  "field_order": [
   "wedding",
   "vendor_name",
+  "city",
   "scope",
   "where_needed",
   "contact_name",
   "contact_phone",
   "advance_amount",
   "vendor_type",
+  "staff_count",
   "column_break_zuwr",
   "section_break_uzen",
   "attach_mlye",
@@ -42,6 +44,14 @@
    "in_list_view": 1,
    "label": "Vendor Name",
    "reqd": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "City",
+   "options": "WD City"
   },
   {
    "fieldname": "scope",
@@ -74,6 +84,14 @@
    "fieldtype": "Link",
    "label": "Vendor Type",
    "options": "WD Vendor Type"
+  },
+  {
+   "default": "0",
+   "description": "Crew this vendor brings on-ground (e.g. catering waitstaff). Used to auto-calculate meal session plate counts — see WD Meal Session.",
+   "fieldname": "staff_count",
+   "fieldtype": "Int",
+   "label": "Staff Count",
+   "non_negative": 1
   },
   {
    "fieldname": "column_break_zuwr",

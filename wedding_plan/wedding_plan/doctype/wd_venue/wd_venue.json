@@ -9,6 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "venue_name",
+  "city",
   "location",
   "image",
   "rooms_total",
@@ -37,9 +38,19 @@
    "unique": 1
   },
   {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "City",
+   "options": "WD City",
+   "reqd": 1
+  },
+  {
    "fieldname": "location",
    "fieldtype": "Small Text",
-   "label": "Location"
+   "label": "Location",
+   "reqd": 1
   },
   {
    "fieldname": "image",
@@ -75,7 +86,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-22 09:20:50.589856",
+ "modified": "2026-09-07 11:24:33.101521",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Venue",

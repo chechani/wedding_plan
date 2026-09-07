@@ -8,10 +8,15 @@
  "engine": "InnoDB",
  "field_order": [
   "household_name",
+  "side",
+  "invitation_prefix",
+  "invitation_name",
+  "invitation_suffix",
   "primary_phone",
   "alternate_phone",
   "address",
   "city",
+  "pincode",
   "category",
   "sub_group",
   "pax",
@@ -64,10 +69,37 @@
    "reqd": 1
   },
   {
+   "default": "Common",
+   "fieldname": "side",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Side",
+   "options": "Groom\nBride\nCommon"
+  },
+  {
+   "description": "Printed together as Prefix + Invitation Name + Suffix, e.g. \"Shreeman Ramesh Chechani Saparivar\".",
+   "fieldname": "invitation_prefix",
+   "fieldtype": "Select",
+   "label": "Prefix",
+   "options": "\nShreeman\nShreemati\nKumar\nKumari\nShri\nSmt.\nDr."
+  },
+  {
+   "fieldname": "invitation_name",
+   "fieldtype": "Data",
+   "label": "Invitation Name"
+  },
+  {
+   "fieldname": "invitation_suffix",
+   "fieldtype": "Select",
+   "label": "Suffix",
+   "options": "\nSaparivar\nEvam Parivar\nParivar Sahit\nDampati"
+  },
+  {
    "fieldname": "primary_phone",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Primary Phone"
+   "label": "Mobile"
   },
   {
    "fieldname": "alternate_phone",
@@ -85,6 +117,11 @@
    "in_list_view": 1,
    "label": "City",
    "options": "WD City"
+  },
+  {
+   "fieldname": "pincode",
+   "fieldtype": "Data",
+   "label": "Pincode"
   },
   {
    "default": "Local",

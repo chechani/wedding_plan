@@ -2,6 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
+ "autoname": "field:city",
  "creation": "2026-08-22 09:32:30.253489",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -12,16 +13,20 @@
   {
    "fieldname": "city",
    "fieldtype": "Data",
-   "label": "City"
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "City",
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-22 09:32:50.358699",
+ "modified": "2026-09-07 11:20:42.370823",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD City",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
