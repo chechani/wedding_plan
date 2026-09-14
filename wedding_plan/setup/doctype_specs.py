@@ -48,6 +48,7 @@ WEDDING_SCOPED_DOCTYPES = [
     "WD WhatsApp Account",
     "WD WhatsApp Campaign",
     "WD WhatsApp Campaign Recipient",
+    "WD WhatsApp Campaign Template",
     "WD Invitation Task",
     "WD Invitation Log",
     "WD Delivery Run",

@@ -1,0 +1,16 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-09-14 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["wedding", "template_name", "message", "attachment", "attachment_kind"],
+ "fields": [
+  {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1,"in_standard_filter":1},
+  {"fieldname":"template_name","fieldtype":"Data","label":"Template Name","reqd":1,"in_list_view":1},
+  {"fieldname":"message","fieldtype":"Long Text","label":"Message"},
+  {"fieldname":"attachment","fieldtype":"Attach","label":"Attachment"},
+  {"fieldname":"attachment_kind","fieldtype":"Select","label":"Attachment Kind","options":"\nImage\nVideo\nDocument","read_only":1}
+ ],
+ "module":"Wedding Plan","name":"WD WhatsApp Campaign Template","owner":"Administrator","permissions":[{"role":"System Manager","create":1,"read":1,"write":1,"delete":1},{"role":"Wedding Planner","create":1,"read":1,"write":1,"delete":1}],"sort_field":"creation","sort_order":"DESC","track_changes":1
+}

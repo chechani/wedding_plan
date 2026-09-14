@@ -23,6 +23,65 @@ def _log(wedding, template_key, to_phone, payload, result, provider_message_id=N
     frappe.db.commit()
 
 
+def _attach_file(doctype, name, field, file_url):
+    """Point `doctype`/`name`/`field` at an already-uploaded File.
+
+    A file that isn't owned by anything yet (a fresh upload) is reassigned
+    directly — the cheap, common case — after checking the caller actually
+    owns it, so a client can't hijack an arbitrary stranger's private upload
+    by URL. A file that's already attached to a *different* document (most
+    commonly: this is a template's attachment, being used to start a
+    campaign) is copied instead of stolen — the original keeps working, and
+    permission to read it was already established by the caller being able
+    to load that other document in the first place.
+
+    `file_url` is not actually unique: Frappe deduplicates identical byte
+    content onto one physical path, so a template's attachment and every
+    campaign copied from it can share the exact same URL string across
+    several distinct File *documents*. Resolving straight from the URL would
+    non-deterministically land on any one of them — including, worst case,
+    a sibling campaign's own copy, which must never be treated as a source
+    to copy from. So: prefer an unattached row (a genuine fresh upload) if
+    one exists, else the oldest row not itself owned by a Campaign (the
+    original — a template, typically) — a Campaign's own copy is only ever a
+    destination here, never a source.
+    """
+    candidates = frappe.get_all(
+        "File",
+        filters={"file_url": file_url},
+        fields=["name", "attached_to_doctype", "attached_to_name", "owner"],
+        order_by="creation asc",
+    )
+    if not candidates:
+        frappe.throw(_("That file could not be found."))
+    match = next((c for c in candidates if not c.attached_to_name), None)
+    if not match and any(c.attached_to_doctype == doctype and c.attached_to_name == name for c in candidates):
+        return file_url  # already exactly where it needs to be
+    if not match:
+        match = next((c for c in candidates if c.attached_to_doctype != "WD WhatsApp Campaign"), candidates[0])
+    file_doc = frappe.get_doc("File", match.name)
+
+    if file_doc.attached_to_name:
+        new_file = frappe.get_doc({
+            "doctype": "File",
+            "file_name": file_doc.file_name,
+            "content": file_doc.get_content(),
+            "is_private": file_doc.is_private,
+            "attached_to_doctype": doctype,
+            "attached_to_name": name,
+            "attached_to_field": field,
+        }).insert(ignore_permissions=True)
+        return new_file.file_url
+
+    if file_doc.owner != frappe.session.user and "System Manager" not in frappe.get_roles():
+        frappe.throw(_("Not permitted to use this file."))
+    file_doc.attached_to_doctype = doctype
+    file_doc.attached_to_name = name
+    file_doc.attached_to_field = field
+    file_doc.save(ignore_permissions=True)
+    return file_url
+
+
 def _campaign_wedding(campaign):
     """Resolve a campaign's wedding and assert send rights on it.
 
@@ -80,7 +139,11 @@ def list_whatsapp_campaigns(wedding):
 
 
 @frappe.whitelist()
-def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None):
+def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None, template=None):
+    """`template` (a `WD WhatsApp Campaign Template` name) pre-fills `message`
+    and `media_file` when those aren't given explicitly — as an independent
+    copy at creation time, not a live link. Editing or deleting the template
+    afterward never reaches back into a campaign already built from it."""
     # Sending is a write-ish action with real, guest-facing cost, so read-only
     # roles must not be able to set a campaign up or fire it.
     if not frappe.has_permission("Wedding", "write", doc=wedding):
@@ -92,6 +155,20 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
     start_at = get_datetime(start_at) if start_at else now_datetime()
     if not households:
         frappe.throw(_("Select at least one guest family."))
+
+    if template:
+        # Only the message text is auto-filled here; the attachment is not —
+        # the caller (the composer) already stages the template's attachment
+        # into its own `media_file` when the family hasn't cleared it, and
+        # `_attach_file` below copies rather than steals when that URL turns
+        # out to belong to another document (the template). Auto-filling
+        # `media_file` here too, from `template` alone, would silently bring
+        # an attachment back after the caller had explicitly removed it.
+        template_doc = frappe.get_doc("WD WhatsApp Campaign Template", template)
+        if template_doc.wedding != wedding:
+            frappe.throw(_("Template not found."))
+        if message is None:
+            message = template_doc.message
 
     guests = frappe.get_all("WD Guest", filters={"wedding": wedding, "name": ["in", households]}, fields=["name", "primary_phone", "household_name"])
     by_id = {row.name: row for row in guests}
@@ -113,6 +190,7 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
     campaign = frappe.get_doc({
         "doctype": "WD WhatsApp Campaign", "wedding": wedding, "campaign_name": campaign_name,
         "message": message, "interval_minutes": interval_minutes, "start_at": start_at,
+        "source_template": template or None,
         "next_send_at": None, "status": "Draft", "sent_count": 0, "failed_count": 0,
     }).insert()
     for row in rows:
@@ -120,15 +198,9 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
     sync_campaign_counts(campaign.name)
     campaign.reload()
     if media_file:
-        file_doc = frappe.get_doc("File", {"file_url": media_file})
-        if file_doc.owner != frappe.session.user and "System Manager" not in frappe.get_roles():
-            frappe.throw(_("Not permitted to use this image."))
-        file_doc.attached_to_doctype = "WD WhatsApp Campaign"
-        file_doc.attached_to_name = campaign.name
-        file_doc.attached_to_field = "media_file"
-        file_doc.save(ignore_permissions=True)
-        frappe.db.set_value("WD WhatsApp Campaign", campaign.name, "media_file", media_file)
-        campaign.media_file = media_file
+        final_url = _attach_file("WD WhatsApp Campaign", campaign.name, "media_file", media_file)
+        frappe.db.set_value("WD WhatsApp Campaign", campaign.name, "media_file", final_url)
+        campaign.media_file = final_url
     return campaign.as_dict()
 
 
@@ -137,16 +209,9 @@ def schedule_whatsapp_campaign(campaign, media_file=None):
      _campaign_wedding(campaign)
      doc = frappe.get_doc("WD WhatsApp Campaign", campaign)
      if media_file:
-         file_doc = frappe.get_doc("File", {"file_url": media_file})
-         if file_doc.owner != frappe.session.user and "System Manager" not in frappe.get_roles():
-             frappe.throw(_("Not permitted to use this image."))
-         file_doc.attached_to_doctype = "WD WhatsApp Campaign"
-         file_doc.attached_to_name = doc.name
-         file_doc.attached_to_field = "media_file"
-         file_doc.save(ignore_permissions=True)
-         doc.media_file = media_file
+         doc.media_file = _attach_file("WD WhatsApp Campaign", doc.name, "media_file", media_file)
      if not (doc.message or doc.media_file):
-         frappe.throw(_("Add a message or upload an image before scheduling."))
+         frappe.throw(_("Add a message or an attachment before scheduling."))
      doc.status = "Scheduled"
      doc.next_send_at = now_datetime()
      doc.save(ignore_permissions=True)

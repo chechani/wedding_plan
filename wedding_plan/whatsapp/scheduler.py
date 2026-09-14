@@ -48,6 +48,20 @@ def _message_id(result):
 	return result.get("message_id") or result.get("id") or data.get("msgId") or result.get("message")
 
 
+def personalize_message(message, household):
+	"""Fill the `{family}` placeholder with the guest's household name.
+
+	`household` is a WD Guest docname; its `household_name` is what the
+	campaign composer's placeholder actually refers to. A guest with a blank
+	household_name (shouldn't happen, but data is data) falls back to "your
+	family" rather than sending a literal empty string.
+	"""
+	if not message:
+		return message
+	name = (frappe.db.get_value("WD Guest", household, "household_name") or "your family").strip()
+	return message.replace("{family}", name)
+
+
 def campaign_counts(campaign_name):
 	"""Per-status recipient counts, straight from the recipient rows.
 
@@ -125,34 +139,26 @@ def process_campaign(campaign_name):
 
 	row.attempts = (row.attempts or 0) + 1
 	_record(row, "Sending", None, account=account.name)
+	message = personalize_message(campaign.message, row.household)
 	try:
-		image_path = None
+		attachment_path = None
 		if campaign.media_file:
-			image_path = frappe.get_doc("File", {"file_url": campaign.media_file}).get_full_path()
-		result = send_wasender(account, row.phone, campaign.message, image_path=image_path)
-		is_dry_run = bool(result.get("dry_run"))
+			attachment_path = frappe.get_doc("File", {"file_url": campaign.media_file}).get_full_path()
+		result = send_wasender(account, row.phone, message, attachment_path=attachment_path)
 		message_id = _message_id(result)
-		_record(
-			row,
-			"Skipped" if is_dry_run else "Sent",
-			"Dry run — WhatsApp sending is switched off, nothing was delivered." if is_dry_run else None,
-			sent_at=None if is_dry_run else now_datetime(),
-			provider_message_id=message_id,
-		)
-		if not is_dry_run:
-			frappe.db.set_value("WD WhatsApp Account", account.name, "last_used_at", now_datetime())
+		_record(row, "Sent", None, sent_at=now_datetime(), provider_message_id=message_id)
+		frappe.db.set_value("WD WhatsApp Account", account.name, "last_used_at", now_datetime())
 		frappe.get_doc({
 			"doctype": "WD WhatsApp Message Log", "wedding": campaign.wedding, "direction": "Out",
-			"to_phone": row.phone, "from_phone": account.phone_number, "payload": campaign.message,
-			"status": "DRY_RUN" if is_dry_run else "SENT", "provider_message_id": message_id,
+			"to_phone": row.phone, "from_phone": account.phone_number, "payload": message,
+			"status": "SENT", "provider_message_id": message_id,
 		}).insert(ignore_permissions=True)
 		sync_campaign_counts(campaign.name, **{
 			"status": "Running",
 			"next_send_at": add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10),
 			"last_error": None,
 		})
-		if not is_dry_run:
-			_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
+		_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
 		return {"processed": True, "recipient": row.name, "status": row.status}
 	except Exception as error:
 		# The full traceback goes to the error log; the family's row keeps the

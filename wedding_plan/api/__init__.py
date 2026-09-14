@@ -73,6 +73,10 @@ from wedding_plan.api.whatsapp import (  # noqa: F401
   schedule_whatsapp_campaign, whatsapp_campaign_report,
   retry_whatsapp_campaign_recipients,
 )
+from wedding_plan.api.whatsapp_templates import (  # noqa: F401
+  list_whatsapp_templates, create_whatsapp_template,
+  update_whatsapp_template, delete_whatsapp_template,
+)
 from wedding_plan.api.invitations import (  # noqa: F401
 	get_invitation_channels,
 	get_invitation_matrix,

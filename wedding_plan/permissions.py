@@ -50,6 +50,7 @@ ROLE_WRITE_REQUIREMENTS = {
     "WD Invitation Log": {"Guest Relations"},
     "WD WhatsApp Campaign": {"Guest Relations"},
     "WD WhatsApp Campaign Recipient": {"Guest Relations"},
+    "WD WhatsApp Campaign Template": {"Guest Relations"},
     "WD Guest Member": {"Accommodation", "Guest Relations"},
     "WD Guest Member Function": {"Guest Relations"},
 }

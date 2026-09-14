@@ -19,6 +19,10 @@ Configure via site_config.json:
   "whatsform_api_key": "...",
   "whatsform_api_secret": "...",
   "whatsform_dry_run": true   # log instead of calling, until the above are real
+
+Not used by the WhatsApp Campaign feature below `send_wasender` — that goes
+through WasenderAPI directly and has its own (no longer dry-run-able)
+sending logic. This is a separate, currently-unused direct-send path.
 """
 import json
 import mimetypes
@@ -32,6 +36,20 @@ SEND_TEMPLATE_PATH = "/api/method/frappe_whatsapp.whatsapp_chat.send_template_to
 
 class WhatsformNotConfigured(Exception):
     pass
+
+
+def classify_attachment(file_url_or_path: str) -> str:
+    """"image" / "video" / "document" from a file's name alone — used both to
+    pick the right WasenderAPI payload field and to label an attachment in
+    the desk UI. Anything not recognized as image/video falls back to
+    "document" (WasenderAPI's own catch-all: "most common document types are
+    supported (PDF, DOCX, XLSX, etc.)")."""
+    mime, _ = mimetypes.guess_type(file_url_or_path or "")
+    if mime and mime.startswith("image/"):
+        return "image"
+    if mime and mime.startswith("video/"):
+        return "video"
+    return "document"
 
 
 def _config():
@@ -79,8 +97,9 @@ def send_template(template: str, mobile_numbers: list, components: list | None =
     })
 
 
-def send_wasender(account, to_phone: str, message: str | None, image_path: str | None = None) -> dict:
-    """Send a text, image, or image-with-caption through WasenderAPI.
+def send_wasender(account, to_phone: str, message: str | None, attachment_path: str | None = None) -> dict:
+    """Send a text, or a text with an image/video/document attached, through
+    WasenderAPI.
 
     The key is read server-side from a Frappe Password field. It is never
     accepted from the browser, stored in a campaign, or written to a log.
@@ -88,33 +107,37 @@ def send_wasender(account, to_phone: str, message: str | None, image_path: str |
     api_key = account.get_password("api_key")
     if not api_key:
         raise WhatsformNotConfigured("WhatsApp sender account has no API key")
-    if frappe.conf.get("whatsapp_dry_run", True):
-        return {"dry_run": True, "message": "dry-run"}
 
-    image_url = None
-    if image_path:
-        with open(image_path, "rb") as image_file:
+    payload = {"to": to_phone, **({"text": message} if message else {})}
+
+    if attachment_path:
+        with open(attachment_path, "rb") as attachment_file:
             media_response = requests.post(
                 frappe.conf.get("wasender_upload_url", "https://wasenderapi.com/api/upload"),
-                data=image_file,
+                data=attachment_file,
                 headers={
                     "Authorization": f"Bearer {api_key}",
-                    "Content-Type": mimetypes.guess_type(image_path)[0] or "image/jpeg",
+                    "Content-Type": mimetypes.guess_type(attachment_path)[0] or "application/octet-stream",
                 },
                 timeout=60,
             )
         media_response.raise_for_status()
-        image_url = media_response.json().get("publicUrl")
-        if not image_url:
-            raise WhatsformNotConfigured("WasenderAPI did not return a public image URL")
+        media_url = media_response.json().get("publicUrl")
+        if not media_url:
+            raise WhatsformNotConfigured("WasenderAPI did not return a public attachment URL")
+
+        kind = classify_attachment(attachment_path)
+        if kind == "image":
+            payload["imageUrl"] = media_url
+        elif kind == "video":
+            payload["videoUrl"] = media_url
+        else:
+            payload["documentUrl"] = media_url
+            payload["fileName"] = attachment_path.rsplit("/", 1)[-1]
 
     response = requests.post(
         frappe.conf.get("wasender_api_url", "https://wasenderapi.com/api/send-message"),
-        json={
-            "to": to_phone,
-            **({"text": message} if message else {}),
-            **({"imageUrl": image_url} if image_url else {}),
-        },
+        json=payload,
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         timeout=30,
     )
