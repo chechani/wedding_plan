@@ -21,6 +21,7 @@ Configure via site_config.json:
   "whatsform_dry_run": true   # log instead of calling, until the above are real
 """
 import json
+import mimetypes
 
 import frappe
 import requests
@@ -64,7 +65,7 @@ def send_text(mobile_no: str, message: str) -> dict:
     return _post(SEND_TEXT_PATH, {"mobile_no": mobile_no, "message": message})
 
 
-def send_template(template: str, mobile_numbers: list, components: list = None, header_type: str = "") -> dict:
+def send_template(template: str, mobile_numbers: list, components: list | None = None, header_type: str = "") -> dict:
     return _post(SEND_TEMPLATE_PATH, {
         "template": template,
         "mobile_numbers": mobile_numbers,
@@ -76,3 +77,46 @@ def send_template(template: str, mobile_numbers: list, components: list = None, 
         "filedata": "",
         "media_name": "",
     })
+
+
+def send_wasender(account, to_phone: str, message: str | None, image_path: str | None = None) -> dict:
+    """Send a text, image, or image-with-caption through WasenderAPI.
+
+    The key is read server-side from a Frappe Password field. It is never
+    accepted from the browser, stored in a campaign, or written to a log.
+    """
+    api_key = account.get_password("api_key")
+    if not api_key:
+        raise WhatsformNotConfigured("WhatsApp sender account has no API key")
+    if frappe.conf.get("whatsapp_dry_run", True):
+        return {"dry_run": True, "message": "dry-run"}
+
+    image_url = None
+    if image_path:
+        with open(image_path, "rb") as image_file:
+            media_response = requests.post(
+                frappe.conf.get("wasender_upload_url", "https://wasenderapi.com/api/upload"),
+                data=image_file,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": mimetypes.guess_type(image_path)[0] or "image/jpeg",
+                },
+                timeout=60,
+            )
+        media_response.raise_for_status()
+        image_url = media_response.json().get("publicUrl")
+        if not image_url:
+            raise WhatsformNotConfigured("WasenderAPI did not return a public image URL")
+
+    response = requests.post(
+        frappe.conf.get("wasender_api_url", "https://wasenderapi.com/api/send-message"),
+        json={
+            "to": to_phone,
+            **({"text": message} if message else {}),
+            **({"imageUrl": image_url} if image_url else {}),
+        },
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()

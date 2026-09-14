@@ -1,0 +1,180 @@
+from collections import Counter
+
+import frappe
+from frappe.utils import add_to_date, now_datetime
+
+from wedding_plan.whatsapp.whatsform_client import send_wasender
+
+# Statuses a recipient can sit in. Only "Pending" is picked up by the
+# scheduler: a failure stays Failed on the record until someone explicitly
+# retries it, so nothing is silently re-sent and nothing is silently lost.
+SENDABLE = ("Pending",)
+RETRYABLE = ("Failed", "Skipped", "Sending", "No Phone")
+
+
+def _update_invitation_task(wedding, household, **kwargs):
+	"""Mirror the send onto the invitation matrix, best effort.
+
+	The matrix refuses some transitions (a task already Acknowledged cannot go
+	back to Failed, say). That must never change what the campaign recorded or
+	stop the run: the WhatsApp attempt happened either way, and the recipient
+	row is the record of it.
+	"""
+	# Imported inside the call: wedding_plan.api imports this module, so a
+	# top-level import of an api submodule would be a cycle.
+	from wedding_plan.api.invitations import update_invitation_task
+
+	if not frappe.db.exists("WD Invitation Channel", "main"):
+		return
+	try:
+		update_invitation_task(wedding, household, "main", **kwargs)
+	except Exception:
+		frappe.log_error(title="WhatsApp campaign: invitation task not updated", message=frappe.get_traceback())
+
+
+def _next_account(wedding):
+	accounts = frappe.get_all(
+		"WD WhatsApp Account",
+		filters={"wedding": wedding, "enabled": 1},
+		fields=["name", "phone_number", "last_used_at"],
+		order_by="last_used_at asc, creation asc",
+		limit=1,
+	)
+	return frappe.get_doc("WD WhatsApp Account", accounts[0].name) if accounts else None
+
+
+def _message_id(result):
+	data = result.get("data") or {}
+	return result.get("message_id") or result.get("id") or data.get("msgId") or result.get("message")
+
+
+def campaign_counts(campaign_name):
+	"""Per-status recipient counts, straight from the recipient rows.
+
+	The rows are the record of truth — counters on the campaign are only a
+	cache of this — so a retry, a re-send, or a crashed run can never leave
+	the campaign claiming a different number than the families it lists.
+	"""
+	by_status = Counter(frappe.get_all(
+		"WD WhatsApp Campaign Recipient",
+		filters={"campaign": campaign_name},
+		pluck="status",
+		limit_page_length=0,
+	))
+	return {
+		"total_count": sum(by_status.values()),
+		"sent_count": by_status.get("Sent", 0),
+		"failed_count": by_status.get("Failed", 0),
+		"skipped_count": by_status.get("Skipped", 0) + by_status.get("No Phone", 0),
+		"pending_count": by_status.get("Pending", 0) + by_status.get("Sending", 0),
+		"by_status": dict(by_status),
+	}
+
+
+def sync_campaign_counts(campaign_name, **extra):
+	counts = campaign_counts(campaign_name)
+	frappe.db.set_value("WD WhatsApp Campaign", campaign_name, {
+		"total_count": counts["total_count"],
+		"sent_count": counts["sent_count"],
+		"failed_count": counts["failed_count"],
+		"skipped_count": counts["skipped_count"],
+		"pending_count": counts["pending_count"],
+		**extra,
+	})
+	return counts
+
+
+def _record(row, status, reason=None, **fields):
+	"""Write the outcome of one attempt onto the family's own row.
+
+	`reason` is always set for anything that is not a clean Sent, so the
+	planner never sees a bare "Failed" without being told why.
+	"""
+	row.status = status
+	row.error = (reason or "")[:500] or None
+	row.last_attempt_at = now_datetime()
+	for field, value in fields.items():
+		setattr(row, field, value)
+	row.save(ignore_permissions=True)
+
+
+def process_campaign(campaign_name):
+	campaign = frappe.get_doc("WD WhatsApp Campaign", campaign_name)
+	if campaign.status not in ("Scheduled", "Running"):
+		return {"processed": False, "status": campaign.status}
+	if campaign.next_send_at and campaign.next_send_at > now_datetime():
+		return {"processed": False}
+
+	recipient = frappe.get_all(
+		"WD WhatsApp Campaign Recipient",
+		filters={"campaign": campaign.name, "status": ["in", SENDABLE]},
+		fields=["name"],
+		order_by="creation asc",
+		limit=1,
+	)
+	if not recipient:
+		counts = sync_campaign_counts(campaign.name, status="Completed", next_send_at=None)
+		return {"processed": False, "completed": True, "counts": counts}
+
+	row = frappe.get_doc("WD WhatsApp Campaign Recipient", recipient[0].name)
+	account = _next_account(campaign.wedding)
+	if not account:
+		reason = "No enabled WhatsApp sender account is configured."
+		sync_campaign_counts(campaign.name, status="Failed", last_error=reason)
+		return {"processed": False, "error": reason}
+
+	row.attempts = (row.attempts or 0) + 1
+	_record(row, "Sending", None, account=account.name)
+	try:
+		image_path = None
+		if campaign.media_file:
+			image_path = frappe.get_doc("File", {"file_url": campaign.media_file}).get_full_path()
+		result = send_wasender(account, row.phone, campaign.message, image_path=image_path)
+		is_dry_run = bool(result.get("dry_run"))
+		message_id = _message_id(result)
+		_record(
+			row,
+			"Skipped" if is_dry_run else "Sent",
+			"Dry run — WhatsApp sending is switched off, nothing was delivered." if is_dry_run else None,
+			sent_at=None if is_dry_run else now_datetime(),
+			provider_message_id=message_id,
+		)
+		if not is_dry_run:
+			frappe.db.set_value("WD WhatsApp Account", account.name, "last_used_at", now_datetime())
+		frappe.get_doc({
+			"doctype": "WD WhatsApp Message Log", "wedding": campaign.wedding, "direction": "Out",
+			"to_phone": row.phone, "from_phone": account.phone_number, "payload": campaign.message,
+			"status": "DRY_RUN" if is_dry_run else "SENT", "provider_message_id": message_id,
+		}).insert(ignore_permissions=True)
+		sync_campaign_counts(campaign.name, **{
+			"status": "Running",
+			"next_send_at": add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10),
+			"last_error": None,
+		})
+		if not is_dry_run:
+			_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
+		return {"processed": True, "recipient": row.name, "status": row.status}
+	except Exception as error:
+		# The full traceback goes to the error log; the family's row keeps the
+		# readable reason so it can be shown next to their name.
+		reason = f"{type(error).__name__}: {error}" if not str(error).strip() else str(error)
+		frappe.log_error(title=f"WhatsApp campaign send failed: {campaign.name}", message=frappe.get_traceback())
+		_record(row, "Failed", reason)
+		sync_campaign_counts(campaign.name, **{
+			"status": "Running",
+			"next_send_at": add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10),
+			"last_error": row.error,
+		})
+		_update_invitation_task(campaign.wedding, row.household, status="Failed", failure_reason=row.error)
+		return {"processed": True, "recipient": row.name, "status": "Failed", "error": row.error}
+
+
+def process_due_campaigns():
+	for name in frappe.get_all(
+		"WD WhatsApp Campaign",
+		filters={"status": ["in", ["Scheduled", "Running"]], "next_send_at": ["<=", now_datetime()]},
+		pluck="name",
+		limit=100,
+	):
+		process_campaign(name)
+	frappe.db.commit()

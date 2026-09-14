@@ -8,6 +8,9 @@ Re-exports so the frontend's REST calls stay short:
   /api/method/wedding_plan.api.dashboard_stats
   /api/method/wedding_plan.api.import_excel
   /api/method/wedding_plan.api.download_import_template
+  /api/method/wedding_plan.api.preview_guest_import
+  /api/method/wedding_plan.api.import_guest_families_excel
+  /api/method/wedding_plan.api.download_guest_import_template
   /api/method/wedding_plan.api.whatsapp_send_text
   /api/method/wedding_plan.api.whatsapp_send_template
   /api/method/wedding_plan.api.get_invitation_channels
@@ -57,8 +60,19 @@ needed for those.
 """
 from wedding_plan.api.auth import register, login, me  # noqa: F401
 from wedding_plan.api.weddings import create_wedding_and_join, add_wedding_member, dashboard_stats  # noqa: F401
-from wedding_plan.api.imports import import_excel, download_import_template  # noqa: F401
-from wedding_plan.api.whatsapp import whatsapp_send_text, whatsapp_send_template  # noqa: F401
+from wedding_plan.api.imports import (  # noqa: F401
+	import_excel,
+	download_import_template,
+	preview_guest_import,
+	import_guest_families_excel,
+	download_guest_import_template,
+)
+from wedding_plan.api.whatsapp import (  # noqa: F401
+  whatsapp_send_text, whatsapp_send_template, list_whatsapp_campaigns,
+  create_whatsapp_campaign, whatsapp_campaign_recipients, run_whatsapp_campaign_now,
+  schedule_whatsapp_campaign, whatsapp_campaign_report,
+  retry_whatsapp_campaign_recipients,
+)
 from wedding_plan.api.invitations import (  # noqa: F401
 	get_invitation_channels,
 	get_invitation_matrix,

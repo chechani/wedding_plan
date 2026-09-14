@@ -76,3 +76,7 @@ _REALTIME_DOCTYPES = [
 doc_events = {
     dt: {"on_update": "wedding_plan.realtime.notify_event_update"} for dt in _REALTIME_DOCTYPES
 }
+
+scheduler_events = {
+    "all": ["wedding_plan.whatsapp.scheduler.process_due_campaigns"]
+}

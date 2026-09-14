@@ -1,0 +1,25 @@
+{
+ "actions": [],
+ "autoname": "field:campaign_name",
+ "creation": "2026-09-14 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["wedding", "campaign_name", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "last_error", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count"],
+ "fields": [
+  {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1,"in_standard_filter":1},
+    {"fieldname":"campaign_name","fieldtype":"Data","label":"Campaign Name","reqd":1,"in_list_view":1},
+  {"fieldname":"message","fieldtype":"Long Text","label":"Message"},
+  {"fieldname":"media_file","fieldtype":"Attach Image","label":"Image"},
+  {"fieldname":"interval_minutes","fieldtype":"Int","label":"Interval (minutes)","default":"10","reqd":1,"in_list_view":1},
+  {"fieldname":"start_at","fieldtype":"Datetime","label":"Start At","reqd":1},
+  {"fieldname":"status","fieldtype":"Select","label":"Status","default":"Draft","options":"Draft\nScheduled\nRunning\nPaused\nCompleted\nFailed","in_list_view":1,"in_standard_filter":1},
+  {"fieldname":"next_send_at","fieldtype":"Datetime","label":"Next Send At","read_only":1,"in_list_view":1},
+  {"fieldname":"last_error","fieldtype":"Small Text","label":"Last Error","read_only":1},
+  {"fieldname":"total_count","fieldtype":"Int","label":"Recipients","read_only":1},
+  {"fieldname":"sent_count","fieldtype":"Int","label":"Sent","read_only":1,"in_list_view":1},
+  {"fieldname":"failed_count","fieldtype":"Int","label":"Failed","read_only":1,"in_list_view":1},
+  {"fieldname":"skipped_count","fieldtype":"Int","label":"Skipped","read_only":1},
+  {"fieldname":"pending_count","fieldtype":"Int","label":"Pending","read_only":1}
+ ],
+ "module":"Wedding Plan","name":"WD WhatsApp Campaign","owner":"Administrator","permissions":[{"role":"System Manager","create":1,"read":1,"write":1,"delete":1},{"role":"Wedding Planner","create":1,"read":1,"write":1,"delete":1}],"sort_field":"creation","sort_order":"DESC","track_changes":1
+}

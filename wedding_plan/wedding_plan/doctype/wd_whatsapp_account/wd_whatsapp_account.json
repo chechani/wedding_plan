@@ -1,0 +1,18 @@
+{
+ "actions": [],
+ "autoname": "field:account_name",
+ "creation": "2026-09-14 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["wedding", "account_name", "phone_number", "provider", "api_key", "enabled", "last_used_at"],
+ "fields": [
+  {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1,"in_standard_filter":1},
+    {"fieldname":"account_name","fieldtype":"Data","label":"Account Name","reqd":1,"in_list_view":1},
+  {"fieldname":"phone_number","fieldtype":"Data","label":"WhatsApp Number","reqd":1,"in_list_view":1},
+  {"fieldname":"provider","fieldtype":"Select","label":"Provider","default":"WasenderAPI","options":"WasenderAPI\nWhatsform","reqd":1},
+  {"fieldname":"api_key","fieldtype":"Password","label":"API Key","reqd":1},
+  {"fieldname":"enabled","fieldtype":"Check","label":"Enabled","default":"1","in_list_view":1},
+  {"fieldname":"last_used_at","fieldtype":"Datetime","label":"Last Used At","read_only":1}
+ ],
+ "module":"Wedding Plan","name":"WD WhatsApp Account","owner":"Administrator","permissions":[{"role":"System Manager","create":1,"read":1,"write":1,"delete":1},{"role":"Wedding Planner","create":1,"read":1,"write":1,"delete":1}],"sort_field":"creation","sort_order":"DESC"
+}

@@ -1,0 +1,22 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-09-14 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["wedding", "campaign", "household", "phone", "status", "sent_at", "account", "provider_message_id", "attempts", "last_attempt_at", "error"],
+ "fields": [
+  {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1},
+  {"fieldname":"campaign","fieldtype":"Link","label":"Campaign","options":"WD WhatsApp Campaign","reqd":1,"in_list_view":1},
+  {"fieldname":"household","fieldtype":"Link","label":"Guest Family","options":"WD Guest","reqd":1,"in_list_view":1},
+  {"fieldname":"phone","fieldtype":"Data","label":"Phone","reqd":1,"in_list_view":1},
+  {"fieldname":"status","fieldtype":"Select","label":"Status","default":"Pending","options":"Pending\nSending\nSent\nFailed\nSkipped\nNo Phone","reqd":1,"in_list_view":1,"in_standard_filter":1},
+  {"fieldname":"sent_at","fieldtype":"Datetime","label":"Sent At","read_only":1},
+  {"fieldname":"account","fieldtype":"Link","label":"Sender Account","options":"WD WhatsApp Account"},
+  {"fieldname":"provider_message_id","fieldtype":"Data","label":"Provider Message ID"},
+  {"fieldname":"attempts","fieldtype":"Int","label":"Attempts","default":"0","read_only":1,"in_list_view":1},
+  {"fieldname":"last_attempt_at","fieldtype":"Datetime","label":"Last Attempt At","read_only":1},
+  {"fieldname":"error","fieldtype":"Small Text","label":"Reason"}
+ ],
+ "module":"Wedding Plan","name":"WD WhatsApp Campaign Recipient","owner":"Administrator","permissions":[{"role":"System Manager","create":1,"read":1,"write":1,"delete":1},{"role":"Wedding Planner","create":1,"read":1,"write":1,"delete":1}],"sort_field":"creation","sort_order":"DESC"
+}
