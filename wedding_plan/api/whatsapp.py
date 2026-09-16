@@ -205,7 +205,16 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
 
 
 @frappe.whitelist()
-def schedule_whatsapp_campaign(campaign, media_file=None):
+def schedule_whatsapp_campaign(campaign, media_file=None, start_at=None):
+     """Move a Draft campaign to Scheduled.
+
+     `start_at` is when the *first* message should go out; leave it out (or
+     pass a moment already in the past) to start right away, as before. The
+     per-recipient gap (`interval_minutes`) only ever applies *between* sends
+     — see `process_campaign` — so however far out `start_at` is, the first
+     family is messaged the moment the campaign becomes due, not one interval
+     after that.
+     """
      _campaign_wedding(campaign)
      doc = frappe.get_doc("WD WhatsApp Campaign", campaign)
      if media_file:
@@ -213,7 +222,8 @@ def schedule_whatsapp_campaign(campaign, media_file=None):
      if not (doc.message or doc.media_file):
          frappe.throw(_("Add a message or an attachment before scheduling."))
      doc.status = "Scheduled"
-     doc.next_send_at = now_datetime()
+     doc.start_at = get_datetime(start_at) if start_at else now_datetime()
+     doc.next_send_at = doc.start_at
      doc.save(ignore_permissions=True)
      return doc.as_dict()
 

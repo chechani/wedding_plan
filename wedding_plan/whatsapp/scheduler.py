@@ -98,6 +98,22 @@ def sync_campaign_counts(campaign_name, **extra):
 	return counts
 
 
+def _advance_or_complete(campaign, **extra):
+	"""Schedule the next send, unless this attempt was the last recipient
+	still Pending — then finish the campaign right away.
+
+	Without this, a campaign whose last family had just been sent (or had
+	just failed) sat labelled "Running" with a next_send_at up to
+	`interval_minutes` away, only turning "Completed" on the following
+	scheduler tick that found nothing left to do. Checking here instead
+	means the status reflects reality the moment the last attempt lands.
+	"""
+	remaining = frappe.db.count("WD WhatsApp Campaign Recipient", filters={"campaign": campaign.name, "status": ["in", SENDABLE]})
+	if remaining:
+		return sync_campaign_counts(campaign.name, status="Running", next_send_at=add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10), **extra)
+	return sync_campaign_counts(campaign.name, status="Completed", next_send_at=None, **extra)
+
+
 def _record(row, status, reason=None, **fields):
 	"""Write the outcome of one attempt onto the family's own row.
 
@@ -153,24 +169,29 @@ def process_campaign(campaign_name):
 			"to_phone": row.phone, "from_phone": account.phone_number, "payload": message,
 			"status": "SENT", "provider_message_id": message_id,
 		}).insert(ignore_permissions=True)
-		sync_campaign_counts(campaign.name, **{
-			"status": "Running",
-			"next_send_at": add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10),
-			"last_error": None,
-		})
+		_advance_or_complete(campaign, last_error=None)
 		_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
 		return {"processed": True, "recipient": row.name, "status": row.status}
 	except Exception as error:
 		# The full traceback goes to the error log; the family's row keeps the
-		# readable reason so it can be shown next to their name.
+		# readable reason so it can be shown next to their name. For a provider
+		# rejection that reason is WasenderAPI's own message (see
+		# `WasenderError`), not a bare requests.HTTPError.
 		reason = f"{type(error).__name__}: {error}" if not str(error).strip() else str(error)
-		frappe.log_error(title=f"WhatsApp campaign send failed: {campaign.name}", message=frappe.get_traceback())
+		frappe.log_error(
+			title=f"WhatsApp campaign send failed: {campaign.name}",
+			message="\n".join([
+				f"Campaign: {campaign.name} (wedding {campaign.wedding})",
+				f"Recipient row: {row.name}, household {row.household}, phone {row.phone}",
+				f"Attempt: {row.attempts}, sender account: {account.name}",
+				f"Attachment: {campaign.media_file or '<none>'}",
+				f"Reason: {reason}",
+				"",
+				frappe.get_traceback(),
+			]),
+		)
 		_record(row, "Failed", reason)
-		sync_campaign_counts(campaign.name, **{
-			"status": "Running",
-			"next_send_at": add_to_date(now_datetime(), minutes=campaign.interval_minutes or 10),
-			"last_error": row.error,
-		})
+		_advance_or_complete(campaign, last_error=row.error)
 		_update_invitation_task(campaign.wedding, row.household, status="Failed", failure_reason=row.error)
 		return {"processed": True, "recipient": row.name, "status": "Failed", "error": row.error}
 
