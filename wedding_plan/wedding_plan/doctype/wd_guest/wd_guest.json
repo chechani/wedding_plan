@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "autoname": "hash",
  "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
@@ -329,7 +330,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-13 17:53:47.999950",
+ "modified": "2026-10-13 21:19:29.165509",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Guest",
