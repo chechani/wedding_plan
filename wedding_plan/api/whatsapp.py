@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 
 import frappe
 from frappe import _
@@ -6,6 +7,13 @@ from frappe.utils import get_datetime, now_datetime
 
 from wedding_plan.whatsapp.scheduler import RETRYABLE, campaign_counts, sync_campaign_counts
 from wedding_plan.whatsapp.whatsform_client import send_template, send_text
+
+
+# Who a campaign goes to. "Guest Family" sends one message per WD Guest
+# (household) to its `primary_phone`; "Guest" sends one per WD Guest Member
+# to that person's own `mobile`. Either way every recipient row keeps the
+# household in `household`, so labels and permissions work the same.
+AUDIENCES = ("Guest Family", "Guest")
 
 
 def _log(wedding, template_key, to_phone, payload, result, provider_message_id=None):
@@ -133,28 +141,142 @@ def list_whatsapp_campaigns(wedding):
     return frappe.get_all(
         "WD WhatsApp Campaign",
         filters={"wedding": wedding},
-        fields=["name", "campaign_name", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count", "last_error"],
+        fields=["name", "campaign_name", "audience", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count", "last_error"],
         order_by="creation desc",
     )
 
 
 @frappe.whitelist()
-def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None, template=None):
+def whatsapp_campaign_audience(wedding, audience="Guest Family"):
+    """Everyone a new campaign could be sent to, plus what the composer
+    filters them on, in one round trip.
+
+    Returns `{"functions": [...], "rows": [...]}`. Each row carries
+    `invited_functions` (the All/Selective select on WD Guest / WD Guest
+    Member) and `functions`, the specific WD Functions it is invited to:
+    `functions_invited` for a family, its `WD Guest Member Function` rows for
+    an individual guest. Filtering itself happens in the browser — a wedding
+    has hundreds of rows, not hundreds of thousands.
+    """
+    frappe.has_permission("Wedding", doc=wedding, throw=True)
+    if audience not in AUDIENCES:
+        frappe.throw(_("Unknown audience: {0}").format(audience))
+
+    functions = frappe.get_all(
+        "WD Function", filters={"wedding": wedding},
+        fields=["name", "function_type", "date"], order_by="date asc, start_time asc, creation asc",
+    )
+    families = frappe.get_all(
+        "WD Guest", filters={"wedding": wedding},
+        fields=["name", "household_name", "primary_phone", "side", "category", "sub_group", "rsvp_status", "invited_functions"],
+        order_by="household_name asc", limit_page_length=0,
+    )
+
+    invited = defaultdict(list)
+    if audience == "Guest Family":
+        if families:
+            # WD Guest Function is a child table with no `wedding` of its own,
+            # so scope it through the parents.
+            for row in frappe.get_all(
+                "WD Guest Function",
+                filters={"parenttype": "WD Guest", "parentfield": "functions_invited", "parent": ["in", [f.name for f in families]]},
+                fields=["parent", "wd_function"], limit_page_length=0,
+            ):
+                invited[row.parent].append(row.wd_function)
+        rows = [{
+            "name": f.name, "label": f.household_name, "family": f.household_name,
+            "phone": f.primary_phone or None, "side": f.side, "category": f.category,
+            "sub_group": f.sub_group, "rsvp_status": f.rsvp_status,
+            "invited_functions": f.invited_functions or None, "functions": invited.get(f.name, []),
+        } for f in families]
+    else:
+        by_family = {f.name: f for f in families}
+        for row in frappe.get_all(
+            "WD Guest Member Function", filters={"wedding": wedding},
+            fields=["guest_member", "function"], limit_page_length=0,
+        ):
+            invited[row.guest_member].append(row.function)
+        members = frappe.get_all(
+            "WD Guest Member", filters={"wedding": wedding},
+            fields=["name", "full_name", "guest", "mobile", "relation_to_household", "age_group", "gender", "invited_functions"],
+            order_by="full_name asc", limit_page_length=0,
+        )
+        rows = []
+        for m in members:
+            family = by_family.get(m.guest) or frappe._dict()
+            rows.append({
+                "name": m.name, "label": m.full_name, "family": family.household_name or m.guest,
+                "phone": m.mobile or None, "side": family.side, "category": family.category,
+                "sub_group": family.sub_group, "rsvp_status": family.rsvp_status,
+                "relation": m.relation_to_household, "age_group": m.age_group, "gender": m.gender,
+                "invited_functions": m.invited_functions or None, "functions": invited.get(m.name, []),
+            })
+    return {"functions": functions, "rows": rows}
+
+
+def _family_recipient_rows(wedding, households):
+    guests = frappe.get_all("WD Guest", filters={"wedding": wedding, "name": ["in", households]}, fields=["name", "primary_phone"])
+    by_id = {row.name: row for row in guests}
+    rows = []
+    for household in households:
+        guest = by_id.get(household)
+        if not guest:
+            continue
+        # A family with no mobile number still gets a row, with the reason on
+        # it — the campaign must account for every family that was chosen,
+        # not quietly drop the ones it cannot reach.
+        if guest.primary_phone:
+            rows.append({"household": household, "phone": guest.primary_phone, "status": "Pending"})
+        else:
+            rows.append({"household": household, "phone": "-", "status": "No Phone", "error": _("No mobile number on this guest family.")})
+    return rows
+
+
+def _member_recipient_rows(wedding, members):
+    found = frappe.get_all("WD Guest Member", filters={"wedding": wedding, "name": ["in", members]}, fields=["name", "guest", "mobile"])
+    by_id = {row.name: row for row in found}
+    rows = []
+    for member_id in members:
+        member = by_id.get(member_id)
+        if not member:
+            continue
+        base = {"household": member.guest, "guest_member": member.name}
+        if member.mobile:
+            rows.append({**base, "phone": member.mobile, "status": "Pending"})
+        else:
+            rows.append({**base, "phone": "-", "status": "No Phone", "error": _("No mobile number on this guest.")})
+    return rows
+
+
+@frappe.whitelist()
+def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None, template=None, audience="Guest Family", members=None):
     """`template` (a `WD WhatsApp Campaign Template` name) pre-fills `message`
     and `media_file` when those aren't given explicitly — as an independent
     copy at creation time, not a live link. Editing or deleting the template
-    afterward never reaches back into a campaign already built from it."""
+    afterward never reaches back into a campaign already built from it.
+
+    `audience` "Guest Family" (the default, and the only option before it
+    existed) reads `households`; "Guest" reads `members` (WD Guest Member
+    names) and sends to each person's own `mobile`.
+
+    A message is optional: an attachment alone (image, video, PDF) is a
+    complete campaign. One of the two is required.
+    """
     # Sending is a write-ish action with real, guest-facing cost, so read-only
     # roles must not be able to set a campaign up or fire it.
     if not frappe.has_permission("Wedding", "write", doc=wedding):
         frappe.throw(_("Not permitted"))
-    if isinstance(households, str):
-        households = frappe.parse_json(households)
-    households = households or []
+    audience = audience or "Guest Family"
+    if audience not in AUDIENCES:
+        frappe.throw(_("Unknown audience: {0}").format(audience))
+    selected = members if audience == "Guest" else households
+    if isinstance(selected, str):
+        selected = frappe.parse_json(selected)
+    selected = selected or []
     interval_minutes = max(1, int(interval_minutes))
     start_at = get_datetime(start_at) if start_at else now_datetime()
-    if not households:
-        frappe.throw(_("Select at least one guest family."))
+    if not selected:
+        frappe.throw(_("Select at least one guest.") if audience == "Guest" else _("Select at least one guest family."))
 
     if template:
         # Only the message text is auto-filled here; the attachment is not —
@@ -170,26 +292,17 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
         if message is None:
             message = template_doc.message
 
-    guests = frappe.get_all("WD Guest", filters={"wedding": wedding, "name": ["in", households]}, fields=["name", "primary_phone", "household_name"])
-    by_id = {row.name: row for row in guests}
-    rows = []
-    for household in households:
-        guest = by_id.get(household)
-        if not guest:
-            continue
-        # A family with no mobile number still gets a row, with the reason on
-        # it — the campaign must account for every family that was chosen,
-        # not quietly drop the ones it cannot reach.
-        if guest.primary_phone:
-            rows.append({"household": household, "phone": guest.primary_phone, "status": "Pending"})
-        else:
-            rows.append({"household": household, "phone": "-", "status": "No Phone", "error": _("No mobile number on this guest family.")})
+    message = (message or "").strip() or None
+    if not (message or media_file):
+        frappe.throw(_("Add a message or an attachment."))
+
+    rows = _member_recipient_rows(wedding, selected) if audience == "Guest" else _family_recipient_rows(wedding, selected)
     if not rows:
-        frappe.throw(_("The selected guest families could not be found."))
+        frappe.throw(_("The selected guests could not be found.") if audience == "Guest" else _("The selected guest families could not be found."))
 
     campaign = frappe.get_doc({
         "doctype": "WD WhatsApp Campaign", "wedding": wedding, "campaign_name": campaign_name,
-        "message": message, "interval_minutes": interval_minutes, "start_at": start_at,
+        "audience": audience, "message": message, "interval_minutes": interval_minutes, "start_at": start_at,
         "source_template": template or None,
         "next_send_at": None, "status": "Draft", "sent_count": 0, "failed_count": 0,
     }).insert()
@@ -235,12 +348,20 @@ def whatsapp_campaign_recipients(campaign):
     recipients = frappe.get_all(
         "WD WhatsApp Campaign Recipient",
         filters={"campaign": campaign},
-        fields=["name", "household", "phone", "status", "sent_at", "account", "error", "attempts", "last_attempt_at", "provider_message_id"],
+        fields=["name", "household", "guest_member", "phone", "status", "sent_at", "account", "error", "attempts", "last_attempt_at", "provider_message_id"],
         order_by="creation asc",
     )
     names = {row.household for row in recipients}
     labels = {row.name: row.household_name for row in frappe.get_all("WD Guest", filters={"name": ["in", list(names)]}, fields=["name", "household_name"])} if names else {}
-    return [{**row, "household_name": labels.get(row.household, row.household)} for row in recipients]
+    member_ids = [row.guest_member for row in recipients if row.guest_member]
+    member_labels = {row.name: row.full_name for row in frappe.get_all("WD Guest Member", filters={"name": ["in", member_ids]}, fields=["name", "full_name"])} if member_ids else {}
+    return [{
+        **row,
+        "household_name": labels.get(row.household, row.household),
+        # Who the message went to: the person on a Guest campaign, the
+        # family otherwise.
+        "recipient_name": member_labels.get(row.guest_member, row.guest_member) if row.guest_member else labels.get(row.household, row.household),
+    } for row in recipients]
 
 
 @frappe.whitelist()
@@ -268,22 +389,29 @@ def retry_whatsapp_campaign_recipients(campaign, recipients=None):
     filters = {"campaign": campaign, "status": ["in", list(RETRYABLE)]}
     if recipients:
         filters["name"] = ["in", recipients]
-    rows = frappe.get_all("WD WhatsApp Campaign Recipient", filters=filters, fields=["name", "household", "phone", "status"], order_by="creation asc")
+    rows = frappe.get_all("WD WhatsApp Campaign Recipient", filters=filters, fields=["name", "household", "guest_member", "phone", "status"], order_by="creation asc")
     if not rows:
         frappe.throw(_("There is nothing left to retry on this campaign."))
 
-    # A family whose number was missing may have had one added since — pick
-    # the current number up rather than retrying against a blank.
-    phones = {
+    # A family (or guest) whose number was missing may have had one added
+    # since — pick the current number up rather than retrying against a blank.
+    family_ids = [r.household for r in rows if not r.guest_member]
+    member_ids = [r.guest_member for r in rows if r.guest_member]
+    family_phones = {
         row.name: row.primary_phone
-        for row in frappe.get_all("WD Guest", filters={"name": ["in", [r.household for r in rows]]}, fields=["name", "primary_phone"])
-    }
+        for row in frappe.get_all("WD Guest", filters={"name": ["in", family_ids]}, fields=["name", "primary_phone"])
+    } if family_ids else {}
+    member_phones = {
+        row.name: row.mobile
+        for row in frappe.get_all("WD Guest Member", filters={"name": ["in", member_ids]}, fields=["name", "mobile"])
+    } if member_ids else {}
     requeued, unreachable = 0, 0
     for row in rows:
-        phone = phones.get(row.household)
+        phone = member_phones.get(row.guest_member) if row.guest_member else family_phones.get(row.household)
         if not phone:
             frappe.db.set_value("WD WhatsApp Campaign Recipient", row.name, {
-                "status": "No Phone", "error": _("No mobile number on this guest family."),
+                "status": "No Phone",
+                "error": _("No mobile number on this guest.") if row.guest_member else _("No mobile number on this guest family."),
             })
             unreachable += 1
             continue

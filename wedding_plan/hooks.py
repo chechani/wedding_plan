@@ -80,3 +80,13 @@ doc_events = {
 scheduler_events = {
     "all": ["wedding_plan.whatsapp.scheduler.process_due_campaigns"]
 }
+
+add_to_apps_screen = [
+    {
+        "name": "wedding_plan",
+        "logo": "/assets/frappe/images/frappe-framework-logo.svg",
+        "title": "Wedding Plan",
+        "route": "/app/wedding-plan",
+        "sequence_id": 10,
+    }
+]

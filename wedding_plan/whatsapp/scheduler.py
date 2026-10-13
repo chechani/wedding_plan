@@ -48,18 +48,23 @@ def _message_id(result):
 	return result.get("message_id") or result.get("id") or data.get("msgId") or result.get("message")
 
 
-def personalize_message(message, household):
-	"""Fill the `{family}` placeholder with the guest's household name.
+def personalize_message(message, household, guest_member=None):
+	"""Fill the `{family}` and `{name}` placeholders.
 
-	`household` is a WD Guest docname; its `household_name` is what the
-	campaign composer's placeholder actually refers to. A guest with a blank
-	household_name (shouldn't happen, but data is data) falls back to "your
-	family" rather than sending a literal empty string.
+	`household` is a WD Guest docname; its `household_name` is what
+	`{family}` refers to. `{name}` is the individual guest's `full_name` on a
+	Guest-audience campaign (`guest_member` set) and the household name on a
+	family campaign, so one template reads naturally for either audience.
+	A blank name (shouldn't happen, but data is data) falls back to "your
+	family" / "there" rather than sending a literal empty string.
 	"""
 	if not message:
 		return message
-	name = (frappe.db.get_value("WD Guest", household, "household_name") or "your family").strip()
-	return message.replace("{family}", name)
+	family = (frappe.db.get_value("WD Guest", household, "household_name") or "your family").strip()
+	person = family
+	if guest_member:
+		person = (frappe.db.get_value("WD Guest Member", guest_member, "full_name") or "there").strip()
+	return message.replace("{family}", family).replace("{name}", person)
 
 
 def campaign_counts(campaign_name):
@@ -155,7 +160,11 @@ def process_campaign(campaign_name):
 
 	row.attempts = (row.attempts or 0) + 1
 	_record(row, "Sending", None, account=account.name)
-	message = personalize_message(campaign.message, row.household)
+	message = personalize_message(campaign.message, row.household, row.guest_member)
+	# The invitation matrix is per household. One guest getting (or missing)
+	# a message says nothing about whether the family was invited, so only
+	# family campaigns move it.
+	mirror_to_matrix = not row.guest_member
 	try:
 		attachment_path = None
 		if campaign.media_file:
@@ -170,7 +179,8 @@ def process_campaign(campaign_name):
 			"status": "SENT", "provider_message_id": message_id,
 		}).insert(ignore_permissions=True)
 		_advance_or_complete(campaign, last_error=None)
-		_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
+		if mirror_to_matrix:
+			_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
 		return {"processed": True, "recipient": row.name, "status": row.status}
 	except Exception as error:
 		# The full traceback goes to the error log; the family's row keeps the
@@ -182,7 +192,7 @@ def process_campaign(campaign_name):
 			title=f"WhatsApp campaign send failed: {campaign.name}",
 			message="\n".join([
 				f"Campaign: {campaign.name} (wedding {campaign.wedding})",
-				f"Recipient row: {row.name}, household {row.household}, phone {row.phone}",
+				f"Recipient row: {row.name}, household {row.household}, guest {row.guest_member or '-'}, phone {row.phone}",
 				f"Attempt: {row.attempts}, sender account: {account.name}",
 				f"Attachment: {campaign.media_file or '<none>'}",
 				f"Reason: {reason}",
@@ -192,7 +202,8 @@ def process_campaign(campaign_name):
 		)
 		_record(row, "Failed", reason)
 		_advance_or_complete(campaign, last_error=row.error)
-		_update_invitation_task(campaign.wedding, row.household, status="Failed", failure_reason=row.error)
+		if mirror_to_matrix:
+			_update_invitation_task(campaign.wedding, row.household, status="Failed", failure_reason=row.error)
 		return {"processed": True, "recipient": row.name, "status": "Failed", "error": row.error}
 
 

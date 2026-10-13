@@ -49,7 +49,9 @@
   "vip_protocol",
   "functions_invited",
   "attachments",
-  "wedding"
+  "wedding",
+  "column_break_mjja",
+  "invited_functions"
  ],
  "fields": [
   {
@@ -312,12 +314,22 @@
    "fieldtype": "Table",
    "label": "Attachments",
    "options": "WD Checklist Attachment"
+  },
+  {
+   "fieldname": "invited_functions",
+   "fieldtype": "Select",
+   "label": "Invited Functions",
+   "options": "All\nSelective"
+  },
+  {
+   "fieldname": "column_break_mjja",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-22 09:37:26.285068",
+ "modified": "2026-10-13 17:53:47.999950",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Guest",

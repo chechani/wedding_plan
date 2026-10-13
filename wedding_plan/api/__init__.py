@@ -71,7 +71,7 @@ from wedding_plan.api.whatsapp import (  # noqa: F401
   whatsapp_send_text, whatsapp_send_template, list_whatsapp_campaigns,
   create_whatsapp_campaign, whatsapp_campaign_recipients, run_whatsapp_campaign_now,
   schedule_whatsapp_campaign, whatsapp_campaign_report,
-  retry_whatsapp_campaign_recipients,
+  retry_whatsapp_campaign_recipients, whatsapp_campaign_audience,
 )
 from wedding_plan.api.whatsapp_templates import (  # noqa: F401
   list_whatsapp_templates, create_whatsapp_template,

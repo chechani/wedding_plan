@@ -4,10 +4,11 @@
  "creation": "2026-09-14 00:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
- "field_order": ["wedding", "campaign_name", "source_template", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "last_error", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count"],
+ "field_order": ["wedding", "campaign_name", "audience", "source_template", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "last_error", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count"],
  "fields": [
   {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1,"in_standard_filter":1},
     {"fieldname":"campaign_name","fieldtype":"Data","label":"Campaign Name","reqd":1,"in_list_view":1},
+  {"fieldname":"audience","fieldtype":"Select","label":"Audience","options":"Guest Family\nGuest","default":"Guest Family","set_only_once":1,"in_list_view":1,"description":"Whole guest families (their primary phone) or individual guests (their own mobile)."},
   {"fieldname":"source_template","fieldtype":"Link","label":"Started From Template","options":"WD WhatsApp Campaign Template","read_only":1},
   {"fieldname":"message","fieldtype":"Long Text","label":"Message"},
   {"fieldname":"media_file","fieldtype":"Attach","label":"Attachment"},
