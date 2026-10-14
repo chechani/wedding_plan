@@ -152,9 +152,11 @@ def whatsapp_campaign_audience(wedding, audience="Guest Family"):
     filters them on, in one round trip.
 
     Returns `{"functions": [...], "rows": [...]}`. Each row carries
-    `invited_functions` (the All/Selective select on WD Guest / WD Guest
-    Member) and `functions`, the specific WD Functions it is invited to:
-    `functions_invited` for a family, its `WD Guest Member Function` rows for
+    `invited_functions` (the All/Selective select on WD Guest; always None
+    for a member, whose select was replaced by `invited_dates`), member rows
+    also carry `invited_dates` (with the Select's options returned as
+    `invited_dates_options`), and every row carries `functions`, the
+    specific WD Functions it is invited to: `functions_invited` for a family, its `WD Guest Member Function` rows for
     an individual guest. Filtering itself happens in the browser — a wedding
     has hundreds of rows, not hundreds of thousands.
     """
@@ -198,7 +200,7 @@ def whatsapp_campaign_audience(wedding, audience="Guest Family"):
             invited[row.guest_member].append(row.function)
         members = frappe.get_all(
             "WD Guest Member", filters={"wedding": wedding},
-            fields=["name", "full_name", "guest", "mobile", "relation_to_household", "age_group", "gender", "invited_functions"],
+            fields=["name", "full_name", "guest", "mobile", "relation_to_household", "age_group", "gender", "invited_dates"],
             order_by="full_name asc", limit_page_length=0,
         )
         rows = []
@@ -209,9 +211,16 @@ def whatsapp_campaign_audience(wedding, audience="Guest Family"):
                 "phone": m.mobile or None, "side": family.side, "category": family.category,
                 "sub_group": family.sub_group, "rsvp_status": family.rsvp_status,
                 "relation": m.relation_to_household, "age_group": m.age_group, "gender": m.gender,
-                "invited_functions": m.invited_functions or None, "functions": invited.get(m.name, []),
+                "invited_dates": m.invited_dates or None,
+                "invited_functions": None, "functions": invited.get(m.name, []),
             })
-    return {"functions": functions, "rows": rows}
+    result = {"functions": functions, "rows": rows}
+    if audience == "Guest":
+        # The filter offers the Select's own options, so a date can be picked
+        # even before any member has it.
+        field = frappe.get_meta("WD Guest Member").get_field("invited_dates")
+        result["invited_dates_options"] = [o for o in (field.options or "").split("\n") if o.strip()] if field else []
+    return result
 
 
 def _family_recipient_rows(wedding, households):
