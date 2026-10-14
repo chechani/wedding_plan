@@ -1,8 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
- "allow_rename": 1,
- "autoname": "hash",
+ "autoname": "Wed-.{bride_name}.-.{groom_name}.-.#####",
  "creation": "2026-08-19 14:55:25.164379",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -49,12 +48,13 @@
    "options": "Bride & Groom\nGroom & Bride"
   },
   {
-   "description": "Computed from bride_name/groom_name/name_order on save — do not edit directly.",
+   "description": "Computed from bride_name/groom_name/name_order on save \u2014 do not edit directly.",
    "fieldname": "couple_names",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Couple Names",
-   "read_only": 1
+   "read_only": 1,
+   "unique": 1
   },
   {
    "fieldname": "start_date",
@@ -86,10 +86,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-19 14:58:45.820539",
+ "modified": "2026-10-14 11:01:23.046004",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "Wedding",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

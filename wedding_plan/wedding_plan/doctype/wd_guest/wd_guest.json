@@ -2,7 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_import": 1,
- "autoname": "hash",
+ "autoname": "field:household_name",
  "creation": "2026-08-19 12:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -69,7 +69,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Household",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "default": "Common",
@@ -330,11 +331,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-13 21:19:29.165509",
+ "modified": "2026-10-14 09:28:52.701977",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Guest",
- "naming_rule": "Random",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
