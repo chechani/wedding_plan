@@ -82,6 +82,21 @@ class WasenderError(Exception):
         self.parsed = parsed
 
 
+class WasenderSessionError(WasenderError):
+    """The sender account's WhatsApp session is not connected.
+
+    WasenderAPI reports this with an HTTP 200 and nothing but a `message`, so
+    it has to be read out of the body. Every later send on that account fails
+    the same way until someone reconnects it, which is why the campaign
+    pauses on this instead of carrying on through the guest list.
+    """
+
+
+# How WasenderAPI words a disconnected session ("Your Whatsapp Session is not
+# connected please connect your session first.").
+_SESSION_DOWN_PATTERN = re.compile(r"(?i)\bsession\b.*\b(?:not\s+connected|disconnected|expired|logged\s+out)\b")
+
+
 def _redact(text: str) -> str:
     def mask(match):
         return (match.group("key") or match.group("scheme") or "") + "***redacted***"
@@ -342,4 +357,31 @@ def send_wasender(account, to_phone: str, message: str | None, attachment_path: 
         },
     )
     response.raise_for_status()
-    return response.json()
+    result = response.json()
+    _check_wasender_accepted(result, endpoint=send_url, account=account)
+    return result
+
+
+def _check_wasender_accepted(result, endpoint: str, account) -> None:
+    """Raise on a 2xx reply that still did not send the message.
+
+    A disconnected session comes back as HTTP 200 with only a `message`, which
+    used to be recorded as Sent with that message stored as the provider id.
+    """
+    if not isinstance(result, dict):
+        return
+    detail = _redact(_wasender_error_message(result, ""))
+    if _SESSION_DOWN_PATTERN.search(detail):
+        raise WasenderSessionError(
+            _truncate(f"WhatsApp session for sender account {account.name} is not connected: {detail}", WASENDER_ERROR_MESSAGE_LIMIT),
+            status_code=200,
+            endpoint=endpoint,
+            parsed=result,
+        )
+    if result.get("success") is False:
+        raise WasenderError(
+            _truncate(f"WasenderAPI rejected the message: {detail or 'no reason given'}", WASENDER_ERROR_MESSAGE_LIMIT),
+            status_code=200,
+            endpoint=endpoint,
+            parsed=result,
+        )

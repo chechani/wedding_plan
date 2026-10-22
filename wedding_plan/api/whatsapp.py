@@ -155,7 +155,8 @@ def whatsapp_campaign_audience(wedding, audience="Guest Family"):
     `invited_functions` (the All/Selective select on WD Guest; always None
     for a member, whose select was replaced by `invited_dates`), member rows
     also carry `invited_dates` (with the Select's options returned as
-    `invited_dates_options`), and every row carries `functions`, the
+    `invited_dates_options`; every filter's full choices are in
+    `filter_options`), and every row carries `functions`, the
     specific WD Functions it is invited to: `functions_invited` for a family, its `WD Guest Member Function` rows for
     an individual guest. Filtering itself happens in the browser — a wedding
     has hundreds of rows, not hundreds of thousands.
@@ -214,13 +215,48 @@ def whatsapp_campaign_audience(wedding, audience="Guest Family"):
                 "invited_dates": m.invited_dates or None,
                 "invited_functions": None, "functions": invited.get(m.name, []),
             })
-    result = {"functions": functions, "rows": rows}
+    filter_fields = AUDIENCE_FILTER_FIELDS["Guest Family"] + (AUDIENCE_FILTER_FIELDS["Guest"] if audience == "Guest" else [])
+    filter_options = {key: _field_choices(doctype, fieldname, wedding) for key, doctype, fieldname in filter_fields}
+    result = {"functions": functions, "rows": rows, "filter_options": filter_options}
     if audience == "Guest":
-        # The filter offers the Select's own options, so a date can be picked
-        # even before any member has it.
-        field = frappe.get_meta("WD Guest Member").get_field("invited_dates")
-        result["invited_dates_options"] = [o for o in (field.options or "").split("\n") if o.strip()] if field else []
+        # Kept for a frontend that predates `filter_options`.
+        result["invited_dates_options"] = filter_options["invited_dates"]
     return result
+
+
+# Composer filter (row key) -> the field its values come from. The filter
+# offers every value the field allows, not just the ones some guest already
+# has, so e.g. a Relation can be picked before anyone is tagged with it.
+AUDIENCE_FILTER_FIELDS = {
+    "Guest Family": [
+        ("side", "WD Guest", "side"),
+        ("category", "WD Guest", "category"),
+        ("rsvp_status", "WD Guest", "rsvp_status"),
+        ("invited_functions", "WD Guest", "invited_functions"),
+    ],
+    "Guest": [
+        ("relation", "WD Guest Member", "relation_to_household"),
+        ("age_group", "WD Guest Member", "age_group"),
+        ("invited_dates", "WD Guest Member", "invited_dates"),
+    ],
+}
+
+
+def _field_choices(doctype, fieldname, wedding):
+    """Every value a Select or Link field can hold, in the field's own order.
+
+    A Link lists the linked records, scoped to this wedding when the linked
+    doctype has a `wedding` field. Any other field type has no fixed choices.
+    """
+    field = frappe.get_meta(doctype).get_field(fieldname)
+    if not field:
+        return []
+    if field.fieldtype == "Select":
+        return [option for option in (field.options or "").split("\n") if option.strip()]
+    if field.fieldtype == "Link" and field.options:
+        filters = {"wedding": wedding} if frappe.get_meta(field.options).has_field("wedding") else {}
+        return frappe.get_all(field.options, filters=filters, pluck="name", order_by="name asc", limit_page_length=0)
+    return []
 
 
 def _family_recipient_rows(wedding, households):
@@ -384,14 +420,15 @@ def whatsapp_campaign_report(campaign):
 
 
 def _resume_if_failed(campaign):
-    """Put a Failed campaign that still has Pending rows back on the queue.
+    """Put a Failed or Paused campaign that still has Pending rows back on the queue.
 
-    A campaign fails as a whole when no sender account was enabled, and its
-    rows stay Pending. Nothing else restarts it: the scheduler skips Failed
-    campaigns, and retry only requeues Failed/Skipped/No Phone rows. Returns
-    how many Pending rows were resumed (0 if nothing changed).
+    A campaign fails as a whole when no sender account was enabled, and pauses
+    when the sender's WhatsApp session is not connected; either way its rows
+    stay Pending. Nothing else restarts it: the scheduler skips both, and retry
+    only requeues rows that were attempted. Returns how many Pending rows were
+    resumed (0 if nothing changed).
     """
-    if frappe.db.get_value("WD WhatsApp Campaign", campaign, "status") != "Failed":
+    if frappe.db.get_value("WD WhatsApp Campaign", campaign, "status") not in ("Failed", "Paused"):
         return 0
     pending = frappe.db.count("WD WhatsApp Campaign Recipient", filters={"campaign": campaign, "status": "Pending"})
     if pending:

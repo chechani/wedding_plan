@@ -4,3 +4,4 @@
 wedding_plan.patches.rename_wedding_to_hash
 wedding_plan.patches.seed_function_types
 wedding_plan.patches.backfill_campaign_counts
+wedding_plan.patches.mark_session_expired_recipients

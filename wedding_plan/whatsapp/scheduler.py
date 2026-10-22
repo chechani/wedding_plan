@@ -3,13 +3,13 @@ from collections import Counter
 import frappe
 from frappe.utils import add_to_date, now_datetime
 
-from wedding_plan.whatsapp.whatsform_client import send_wasender
+from wedding_plan.whatsapp.whatsform_client import WasenderSessionError, send_wasender
 
 # Statuses a recipient can sit in. Only "Pending" is picked up by the
 # scheduler: a failure stays Failed on the record until someone explicitly
 # retries it, so nothing is silently re-sent and nothing is silently lost.
 SENDABLE = ("Pending",)
-RETRYABLE = ("Failed", "Skipped", "Sending", "No Phone")
+RETRYABLE = ("Failed", "Skipped", "Sending", "No Phone", "Session Expired")
 
 
 def _update_invitation_task(wedding, household, **kwargs):
@@ -45,7 +45,10 @@ def _next_account(wedding):
 
 def _message_id(result):
 	data = result.get("data") or {}
-	return result.get("message_id") or result.get("id") or data.get("msgId") or result.get("message")
+	# Never `result["message"]`: that is WasenderAPI's human-readable text
+	# (a disconnected session reads "Your Whatsapp Session is not connected…"),
+	# not an id.
+	return result.get("message_id") or result.get("id") or data.get("msgId")
 
 
 def personalize_message(message, household, guest_member=None):
@@ -83,7 +86,10 @@ def campaign_counts(campaign_name):
 	return {
 		"total_count": sum(by_status.values()),
 		"sent_count": by_status.get("Sent", 0),
-		"failed_count": by_status.get("Failed", 0),
+		# A session that dropped mid-campaign is a family who did not get the
+		# message, the same as any other failure.
+		"failed_count": by_status.get("Failed", 0) + by_status.get("Session Expired", 0),
+		"session_expired_count": by_status.get("Session Expired", 0),
 		"skipped_count": by_status.get("Skipped", 0) + by_status.get("No Phone", 0),
 		"pending_count": by_status.get("Pending", 0) + by_status.get("Sending", 0),
 		"by_status": dict(by_status),
@@ -182,6 +188,25 @@ def process_campaign(campaign_name):
 		if mirror_to_matrix:
 			_update_invitation_task(campaign.wedding, row.household, status="Sent", delivery_reference=message_id)
 		return {"processed": True, "recipient": row.name, "status": row.status}
+	except WasenderSessionError as error:
+		# Every remaining family would hit the same disconnected session, one
+		# interval apart. Pause instead: they stay Pending, and retrying (or
+		# "Send next") once the account is reconnected picks the campaign up.
+		reason = str(error)
+		frappe.log_error(
+			title=f"WhatsApp campaign paused, session not connected: {campaign.name}",
+			message="\n".join([
+				f"Campaign: {campaign.name} (wedding {campaign.wedding})",
+				f"Recipient row: {row.name}, household {row.household}, guest {row.guest_member or '-'}, phone {row.phone}",
+				f"Attempt: {row.attempts}, sender account: {account.name}",
+				f"Reason: {reason}",
+			]),
+		)
+		_record(row, "Session Expired", reason, provider_message_id=None)
+		sync_campaign_counts(campaign.name, status="Paused", next_send_at=None, last_error=row.error)
+		if mirror_to_matrix:
+			_update_invitation_task(campaign.wedding, row.household, status="Failed", failure_reason=row.error)
+		return {"processed": True, "recipient": row.name, "status": row.status, "error": row.error, "paused": True}
 	except Exception as error:
 		# The full traceback goes to the error log; the family's row keeps the
 		# readable reason so it can be shown next to their name. For a provider
