@@ -75,8 +75,9 @@
    "fieldname": "relation_to_household",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Relation",
-   "options": "Self\nSpouse\nChild\nParent\nSibling\nOther Relative\nGuest"
+   "options": "Family\nBaeji\nBhua Family\nBohras\nJamner\nFriends\nSahaj\nManmad\nSelf\nSpouse\nChild\nParent\nSibling\nOther Relative\nGuest"
   },
   {
    "fieldname": "column_break_1",
@@ -267,7 +268,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-14 11:10:29.416233",
+ "modified": "2026-10-22 10:55:33.329318",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD Guest Member",
