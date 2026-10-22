@@ -142,7 +142,7 @@ def list_whatsapp_campaigns(wedding):
     return frappe.get_all(
         "WD WhatsApp Campaign",
         filters={"wedding": wedding},
-        fields=["name", "campaign_name", "audience", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count", "last_error"],
+        fields=["name", "campaign_name", "audience", "message", "media_file", "interval_minutes", "send_mode", "start_at", "status", "next_send_at", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count", "last_error"],
         order_by="creation desc",
     )
 
@@ -294,8 +294,28 @@ def _member_recipient_rows(wedding, members):
     return rows
 
 
+def _resolve_start(mode, start_at):
+    """(send_mode, start_at) for the planner's Immediate / Scheduled choice.
+
+    No `mode` (an older frontend) keeps the old rule: a given `start_at` is
+    the start, a blank one means now.
+    """
+    if mode not in (None, "", "immediate", "scheduled"):
+        frappe.throw(_("Unknown schedule mode: {0}").format(mode))
+    if mode == "scheduled":
+        if not start_at:
+            frappe.throw(_("Pick the date and time to start sending."))
+        # A minute of slack for the time spent between picking and clicking.
+        if get_datetime(start_at) < add_to_date(now_datetime(), minutes=-1):
+            frappe.throw(_("The start time has already passed. Pick a later time, or send immediately."))
+        return "Scheduled", get_datetime(start_at)
+    if mode == "immediate" or not start_at:
+        return "Immediate", now_datetime()
+    return "Scheduled", get_datetime(start_at)
+
+
 @frappe.whitelist()
-def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None, template=None, audience="Guest Family", members=None):
+def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minutes=10, start_at=None, households=None, media_file=None, template=None, audience="Guest Family", members=None, mode=None, ignored=None, ignore_against=None):
     """`template` (a `WD WhatsApp Campaign Template` name) pre-fills `message`
     and `media_file` when those aren't given explicitly — as an independent
     copy at creation time, not a live link. Editing or deleting the template
@@ -307,6 +327,17 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
 
     A message is optional: an attachment alone (image, video, PDF) is a
     complete campaign. One of the two is required.
+
+    `mode` ("immediate" / "scheduled") is decided here, before anything is
+    created: a scheduled campaign must come with a future `start_at`. The
+    campaign is still created as a Draft, so recipients can be reviewed
+    (removed, ignored) before it is started.
+
+    `ignored` lists selected guests (same ids as `households` / `members`)
+    to record as Ignored instead of Pending: the composer's "ignore existing
+    campaigns" check, matched on phone number against `ignore_against`. They
+    stay on the campaign, with where they were already sent, but are never
+    sent to unless included again.
     """
     # Sending is a write-ish action with real, guest-facing cost, so read-only
     # roles must not be able to set a campaign up or fire it.
@@ -320,7 +351,7 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
         selected = frappe.parse_json(selected)
     selected = selected or []
     interval_minutes = max(1, int(interval_minutes))
-    start_at = get_datetime(start_at) if start_at else now_datetime()
+    send_mode, start_at = _resolve_start(mode, start_at)
     if not selected:
         frappe.throw(_("Select at least one guest.") if audience == "Guest" else _("Select at least one guest family."))
 
@@ -343,12 +374,18 @@ def create_whatsapp_campaign(wedding, campaign_name, message=None, interval_minu
         frappe.throw(_("Add a message or an attachment."))
 
     rows = _member_recipient_rows(wedding, selected) if audience == "Guest" else _family_recipient_rows(wedding, selected)
+    ignored = set(frappe.parse_json(ignored) if isinstance(ignored, str) else (ignored or []))
+    if ignored:
+        by_phone = _sent_by_phone(wedding, against=_parse_against(ignore_against))
+        for row in rows:
+            if row["status"] == "Pending" and (row.get("guest_member") if audience == "Guest" else row["household"]) in ignored:
+                row["status"], row["error"] = "Ignored", _already_sent_reason(by_phone.get(normalise_phone(row["phone"])))
     if not rows:
         frappe.throw(_("The selected guests could not be found.") if audience == "Guest" else _("The selected guest families could not be found."))
 
     campaign = frappe.get_doc({
         "doctype": "WD WhatsApp Campaign", "wedding": wedding, "campaign_name": campaign_name,
-        "audience": audience, "message": message, "interval_minutes": interval_minutes, "start_at": start_at,
+        "audience": audience, "message": message, "interval_minutes": interval_minutes, "send_mode": send_mode, "start_at": start_at,
         "source_template": template or None,
         "next_send_at": None, "status": "Draft", "sent_count": 0, "failed_count": 0,
     }).insert()
@@ -383,18 +420,10 @@ def schedule_whatsapp_campaign(campaign, media_file=None, start_at=None, mode=No
          doc.media_file = _attach_file("WD WhatsApp Campaign", doc.name, "media_file", media_file)
      if not (doc.message or doc.media_file):
          frappe.throw(_("Add a message or an attachment before scheduling."))
-     if mode not in (None, "", "immediate", "scheduled"):
-         frappe.throw(_("Unknown schedule mode: {0}").format(mode))
      if not frappe.db.exists("WD WhatsApp Campaign Recipient", {"campaign": doc.name, "status": "Pending"}):
          frappe.throw(_("Nobody on this campaign is waiting to be sent to."))
-     if mode == "scheduled":
-         if not start_at:
-             frappe.throw(_("Pick the date and time to start sending."))
-         # A minute of slack for the time spent between picking and clicking.
-         if get_datetime(start_at) < add_to_date(now_datetime(), minutes=-1):
-             frappe.throw(_("The start time has already passed. Pick a later time, or send immediately."))
+     doc.send_mode, doc.start_at = _resolve_start(mode, start_at)
      doc.status = "Scheduled"
-     doc.start_at = now_datetime() if mode == "immediate" or not start_at else get_datetime(start_at)
      doc.next_send_at = doc.start_at
      doc.save(ignore_permissions=True)
      return doc.as_dict()
@@ -450,15 +479,19 @@ def _campaign_rows(campaign, recipients):
     )
 
 
-def _sent_by_phone(wedding, campaign, against=None):
-    """Who already got a message from this wedding's *other* campaigns, keyed
-    by normalised phone number (the matching rule: one number, one person,
-    whichever audience or guest record it was sent through)."""
-    filters = {"wedding": wedding, "campaign": ["!=", campaign], "status": "Sent"}
+def _sent_by_phone(wedding, campaign=None, against=None):
+    """Who already got a message from this wedding's campaigns (other than
+    `campaign`), keyed by normalised phone number (the matching rule: one
+    number, one person, whichever audience or guest record it was sent
+    through). `against` limits it to those campaigns; `[]` matches nothing."""
+    filters = {"wedding": wedding, "status": "Sent"}
+    if campaign:
+        filters["campaign"] = ["!=", campaign]
     if against is not None:
+        against = [name for name in against if name != campaign]
         if not against:
             return {}
-        filters["campaign"] = ["in", [name for name in against if name != campaign]]
+        filters["campaign"] = ["in", against]
     sent = frappe.get_all(
         "WD WhatsApp Campaign Recipient", filters=filters,
         fields=["name", "campaign", "household", "guest_member", "phone", "sent_at", "account"],
@@ -486,6 +519,50 @@ def _parse_against(against):
     return against
 
 
+def _already_sent_reason(hits):
+    if not hits:
+        return _("Ignored before sending.")
+    return _("Already sent in {0}").format(", ".join(
+        f"{hit['campaign_name']} ({frappe.utils.format_datetime(hit['sent_at'])})" if hit["sent_at"] else hit["campaign_name"]
+        for hit in hits
+    ))[:500]
+
+
+def _campaigns_with_sends(wedding, exclude=None):
+    """The campaigns a planner can pick to ignore against: any that has
+    actually sent something."""
+    filters = {"wedding": wedding, "sent_count": [">", 0]}
+    if exclude:
+        filters["name"] = ["!=", exclude]
+    return frappe.get_all(
+        "WD WhatsApp Campaign", filters=filters,
+        fields=["name", "campaign_name", "audience", "status", "start_at", "sent_count"],
+        order_by="creation desc",
+    )
+
+
+@frappe.whitelist()
+def whatsapp_audience_overlap(wedding, audience="Guest Family", against=None):
+    """For the composer, before a campaign exists: which of the guests it
+    could be sent to already got a message in the `against` campaigns,
+    matched on phone number. `matches` is keyed like the audience rows (WD
+    Guest name for families, WD Guest Member name for guests)."""
+    frappe.has_permission("Wedding", doc=wedding, throw=True)
+    if audience not in AUDIENCES:
+        frappe.throw(_("Unknown audience: {0}").format(audience))
+    by_phone = _sent_by_phone(wedding, against=_parse_against(against))
+    if audience == "Guest":
+        people = frappe.get_all("WD Guest Member", filters={"wedding": wedding}, fields=["name", "mobile as phone"], limit_page_length=0)
+    else:
+        people = frappe.get_all("WD Guest", filters={"wedding": wedding}, fields=["name", "primary_phone as phone"], limit_page_length=0)
+    matches = {}
+    for person in people:
+        hits = by_phone.get(normalise_phone(person.phone)) if person.phone else None
+        if hits:
+            matches[person.name] = hits
+    return {"campaigns": _campaigns_with_sends(wedding), "matches": matches}
+
+
 @frappe.whitelist()
 def whatsapp_campaign_overlap(campaign, against=None):
     """Which recipients of `campaign` were already sent a message by another
@@ -498,12 +575,7 @@ def whatsapp_campaign_overlap(campaign, against=None):
     """
     wedding = frappe.db.get_value("WD WhatsApp Campaign", campaign, "wedding")
     frappe.has_permission("Wedding", doc=wedding, throw=True)
-    campaigns = frappe.get_all(
-        "WD WhatsApp Campaign",
-        filters={"wedding": wedding, "name": ["!=", campaign], "sent_count": [">", 0]},
-        fields=["name", "campaign_name", "audience", "status", "start_at", "sent_count"],
-        order_by="creation desc",
-    )
+    campaigns = _campaigns_with_sends(wedding, exclude=campaign)
     by_phone = _sent_by_phone(wedding, campaign, _parse_against(against))
     matches = {}
     for row in frappe.get_all(
@@ -532,12 +604,8 @@ def ignore_whatsapp_campaign_recipients(campaign, recipients, ignore=1, against=
         for row in rows:
             if row.status != "Pending":
                 continue
-            found = by_phone.get(normalise_phone(row.phone))
-            reason = _("Already sent in {0}").format(", ".join(
-                f"{hit['campaign_name']} ({frappe.utils.format_datetime(hit['sent_at'])})" if hit["sent_at"] else hit["campaign_name"]
-                for hit in found
-            )) if found else _("Ignored before sending.")
-            frappe.db.set_value("WD WhatsApp Campaign Recipient", row.name, {"status": "Ignored", "error": reason[:500]})
+            reason = _already_sent_reason(by_phone.get(normalise_phone(row.phone)))
+            frappe.db.set_value("WD WhatsApp Campaign Recipient", row.name, {"status": "Ignored", "error": reason})
             changed += 1
     else:
         for row in rows:

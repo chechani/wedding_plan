@@ -4,7 +4,7 @@
  "creation": "2026-09-14 00:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
- "field_order": ["wedding", "campaign_name", "audience", "source_template", "message", "media_file", "interval_minutes", "start_at", "status", "next_send_at", "last_error", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count"],
+ "field_order": ["wedding", "campaign_name", "audience", "source_template", "message", "media_file", "interval_minutes", "send_mode", "start_at", "status", "next_send_at", "last_error", "total_count", "sent_count", "failed_count", "skipped_count", "pending_count"],
  "fields": [
   {"fieldname":"wedding","fieldtype":"Link","label":"Wedding","options":"Wedding","reqd":1,"in_list_view":1,"in_standard_filter":1},
     {"fieldname":"campaign_name","fieldtype":"Data","label":"Campaign Name","reqd":1,"in_list_view":1},
@@ -13,6 +13,7 @@
   {"fieldname":"message","fieldtype":"Long Text","label":"Message"},
   {"fieldname":"media_file","fieldtype":"Attach","label":"Attachment"},
   {"fieldname":"interval_minutes","fieldtype":"Int","label":"Interval (minutes)","default":"10","reqd":1,"in_list_view":1},
+  {"fieldname":"send_mode","fieldtype":"Select","label":"Send Mode","options":"Immediate\nScheduled","default":"Immediate","description":"Immediate starts sending as soon as the campaign is started; Scheduled waits for Start At."},
   {"fieldname":"start_at","fieldtype":"Datetime","label":"Start At","reqd":1},
   {"fieldname":"status","fieldtype":"Select","label":"Status","default":"Draft","options":"Draft\nScheduled\nRunning\nPaused\nCompleted\nFailed","in_list_view":1,"in_standard_filter":1},
   {"fieldname":"next_send_at","fieldtype":"Datetime","label":"Next Send At","read_only":1,"in_list_view":1},
