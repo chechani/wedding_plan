@@ -383,6 +383,22 @@ def whatsapp_campaign_report(campaign):
     return {"counts": counts, "recipients": whatsapp_campaign_recipients(campaign)}
 
 
+def _resume_if_failed(campaign):
+    """Put a Failed campaign that still has Pending rows back on the queue.
+
+    A campaign fails as a whole when no sender account was enabled, and its
+    rows stay Pending. Nothing else restarts it: the scheduler skips Failed
+    campaigns, and retry only requeues Failed/Skipped/No Phone rows. Returns
+    how many Pending rows were resumed (0 if nothing changed).
+    """
+    if frappe.db.get_value("WD WhatsApp Campaign", campaign, "status") != "Failed":
+        return 0
+    pending = frappe.db.count("WD WhatsApp Campaign Recipient", filters={"campaign": campaign, "status": "Pending"})
+    if pending:
+        sync_campaign_counts(campaign, status="Scheduled", next_send_at=now_datetime(), last_error=None)
+    return pending
+
+
 @frappe.whitelist()
 def retry_whatsapp_campaign_recipients(campaign, recipients=None):
     """Queue the families that did not get the message for another send.
@@ -399,6 +415,9 @@ def retry_whatsapp_campaign_recipients(campaign, recipients=None):
     if recipients:
         filters["name"] = ["in", recipients]
     rows = frappe.get_all("WD WhatsApp Campaign Recipient", filters=filters, fields=["name", "household", "guest_member", "phone", "status"], order_by="creation asc")
+    resumed = _resume_if_failed(campaign)
+    if not rows and resumed:
+        return {"requeued": 0, "unreachable": 0, "resumed": resumed, "counts": campaign_counts(campaign)}
     if not rows:
         frappe.throw(_("There is nothing left to retry on this campaign."))
 
@@ -433,10 +452,11 @@ def retry_whatsapp_campaign_recipients(campaign, recipients=None):
     if requeued:
         extra = {"status": "Scheduled", "next_send_at": now_datetime(), "last_error": None}
     counts = sync_campaign_counts(campaign, **extra)
-    return {"requeued": requeued, "unreachable": unreachable, "counts": counts}
+    return {"requeued": requeued, "unreachable": unreachable, "resumed": resumed, "counts": counts}
 
 
 @frappe.whitelist()
 def run_whatsapp_campaign_now(campaign):
     _campaign_wedding(campaign)
+    _resume_if_failed(campaign)
     return __import__("wedding_plan.whatsapp.scheduler", fromlist=["process_campaign"]).process_campaign(campaign)
