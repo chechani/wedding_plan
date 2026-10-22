@@ -65,7 +65,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Pending\nSending\nSent\nFailed\nSkipped\nNo Phone\nSession Expired",
+   "options": "Pending\nSending\nSent\nFailed\nSkipped\nNo Phone\nSession Expired\nIgnored",
    "reqd": 1
   },
   {
@@ -106,7 +106,7 @@
   }
  ],
  "links": [],
- "modified": "2026-10-22 09:20:21.647370",
+ "modified": "2026-10-22 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Wedding Plan",
  "name": "WD WhatsApp Campaign Recipient",

@@ -92,6 +92,9 @@ def campaign_counts(campaign_name):
 		"session_expired_count": by_status.get("Session Expired", 0),
 		"skipped_count": by_status.get("Skipped", 0) + by_status.get("No Phone", 0),
 		"pending_count": by_status.get("Pending", 0) + by_status.get("Sending", 0),
+		# Left out on purpose (already got the message in another campaign);
+		# never sent, never retried, and not a failure.
+		"ignored_count": by_status.get("Ignored", 0),
 		"by_status": dict(by_status),
 	}
 
